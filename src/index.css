@@ -457,6 +457,16 @@ body.hide-custom-cursor {
 
 /* ── Global Layout Utilities ────────────────────────────────────── */
 
+.section-padding {
+  padding: 8rem 5%;
+}
+
+@media (max-width: 900px) {
+  .section-padding {
+    padding: 4rem 5%;
+  }
+}
+
 /* Smart hero stacking: text below avatar on mobile */
 .hero-grid {
   display: grid;
