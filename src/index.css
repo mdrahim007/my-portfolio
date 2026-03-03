@@ -1,0 +1,508 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Obsidian Elegance Palette */
+  --bg-main: #0c0c0c;
+  --bg-surface: #1e1e1e;
+  --text-primary: #FAFAFA;
+  --text-muted: #888;
+  --text-secondary: rgba(250, 250, 250, 0.5);
+  --accent: #bea98e;
+  --accent-dim: rgba(190, 169, 142, 0.2);
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --radius-card: 20px;
+  --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Eyebrow label — used above section headings */
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+/* Pill variant — used for top-level section labels only (01 — Identity etc.) */
+.eyebrow-pill {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(190, 169, 142, 0.25);
+  background: rgba(190, 169, 142, 0.07);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Divider rule */
+.section-rule {
+  width: 100%;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 2rem 0 3rem;
+}
+
+.surface {
+  background-color: var(--bg-surface);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GLASSMORPHISM SYSTEM — Apple macOS dark mode style
+   Requires the canvas starfield background to be visible behind sections
+   for maximum effect. Uses @supports for graceful degradation.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Base glass card — used on Bento Grid, testimonials, inner sub-cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-card);
+  transition:
+    background 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .glass-card {
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    background: rgba(255, 255, 255, 0.015);
+  }
+}
+
+/* Subtle inner highlight — top edge catches virtual "light" like Apple glass */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0) 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(190, 169, 142, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(190, 169, 142, 0.1) inset,
+    0 8px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(190, 169, 142, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Frosted nav pill */
+.glass-nav {
+  background: rgba(12, 12, 12, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 100px;
+  padding: 0.75rem 2.5rem;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .glass-nav {
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+  }
+}
+
+.glass-nav:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(190, 169, 142, 0.14);
+}
+
+/* Inner sub-card (tools list items, methodology items) */
+.glass-inner {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 12px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .glass-inner {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+.glass-inner:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(190, 169, 142, 0.15);
+}
+
+/* Testimonial glass — left accent glow instead of hard border */
+.glass-testimonial {
+  background: rgba(255, 255, 255, 0.012);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-left: 2px solid rgba(190, 169, 142, 0.5);
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .glass-testimonial {
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
+}
+
+.glass-testimonial::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 60%);
+  pointer-events: none;
+}
+
+.glass-testimonial:hover {
+  background: rgba(255, 255, 255, 0.045);
+  border-left-color: rgba(190, 169, 142, 0.8);
+  box-shadow:
+    -4px 0 24px rgba(190, 169, 142, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Contact form glass wrapper */
+.glass-form {
+  background: rgba(255, 255, 255, 0.013);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .glass-form {
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+  }
+}
+
+.glass-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(190, 169, 142, 0.4), transparent);
+  pointer-events: none;
+}
+
+/* Bento card glass override */
+.bento-card-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.014);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .bento-card-container {
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+  }
+}
+
+.bento-card-container:hover {
+  border-color: rgba(190, 169, 142, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(190, 169, 142, 0.07) inset;
+}
+
+
+/* Placeholder color for form fields */
+::placeholder {
+  color: rgba(250, 250, 250, 0.35);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* section anchor offset for nav */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* --- Bento Grid Asymmetrical Layout --- */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(300px, auto);
+  gap: 1.25rem;
+}
+
+.bento-card-container {
+  position: relative;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s var(--transition-smooth);
+}
+
+.bento-card-container:hover {
+  border-color: rgba(190, 169, 142, 0.2);
+}
+
+/* Asymmetrical Spans */
+.bento-size-large {
+  grid-column: span 8;
+  grid-row: span 2;
+}
+
+.bento-size-medium {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+
+.bento-size-tall {
+  grid-column: span 5;
+  grid-row: span 3;
+}
+
+.bento-size-wide {
+  grid-column: span 7;
+  grid-row: span 2;
+}
+
+.bento-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  overflow: hidden;
+  background-color: #1a1a1a;
+}
+
+.bento-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms var(--transition-smooth);
+}
+
+.bento-card-container:hover .bento-image {
+  transform: scale(1.05);
+}
+
+.bento-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, var(--bg-surface), transparent);
+  pointer-events: none;
+}
+
+.bento-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.bento-category {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+}
+
+.bento-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+@media (max-width: 900px) {
+  .bento-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bento-card-container {
+    min-height: 400px;
+  }
+}
+
+/* ── CV Modal Cursor Handling ───────────────────────────────────── */
+/* When CV modal is open, let the browser show the default text/pointer cursors */
+body.hide-custom-cursor .custom-cursor {
+  display: none !important;
+}
+
+body.hide-custom-cursor {
+  cursor: auto !important;
+}
+
+/* ── Utilities ──────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .cv-print-btn {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── Global Layout Utilities ────────────────────────────────────── */
+
+/* Smart hero stacking: text below avatar on mobile */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: center;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .hero-content-block {
+    align-items: center !important;
+  }
+}
+
+/* Smart about layout: 1fr 1fr desktop, stacked mobile */
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .responsive-grid-2 {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 3rem;
+  }
+}
+
+/* Navbar Shrink for Mobile */
+@media (max-width: 600px) {
+  .nav-pill-link {
+    padding: 0.45rem 0.85rem !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.12em !important;
+  }
+}

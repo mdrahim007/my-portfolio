@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "title": "Cloud Infrastructure Overhaul",
+    "role": "DevOps Architect",
+    "description": "Redesigned a monolithic legacy architecture into a scalable, highly-available Kubernetes-based microservices ecosystem. Reduced deployment times by 75% and improved system reliability to 99.99%.",
+    "metrics": ["75% Faster Deployments", "$1.2M Annual Savings", "99.99% Uptime"],
+    "technologies": ["AWS", "Kubernetes", "Terraform", "CI/CD"],
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop",
+    "size": "large"
+  },
+  {
+    "id": 2,
+    "title": "FinTech Executive Dashboard",
+    "role": "UI/UX Designer",
+    "description": "Engineered a high-density data visualization dashboard for C-suite executives, transforming complex financial data streams into actionable, intuitive insights. Adopted by 3 major investment banks.",
+    "metrics": ["40% Faster Decision Making", "Zero Training Required"],
+    "technologies": ["Figma", "Design Systems", "Prototyping"],
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop",
+    "size": "medium"
+  },
+  {
+    "id": 3,
+    "title": "Algorithmic Trading Engine",
+    "role": "Lead Programmer",
+    "description": "Developed a low-latency trading engine capable of processing millions of transactions per second. Implemented advanced caching mechanisms and parallel processing.",
+    "metrics": ["<1ms Latency", "Processed 10M+ Tx/s"],
+    "technologies": ["Rust", "C++", "Redis", "Kafka"],
+    "image": "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?q=80&w=2671&auto=format&fit=crop",
+    "size": "small"
+  },
+  {
+    "id": 4,
+    "title": "Global Logistics Platform",
+    "role": "Product Manager",
+    "description": "Led cross-functional teams to deliver a comprehensive supply chain management platform. Managed the product lifecycle from ideation to successful global rollout across 12 countries.",
+    "metrics": ["12 Country Rollout", "Delivered 2 Months Early"],
+    "technologies": ["Agile", "Jira", "Stakeholder Management"],
+    "image": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2670&auto=format&fit=crop",
+    "size": "large"
+  },
+  {
+    "id": 5,
+    "title": "AI-Powered Threat Detection",
+    "role": "Full Stack Developer",
+    "description": "Built an intelligent security monitoring system leveraging machine learning models to detect and neutralize zero-day vulnerabilities in real-time.",
+    "metrics": ["99% Threat Mitigation", "Real-time Detection"],
+    "technologies": ["React", "Python", "TensorFlow", "WebSocket"],
+    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop",
+    "size": "medium"
+  }
+]

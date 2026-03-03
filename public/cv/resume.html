@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Md. Abdur Rahim</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta name="description"
+        content="Professional CV of Md. Abdur Rahim - Support Manager & ITSM Lead. Experienced in IT Operations, Project Management, and Business Analysis.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap');
+
+        /* ═══════════════════════════════════════════════════
+           LIGHT MODE — default, print-friendly
+           All values are solid (no rgba transparency)
+           so they render perfectly on paper
+        ═══════════════════════════════════════════════════ */
+        :root {
+            --primary: #1a1828;
+            /* Deep navy — crisp on print */
+            --accent: #8a6d30;
+            /* Rich dark gold — visible on white */
+            --accent-light: #b8935a;
+            /* Lighter gold for hover/links */
+            --text-dark: #1a1828;
+            --text-light: #5c5470;
+            --text-body: #3d3555;
+            --sidebar-bg: #ede8df;
+            /* Warm parchment — distinct from page */
+            --sidebar-border: #c9b88a;
+            /* Solid warm gold border */
+            --border-color: #d4c8a8;
+            /* Solid warm border */
+            --page-bg: #ffffff;
+            --tag-bg: #f7f2e8;
+            --badge-bg: #e8dfc8;
+            --badge-text: #6b5020;
+            --ref-bg: #f5f0e5;
+            --card-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 30px 60px rgba(0, 0, 0, 0.12);
+            --body-bg: transparent;
+            --icon-bg: #e2d9c5;
+            --name-color: #1a1828;
+            --hr-color: #c9b88a;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           DARK MODE — matches portfolio aesthetic
+        ═══════════════════════════════════════════════════ */
+        body.dark-mode {
+            --primary: #F5F0E8;
+            /* Warm white — softer than pure white */
+            --accent: #D4AF80;
+            /* Portfolio gold */
+            --accent-light: #e8c99a;
+            --text-dark: #F2EEE8;
+            --text-light: #C8C2BC;
+            --text-body: #EAE4DC;
+            /* Lightened body text */
+            --sidebar-bg: #070712;
+            /* Deeper than page — creates sidebar depth */
+            --sidebar-border: rgba(212, 175, 128, 0.35);
+            --border-color: rgba(212, 175, 128, 0.2);
+            --page-bg: #0e0e16;
+            /* Lightened slightly to float over the dark modal background */
+            --tag-bg: rgba(212, 175, 128, 0.07);
+            --badge-bg: rgba(212, 175, 128, 0.13);
+            --badge-text: #D4AF80;
+            --ref-bg: rgba(212, 175, 128, 0.05);
+            --card-shadow: 0 0 0 1px rgba(212, 175, 128, 0.15), 0 40px 100px rgba(0, 0, 0, 0.9);
+            --body-bg: transparent;
+            /* Portfolio outermost bg */
+            --icon-bg: rgba(212, 175, 128, 0.12);
+            --name-color: #FFFFFF;
+            /* Pure white name */
+            --hr-color: rgba(212, 175, 128, 0.3);
+        }
+
+        /* ── BASE ─────────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Premium Modern Scrollbar */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(212, 175, 128, 0.25) transparent;
+            /* Dark gold, highly transparent */
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            /* Ultra thin */
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 128, 0.3);
+            /* Subtle gold */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 128, 0.8);
+            /* Stronger gold on hover */
+        }
+
+        body {
+            background: var(--body-bg);
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            transition: background 0.4s ease;
+        }
+
+        .cv-page {
+            width: 99%;
+            min-height: 297mm;
+            background: var(--page-bg);
+            display: grid;
+            grid-template-columns: 31% 69%;
+            box-shadow: var(--card-shadow);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* ── SIDEBAR ───────────────────────────────────────── */
+        .sidebar {
+            background: var(--sidebar-bg);
+            padding: 48px 20px 34px 22px;
+            border-right: 2px solid var(--sidebar-border);
+            color: var(--primary);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .profile-img-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            outline: 4px solid var(--icon-bg);
+            outline-offset: 2px;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid var(--border-color);
+            transition: color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .sidebar-title i {
+            background: var(--icon-bg);
+            color: var(--accent);
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 9.5px;
+            flex-shrink: 0;
+            transition: background 0.4s ease;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 9px;
+            font-size: 11.5px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            transition: color 0.4s ease;
+        }
+
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        .contact-item i {
+            color: var(--accent);
+            width: 17px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            font-size: 11px;
+        }
+
+        /* MOBILE VCARD */
+        .mobile-vcard-btn {
+            display: none;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        .mobile-vcard-btn a {
+            display: inline-block;
+            background: var(--accent);
+            color: #ffffff;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        .skill-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--tag-bg);
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-dark);
+            letter-spacing: 0.02em;
+            transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        .skill-tag::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .info-block {
+            font-size: 11.5px;
+            line-height: 1.65;
+            margin-bottom: 12px;
+            color: var(--text-body);
+        }
+
+        .info-block strong {
+            display: block;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 1px;
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────── */
+        .main-content {
+            padding: 48px 34px 34px 30px;
+        }
+
+        .header {
+            padding-bottom: 16px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        /* Gold underline bar beneath the name block */
+        .header::after {
+            content: '';
+            display: block;
+            height: 1px;
+            background: var(--hr-color);
+            margin-top: 14px;
+            transition: background 0.4s ease;
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 27px;
+            font-weight: 700;
+            color: var(--name-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0;
+            line-height: 1.1;
+            transition: color 0.4s ease;
+        }
+
+        .designation {
+            font-family: 'Raleway', sans-serif;
+            font-size: 10.5px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            transition: color 0.4s ease;
+        }
+
+        .summary {
+            font-size: 12px;
+            color: var(--text-body);
+            line-height: 1.75;
+            text-align: justify;
+            margin-bottom: 16px;
+            transition: color 0.4s ease;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.4s ease;
+        }
+
+        .section-title i {
+            background: var(--icon-bg);
+            color: var(--accent);
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 9.5px;
+            flex-shrink: 0;
+            transition: background 0.4s ease;
+        }
+
+        .section-title-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            transition: color 0.4s ease;
+        }
+
+        /* ── TIMELINE ──────────────────────────────────────── */
+        .job-card {
+            margin-bottom: 14px;
+        }
+
+        .job-content {
+            border-left: 1px solid var(--border-color);
+            padding-left: 16px;
+            margin-left: 3px;
+            margin-top: 4px;
+            transition: border-color 0.4s ease;
+        }
+
+        .job-role {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            padding-left: 20px;
+            line-height: 1.3;
+            transition: color 0.4s ease;
+        }
+
+        /* Timeline dot with ring glow in dark mode */
+        .job-role::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 5px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        body.dark-mode .job-role::before {
+            box-shadow: 0 0 0 2px rgba(212, 175, 128, 0.2), 0 0 8px rgba(212, 175, 128, 0.35);
+        }
+
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 4px 0 6px;
+            letter-spacing: 0.04em;
+            transition: color 0.4s ease;
+        }
+
+        .project-badge {
+            display: inline-block;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 0.04em;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        .job-desc ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .job-desc li {
+            font-size: 11.5px;
+            color: var(--text-body);
+            margin-bottom: 3px;
+            line-height: 1.55;
+            text-align: justify;
+            transition: color 0.4s ease;
+        }
+
+        /* ── REFERENCE ─────────────────────────────────────── */
+        .reference-card {
+            background: var(--ref-bg);
+            padding: 12px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent);
+            font-size: 12px;
+            color: var(--text-body);
+            line-height: 1.55;
+            transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        .reference-card strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .reference-card a {
+            color: var(--accent-light);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .reference-section {
+            margin-top: 16px;
+            page-break-inside: avoid;
+        }
+
+        /* ── QR CODE ───────────────────────────────────────── */
+        .qr-code-container {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .qr-code-container img {
+            width: 76px;
+            height: 76px;
+            padding: 3px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+        }
+
+        .mobile-header {
+            display: none;
+        }
+
+        /* ── MOBILE ──────────────────────────────────────────── */
+        @media screen and (max-width: 800px) {
+            body {
+                padding: 0;
+                display: block;
+            }
+
+            .cv-page {
+                width: 100%;
+                box-shadow: none;
+                min-height: auto;
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .sidebar,
+            .main-content {
+                display: contents;
+            }
+
+            .profile-img-container {
+                order: 1;
+                margin-top: 20px;
+            }
+
+            .mobile-header {
+                order: 2;
+                text-align: center;
+            }
+
+            .contact-section {
+                order: 3;
+                text-align: center;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            .contact-section .contact-item {
+                justify-content: center;
+            }
+
+            .summary {
+                order: 4;
+            }
+
+            .experience-section {
+                order: 5;
+                padding-bottom: 20px;
+            }
+
+            .skills-section {
+                order: 6;
+                margin-top: 10px;
+            }
+
+            .education-section {
+                order: 7;
+                margin-bottom: 0;
+            }
+
+            .reference-section {
+                order: 8;
+            }
+
+            .mobile-header {
+                display: block;
+                margin-bottom: 20px;
+            }
+
+            .mobile-header .name {
+                font-size: 22px;
+            }
+
+            .mobile-header .designation {
+                font-size: 10px;
+            }
+
+            .main-content .header {
+                display: none;
+            }
+
+            .qr-code-container {
+                display: none;
+            }
+
+            .mobile-vcard-btn {
+                display: block;
+            }
+
+            .summary,
+            .job-desc li,
+            .reference-card {
+                text-align: left;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+           PRINT — crisp, ink-efficient, professional
+           Forces all solid colors regardless of mode
+        ══════════════════════════════════════════════════ */
+        @page {
+            margin: 0;
+            size: A4;
+        }
+
+        @media print {
+            * {
+                transition: none !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                padding: 0;
+            }
+
+            /* Override dark mode for print — always light for paper */
+            body,
+            body.dark-mode {
+                --primary: #1a1828 !important;
+                --accent: #8a6d30 !important;
+                --accent-light: #a08040 !important;
+                --text-dark: #1a1828 !important;
+                --text-light: #5c5470 !important;
+                --text-body: #3a3452 !important;
+                --sidebar-bg: #ede8df !important;
+                --sidebar-border: #c9b88a !important;
+                --border-color: #d4c8a8 !important;
+                --page-bg: #ffffff !important;
+                --tag-bg: #f7f2e8 !important;
+                --badge-bg: #e8dfc8 !important;
+                --badge-text: #6b5020 !important;
+                --ref-bg: #f5f0e5 !important;
+                --icon-bg: #e2d9c5 !important;
+                --name-color: #1a1828 !important;
+                --hr-color: #c9b88a !important;
+            }
+
+            .cv-page {
+                width: 100%;
+                min-height: 100vh;
+                box-shadow: none !important;
+                display: grid;
+                background: #ffffff !important;
+            }
+
+            .sidebar {
+                background: #ede8df !important;
+                border-right: 2px solid #c9b88a !important;
+            }
+
+            .name {
+                color: #1a1828 !important;
+            }
+
+            .job-role::before {
+                box-shadow: none !important;
+            }
+
+            .project-badge {
+                background: #e8dfc8 !important;
+                color: #6b5020 !important;
+            }
+
+            .skill-tag::before {
+                background: #8a6d30 !important;
+            }
+
+            .btn-print,
+            .btn-toggle-theme {
+                display: none !important;
+            }
+
+            .job-card,
+            .reference-card,
+            .sidebar-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="dark-mode">
+
+
+
+    <div class="cv-page">
+        <aside class="sidebar">
+            <div class="profile-img-container">
+                <img src="img/photo.jpg" alt="Md. Abdur Rahim"
+                    onerror="this.src='https://via.placeholder.com/150?text=Photo'">
+            </div>
+
+            <div class="mobile-header">
+                <h1 class="name">Md. Abdur Rahim</h1>
+                <div class="designation">Support Manager | Implementation Head</div>
+            </div>
+
+            <div class="sidebar-section contact-section">
+                <div class="sidebar-title"><i class="fas fa-address-card"></i>Contact</div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span><a href="tel:+8801722108281">+880 1722-108281</a></span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span><a href="mailto:mdrahim.cse@gmail.com">mdrahim.cse@gmail.com</a></span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <span><a href="https://www.linkedin.com/in/abrahim007"
+                            target="_blank">linkedin.com/in/abrahim007</a></span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><a href="https://maps.google.com/?q=Sadhinota+Sarani,+Uttar+Badda,+Dhaka-1212"
+                            target="_blank">Sadhinota Sarani, Uttar Badda, Dhaka-1212</a></span>
+                </div>
+
+                <!-- Mobile Only vCard Button -->
+                <div class="mobile-vcard-btn">
+                    <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3AMd.%20Abdur%20Rahim%0ATITLE%3ASupport%20Manager%20%7C%20ITSM%20Lead%0ATEL%3BTYPE%3DCELL%3A%2B8801722108281%0AEMAIL%3Amdrahim.cse%40gmail.com%0AURL%3Ahttps%3A%2F%2Fwww.linkedin.com%2Fin%2Fabrahim007%0AEND%3AVCARD"
+                        download="contact.vcf"><i class="fas fa-address-card"></i> Save Contact</a>
+                </div>
+            </div>
+
+            <div class="sidebar-section skills-section">
+                <div class="sidebar-title"><i class="fas fa-cogs"></i>Skills &amp; Expertise</div>
+                <span class="skill-tag">IT Project Management</span>
+                <span class="skill-tag">Business Analysis (BA)</span>
+                <span class="skill-tag">Requirement Gathering</span>
+                <span class="skill-tag">ITSM & Operations</span>
+                <span class="skill-tag">Team Leadership</span>
+                <span class="skill-tag">Jira / Confluence</span>
+                <span class="skill-tag">MS Excel (Advanced)</span>
+            </div>
+
+            <div class="sidebar-section education-section">
+                <div class="sidebar-title"><i class="fas fa-graduation-cap"></i>Education</div>
+                <div class="info-block">
+                    <strong>B.Sc. in CSE</strong>
+                    Asian University of Bangladesh<br>
+                    <span style="color: var(--text-light)">2023</span>
+                </div>
+                <div class="info-block">
+                    <strong>Diploma in Engineering</strong>
+                    Kurigram Polytechnic Institute<br>
+                    <span style="color: var(--text-light)">2020</span>
+                </div>
+                <div class="info-block">
+                    <strong>Secondary School Certificate</strong>
+                    Kurigram Govt. High School<br>
+                    <span style="color: var(--text-light)">2016</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section qr-code-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linkedin.com/in/abrahim007"
+                    alt="LinkedIn QR Code">
+                <div style="font-size: 11px; color: var(--text-light); margin-top: 5px;">Scan for LinkedIn</div>
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="name">Md. Abdur Rahim</h1>
+                <div class="designation">Support Manager | Implementation Head</div>
+            </header>
+
+            <div class="summary">
+                Results-driven IT professional with over 4 years of experience in Support Operations and Implementation
+                leadership. Currently managing the national <strong>myGov ITSM Project</strong> while actively applying
+                Business Analysis methodologies to optimize workflows and requirements. Passionate about evolving into a
+                Project Manager role by leveraging a strong foundation in technical management, stakeholder reporting,
+                and strategic resource allocation.
+            </div>
+
+            <div class="experience-section">
+                <div class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    <span class="section-title-text">Professional Experience</span>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-role">Support Manager</div>
+                    <div class="job-content">
+                        <div class="job-details">
+                            <span>UY Systems Ltd.</span>
+                            <span>Dec 2023 – Present</span>
+                        </div>
+                        <span class="project-badge">Project: myGov ITSM Project (a2i)</span>
+                        <div class="job-desc">
+                            <ul>
+                                <li><strong>Team Leadership:</strong> Lead the Support and Implementation team for the
+                                    myGov ITSM project, ensuring efficient service delivery.</li>
+                                <li><strong>Implementation & Analysis:</strong> Oversee deployment of ITSM solutions and
+                                    analyze client requirements for system optimization.</li>
+                                <li><strong>Reporting:</strong> Manage all reporting requirements, generating detailed
+                                    progress reports and performance metrics.</li>
+                                <li><strong>Strategy:</strong> Coordinate daily operations to ensure Service Level
+                                    Agreements (SLAs) are met.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-role">Sr. Support Executive</div>
+                    <div class="job-content">
+                        <div class="job-details">
+                            <span>Business Automation Ltd.</span>
+                            <span>Mar 2021 – Nov 2023</span>
+                        </div>
+                        <span class="project-badge">Project: National Portal Framework (a2i)</span>
+                        <div class="job-desc">
+                            <ul>
+                                <li><strong>Leadership:</strong> Led the support team and provided mentorship to resolve
+                                    escalated technical issues.</li>
+                                <li><strong>QA & Requirement Validation:</strong> Executed manual testing procedures to
+                                    verify government website functionality against requirements.</li>
+                                <li><strong>Client Ops:</strong> Managed multi-channel support and tracked inbound
+                                    tickets for clear resolutions.</li>
+                                <li><strong>Training:</strong> Conducted training sessions on National Portal Framework.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="job-card" style="margin-bottom: 0;">
+                    <div class="job-role">Data Entry Operator</div>
+                    <div class="job-content">
+                        <div class="job-details">
+                            <span>Chhinnamukul Bangladesh</span>
+                            <span>Jul 2018 – Nov 2019</span>
+                        </div>
+                        <span class="project-badge">Project: Basic Literacy Project (MOPME)</span>
+                        <div class="job-desc">
+                            <ul>
+                                <li>Accurately entered and updated data into designated systems with high precision.
+                                </li>
+                                <li>Performed quality checks on data to identify and correct errors.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reference-section">
+                <div class="section-title">
+                    <i class="fas fa-user-check"></i>
+                    <span class="section-title-text">Reference</span>
+                </div>
+                <div class="reference-card">
+                    <strong>Md. Moniruzzaman, PMP</strong><br>
+                    Project Director & CTO, UY Systems Ltd.<br>
+                    <a href="mailto:zaman@uysys.com">zaman@uysys.com</a> | +880 1712-027826
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.btn-toggle-theme i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+    </script>
+</body>
+
+</html>
