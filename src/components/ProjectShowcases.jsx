@@ -230,14 +230,55 @@ export const ProjectShowcases = () => {
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @media (max-width: 900px) {
-                    #projects article {
+                    #work {
+                        padding: 4rem 5% !important;
+                    }
+                    #work > div > div {
+                        gap: 3rem !important;
+                    }
+                    #work h2 {
+                        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+                    }
+                    #work article {
                         grid-template-columns: 1fr !important;
+                        border-radius: 16px !important;
                     }
-                    #projects article > div:first-child {
-                        min-height: 250px;
+                    #work article > div:first-child {
+                        min-height: 220px !important;
+                        max-height: 260px;
+                        order: 1 !important;
                     }
-                    #projects article > div:last-child {
-                        padding: 2rem;
+                    #work article > div:last-child {
+                        padding: 1.75rem 1.5rem !important;
+                        order: 2 !important;
+                    }
+                    #work article > div:last-child h3 {
+                        font-size: 1.3rem !important;
+                        margin-bottom: 1rem !important;
+                    }
+                    #work article > div:last-child > div:first-of-type {
+                        gap: 0.5rem !important;
+                        flex-wrap: wrap;
+                    }
+                    #work article > div:last-child > div:first-of-type button {
+                        font-size: 0.72rem !important;
+                        letter-spacing: 0.08em !important;
+                    }
+                    #work article > div:last-child p {
+                        font-size: 0.9rem !important;
+                        line-height: 1.65 !important;
+                    }
+                }
+                @media (max-width: 480px) {
+                    #work article > div:first-child {
+                        min-height: 180px !important;
+                        max-height: 220px;
+                    }
+                    #work article > div:last-child {
+                        padding: 1.5rem 1.2rem !important;
+                    }
+                    #work article > div:last-child h3 {
+                        font-size: 1.15rem !important;
                     }
                 }
             `}} />

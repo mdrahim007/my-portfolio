@@ -196,8 +196,41 @@ export const BentoGrid = () => {
                     }
                 }
                 @media (max-width: 900px) {
+                    #expertise {
+                        min-height: auto !important;
+                    }
+                    #expertise > div > div {
+                        gap: 1rem !important;
+                    }
                     #expertise > div > div > article {
                         grid-column: span 12 !important;
+                        padding: 2rem 1.5rem !important;
+                        border-radius: 16px !important;
+                        min-height: auto !important;
+                    }
+                    #expertise > div > div > article:first-child p {
+                        font-size: 0.92rem !important;
+                        line-height: 1.7 !important;
+                    }
+                    #expertise .eyebrow {
+                        font-size: 0.7rem !important;
+                    }
+                    #expertise h2 {
+                        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+                    }
+                }
+                @media (max-width: 480px) {
+                    #expertise > div > div > article {
+                        padding: 1.5rem 1.2rem !important;
+                    }
+                    #expertise > div > div > article .glass-inner {
+                        padding: 1rem !important;
+                    }
+                    #expertise > div > div > article .glass-inner h4 {
+                        font-size: 1rem !important;
+                    }
+                    #expertise > div > div > article .glass-inner p {
+                        font-size: 0.85rem !important;
                     }
                 }
             `}} />

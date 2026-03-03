@@ -5,6 +5,31 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ── Gallery card data ─────────────────────────────────────────────── */
+const galleryCards = [
+    {
+        id: 1,
+        title: 'a2i National Portal Knowledge Base',
+        category: 'Documentation',
+        image: 'https://images.unsplash.com/photo-1555529771-447544062c3e?q=80&w=1600&auto=format&fit=crop',
+        alt: 'Knowledge Base Article',
+    },
+    {
+        id: 2,
+        title: 'SLA Escalation Routing Flowchart',
+        category: 'Process Flow',
+        image: 'https://images.unsplash.com/photo-1618609378039-b572a138dbaa?q=80&w=1600&auto=format&fit=crop',
+        alt: 'Support Procedure Flowchart',
+    },
+    {
+        id: 3,
+        title: 'myGov Performance Metrics Dashboard',
+        category: 'Data Visualization',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop',
+        alt: 'Performance Dashboard',
+    },
+];
+
 const testimonials = [
     {
         id: 1,
@@ -46,14 +71,40 @@ export const DocumentationAndFeedback = () => {
     const galleryWrapperRef = useRef(null);
     const feedbackSectionRef = useRef(null);
     const cardRef = useRef(null);
-    const autoTimer = useRef(null);
 
+    /* ── Mobile detection ──────────────────────────────────── */
+    const [isMobileView, setIsMobileView] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 900);
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 900px)');
+        const handler = (e) => setIsMobileView(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
+
+    /* ── Mobile stacked cards scroll-reveal ──────────────────── */
+    const mobileCardsRef = useRef(null);
+    useEffect(() => {
+        if (!isMobileView || !mobileCardsRef.current) return;
+        const cards = mobileCardsRef.current.querySelectorAll('.doc-stack-card');
+        gsap.set(cards, { opacity: 0, y: 40 });
+        ScrollTrigger.batch(cards, {
+            onEnter: (batch) =>
+                gsap.to(batch, {
+                    opacity: 1, y: 0, duration: 0.6,
+                    ease: 'power3.out', stagger: 0.15,
+                }),
+            start: 'top 88%',
+            once: true,
+        });
+        return () => ScrollTrigger.getAll().forEach(t => t.kill());
+    }, [isMobileView]);
+
+    /* ── Testimonial carousel state ────────────────────────── */
     const [activeIdx, setActiveIdx] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
     const [progressKey, setProgressKey] = useState(0);
     const total = testimonials.length;
 
-    // Carousel: GSAP fade-slide transition
     const goTo = useCallback((nextIdx) => {
         const card = cardRef.current;
         if (!card) return;
@@ -70,7 +121,6 @@ export const DocumentationAndFeedback = () => {
     const goPrev = useCallback(() => goTo((activeIdx - 1 + total) % total), [activeIdx, goTo, total]);
     const goNext = useCallback(() => goTo((activeIdx + 1) % total), [activeIdx, goTo, total]);
 
-    // Auto-advance every 6 seconds, pause on hover
     useEffect(() => {
         if (isHovered) return;
         setProgressKey(k => k + 1);
@@ -81,58 +131,35 @@ export const DocumentationAndFeedback = () => {
         return () => clearInterval(timer);
     }, [isHovered, total]);
 
-    // Scroll reveals for Feedback section headings + testimonial stagger
     useScrollReveal(feedbackSectionRef);
 
+    /* ── Desktop horizontal ScrollTrigger ───────────────────── */
     useEffect(() => {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
         const wrapper = sectionWrapperRef.current;
         const inner = innerPanelRef.current;
         const gallery = galleryWrapperRef.current;
-
         if (!wrapper || !inner || !gallery) return;
 
-        if (!prefersReducedMotion) {
-            // How far the gallery needs to travel horizontally to reveal all 3 panels
+        if (!prefersReducedMotion && !isMobileView) {
             const getScrollAmount = () => -(gallery.scrollWidth - window.innerWidth);
-
-            // Timeline: gallery slides LEFT only.
-            // NO exit animation — the Feedback section (zIndex:20, solid bg) scrolls
-            // naturally over the pinned Documentation section for a seamless transition.
             const masterTl = gsap.timeline();
-
-            masterTl.to(gallery, {
-                x: getScrollAmount,
-                ease: 'none',
-            });
-
+            masterTl.to(gallery, { x: getScrollAmount, ease: 'none' });
             const galleryTravel = Math.abs(getScrollAmount());
-
-            // Store on DOM so App.jsx snap helper can calculate snap targets
             wrapper.dataset.galleryTravel = String(galleryTravel);
             wrapper.dataset.totalScroll = String(galleryTravel);
-
             ScrollTrigger.create({
-                trigger: wrapper,
-                start: 'top top',
+                trigger: wrapper, start: 'top top',
                 end: () => `+=${Math.abs(getScrollAmount())}`,
-                pin: true,
-                pinSpacing: true,
-                scrub: 1,
-                animation: masterTl,
-                invalidateOnRefresh: true,
+                pin: true, pinSpacing: true, scrub: 1,
+                animation: masterTl, invalidateOnRefresh: true,
             });
         } else {
-            // Reduced-motion: show gallery at start, no animation
             gsap.set(inner, { yPercent: 0 });
             gsap.set(gallery, { x: 0 });
         }
-
-        return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
-    }, []);
+        return () => { ScrollTrigger.getAll().forEach(t => t.kill()); };
+    }, [isMobileView]);
 
     return (
         <>
@@ -181,93 +208,91 @@ export const DocumentationAndFeedback = () => {
                         </p>
                     </div>
 
-                    {/* Horizontally panning gallery row */}
-                    <div
-                        ref={galleryWrapperRef}
-                        data-gallery="true"
-                        style={{
-                            display: 'flex',
-                            gap: '4rem',
-                            padding: '0 5%',
-                            width: 'max-content',
-                            willChange: 'transform',
-                        }}
-                    >
-                        <article style={{ width: '60vw', minWidth: '600px', flexShrink: 0 }}>
-                            <div style={{
-                                height: '50vh',
-                                backgroundColor: 'var(--bg-surface)',
-                                borderRadius: '16px',
-                                overflow: 'hidden',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                position: 'relative'
-                            }}>
-                                <img
-                                    src="https://images.unsplash.com/photo-1555529771-447544062c3e?q=80&w=1600&auto=format&fit=crop"
-                                    alt="Knowledge Base Article"
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
-                                />
-                                {/* Lock overlay */}
-                                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <h3 style={{ marginTop: '1.25rem', fontSize: '1.3rem', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>a2i National Portal Knowledge Base</h3>
-                            <span className="eyebrow" style={{ marginTop: '0.4rem' }}>Documentation</span>
-                        </article>
+                    {/* ── MOBILE: Stacked vertical cards with scroll-reveal ── */}
+                    {isMobileView && (
+                        <div ref={mobileCardsRef} style={{ padding: '0 5% 2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            {galleryCards.map((card, i) => (
+                                <article
+                                    key={card.id}
+                                    className="doc-stack-card"
+                                    style={{
+                                        background: 'rgba(255,255,255,0.015)',
+                                        border: '1px solid rgba(255,255,255,0.07)',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+                                    }}
+                                >
+                                    {/* Image */}
+                                    <div style={{
+                                        height: '44vw', minHeight: '160px', maxHeight: '220px',
+                                        position: 'relative', overflow: 'hidden',
+                                    }}>
+                                        <img src={card.image} alt={card.alt}
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
+                                        />
+                                        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    {/* Info row */}
+                                    <div style={{ padding: '1rem 1.25rem 1.15rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+                                        <div style={{ minWidth: 0 }}>
+                                            <h3 style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '-0.01em', marginBottom: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                {card.title}
+                                            </h3>
+                                            <span className="eyebrow" style={{ marginBottom: 0, fontSize: '0.68rem' }}>{card.category}</span>
+                                        </div>
+                                        {/* Number badge */}
+                                        <span style={{
+                                            flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
+                                            background: 'rgba(190,169,142,0.08)', border: '1px solid rgba(190,169,142,0.2)',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            fontSize: '0.75rem', fontWeight: 600, color: '#bea98e',
+                                            fontFamily: 'var(--font-body)',
+                                        }}>
+                                            {String(i + 1).padStart(2, '0')}
+                                        </span>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    )}
 
-                        {/* Card 2 */}
-                        <article style={{ width: '60vw', minWidth: '600px', flexShrink: 0 }}>
-                            <div style={{
-                                height: '50vh',
-                                backgroundColor: 'var(--bg-surface)',
-                                borderRadius: '16px',
-                                overflow: 'hidden',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                position: 'relative'
-                            }}>
-                                <img
-                                    src="https://images.unsplash.com/photo-1618609378039-b572a138dbaa?q=80&w=1600&auto=format&fit=crop"
-                                    alt="Support Procedure Flowchart"
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
-                                />
-                                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <h3 style={{ marginTop: '1.25rem', fontSize: '1.3rem', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>SLA Escalation Routing Flowchart</h3>
-                            <span className="eyebrow" style={{ marginTop: '0.4rem' }}>Process Flow</span>
-                        </article>
-
-                        {/* Card 3 */}
-                        <article style={{ width: '60vw', minWidth: '600px', flexShrink: 0, paddingRight: '5vw' }}>
-                            <div style={{
-                                height: '50vh',
-                                backgroundColor: 'var(--bg-surface)',
-                                borderRadius: '16px',
-                                overflow: 'hidden',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                position: 'relative'
-                            }}>
-                                <img
-                                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop"
-                                    alt="Performance Dashboard"
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
-                                />
-                                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <h3 style={{ marginTop: '1.25rem', fontSize: '1.3rem', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>myGov Performance Metrics Dashboard</h3>
-                            <span className="eyebrow" style={{ marginTop: '0.4rem' }}>Data Visualization</span>
-                        </article>
-                    </div>
+                    {/* ── DESKTOP: Horizontal panning gallery ───────── */}
+                    {!isMobileView && (
+                        <div
+                            ref={galleryWrapperRef}
+                            data-gallery="true"
+                            style={{
+                                display: 'flex', gap: '4rem', padding: '0 5%',
+                                width: 'max-content', willChange: 'transform',
+                            }}
+                        >
+                            {galleryCards.map((card, i) => (
+                                <article key={card.id} style={{ width: '60vw', minWidth: 0, flexShrink: 0, ...(i === galleryCards.length - 1 ? { paddingRight: '5vw' } : {}) }}>
+                                    <div style={{
+                                        height: '50vh', backgroundColor: 'var(--bg-surface)',
+                                        borderRadius: '16px', overflow: 'hidden',
+                                        border: '1px solid rgba(255,255,255,0.1)', position: 'relative',
+                                    }}>
+                                        <img src={card.image} alt={card.alt}
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
+                                        />
+                                        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <h3 style={{ marginTop: '1.25rem', fontSize: '1.3rem', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{card.title}</h3>
+                                    <span className="eyebrow" style={{ marginTop: '0.4rem' }}>{card.category}</span>
+                                </article>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -516,6 +541,79 @@ export const DocumentationAndFeedback = () => {
                     </div>
                 </div>
             </section>
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @media (max-width: 900px) {
+                    #documentation {
+                        height: auto !important;
+                        overflow: visible !important;
+                    }
+                    #documentation > div {
+                        height: auto !important;
+                    }
+                    #documentation > div > div:first-child {
+                        padding: 4rem 5% 0 !important;
+                        margin-bottom: 1.5rem !important;
+                    }
+                    #documentation > div > div:first-child h2 {
+                        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+                    }
+                    #documentation > div > div:first-child p {
+                        font-size: 0.9rem !important;
+                    }
+                    .glass-testimonial {
+                        height: auto !important;
+                        min-height: 0 !important;
+                        padding: 2rem 1.5rem !important;
+                    }
+                    .glass-testimonial p {
+                        font-size: 0.92rem !important;
+                        line-height: 1.7 !important;
+                    }
+                    .glass-testimonial > span:first-child {
+                        font-size: 4rem !important;
+                        top: 0.5rem !important;
+                        right: 1rem !important;
+                    }
+                    .glass-testimonial > div:last-child {
+                        flex-wrap: wrap !important;
+                        gap: 0.75rem !important;
+                    }
+                    .glass-testimonial > div:last-child > span:last-child {
+                        margin-left: 0 !important;
+                        font-size: 0.6rem !important;
+                    }
+                }
+                @media (max-width: 600px) {
+                    .glass-testimonial {
+                        padding: 1.5rem 1.2rem !important;
+                    }
+                    .glass-testimonial p {
+                        font-size: 0.88rem !important;
+                        line-height: 1.65 !important;
+                    }
+                }
+                @media (max-width: 480px) {
+                    .glass-testimonial {
+                        padding: 1.25rem 1rem !important;
+                    }
+                    .glass-testimonial p {
+                        font-size: 0.85rem !important;
+                    }
+                    .glass-testimonial > span:first-child {
+                        font-size: 3rem !important;
+                    }
+                    .glass-testimonial > div:last-child {
+                        flex-direction: column !important;
+                        align-items: flex-start !important;
+                        gap: 0.6rem !important;
+                    }
+                    .glass-testimonial > div:last-child > div > p {
+                        flex-wrap: wrap !important;
+                    }
+                }
+            `}} />
 
         </>
     );

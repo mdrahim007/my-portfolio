@@ -277,7 +277,7 @@ export const Hero = () => {
                             Leading the Support and Implementation team for the myGov ITSM project. Specializing in Service Level Agreements, detailed progress reporting, and resolving escalated technical issues.
                         </p>
 
-                        <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                        <div className="hero-cta-row" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                             <a
                                 href="#work"
                                 ref={buttonRef}
@@ -392,8 +392,8 @@ export const Hero = () => {
                     </div>
                 </div>
 
-                {/* Scroll indicator arrow */}
-                <div style={{
+                {/* Scroll indicator arrow — hidden on mobile via CSS class */}
+                <div className="hero-scroll-indicator" style={{
                     position: 'absolute',
                     bottom: '2.5rem',
                     left: '50%',
@@ -419,16 +419,73 @@ export const Hero = () => {
                     50% { transform: translateX(-50%) translateY(6px); }
                 }
                 @media (max-width: 900px) {
+                    #home {
+                        min-height: auto !important;
+                        padding-top: 6.5rem !important;
+                        padding-bottom: 3rem !important;
+                    }
                     .hero-grid {
                         grid-template-columns: 1fr !important;
                         text-align: center;
+                        gap: 1.5rem !important;
+                        padding: 0 6% !important;
                     }
                     .hero-grid > div:first-child {
                         align-items: center;
+                        order: 2;
+                    }
+                    .hero-grid .eyebrow-pill {
+                        align-self: center;
+                    }
+                    .hero-grid > div:last-child {
+                        order: 1;
+                        max-height: 340px;
+                        overflow: hidden;
+                    }
+                    .hero-grid > div:last-child > div {
+                        max-width: 260px !important;
+                        aspect-ratio: 3/4 !important;
+                        margin: 0 auto;
+                    }
+                    .hero-grid h1 {
+                        font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
+                    }
+                    .hero-grid h2 {
+                        font-size: 0.82rem !important;
                     }
                     .hero-grid p {
                         margin: 0 auto;
                         max-width: 100% !important;
+                        font-size: 0.88rem !important;
+                        line-height: 1.65 !important;
+                    }
+                    .hero-cta-row {
+                        flex-direction: column !important;
+                        width: 100%;
+                        gap: 0.75rem !important;
+                    }
+                    .hero-cta-row a,
+                    .hero-cta-row button {
+                        width: 100% !important;
+                        padding: 0.9rem 1.5rem !important;
+                        text-align: center;
+                        justify-content: center;
+                        font-size: 0.72rem !important;
+                    }
+                    .hero-scroll-indicator {
+                        display: none !important;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .hero-grid h1 {
+                        font-size: 1.7rem !important;
+                    }
+                    .hero-grid > div:last-child {
+                        max-height: 300px;
+                    }
+                    .hero-grid > div:last-child > div {
+                        max-width: 220px !important;
                     }
                 }
             `}} />
