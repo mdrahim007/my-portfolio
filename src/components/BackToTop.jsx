@@ -1,44 +1,21 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 
-const RADIUS = 22;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
-
-export const BackToTop = () => {
-    const [visible, setVisible] = useState(false);
-    const [progress, setProgress] = useState(0);
+export const WhatsAppButton = () => {
     const [hovered, setHovered] = useState(false);
 
-    const handleScroll = useCallback(() => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const pct = docHeight > 0 ? scrollTop / docHeight : 0;
-
-        setProgress(pct);
-        setVisible(scrollTop > 220);
-    }, []);
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
-
-    const scrollToTop = () => {
-        // Use Lenis if available, otherwise native
-        if (window.__lenis) {
-            window.__lenis.scrollTo(0, { duration: 1.6, easing: (t) => 1 - Math.pow(1 - t, 4) });
-        } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    };
-
-    const strokeOffset = CIRCUMFERENCE - progress * CIRCUMFERENCE;
+    // Replace with actual WhatsApp number + country code
+    const WA_NUMBER = "8801722108281";
+    const WA_LINK = `https://wa.me/${WA_NUMBER}`;
 
     return (
-        <button
-            onClick={scrollToTop}
+        <a
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            aria-label="Back to top"
+            aria-label="Chat on WhatsApp"
+            className="interactive-element"
             style={{
                 position: 'fixed',
                 bottom: '2.2rem',
@@ -47,78 +24,31 @@ export const BackToTop = () => {
                 width: '56px',
                 height: '56px',
                 borderRadius: '50%',
-                border: 'none',
-                background: 'transparent',
-                padding: 0,
-                cursor: 'none',
-                // Fade + slide in/out
-                opacity: visible ? 1 : 0,
-                transform: visible ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.85)',
-                transition: 'opacity 0.4s ease, transform 0.4s ease',
-                pointerEvents: visible ? 'auto' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                // Glassmorphism WhatsApp green theme
+                background: hovered ? 'rgba(37, 211, 102, 0.2)' : 'rgba(15, 15, 20, 0.65)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: hovered ? '1px solid rgba(37, 211, 102, 0.5)' : '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: hovered
+                    ? '0 0 24px rgba(37, 211, 102, 0.3), 0 8px 32px rgba(0,0,0,0.5)'
+                    : '0 8px 32px rgba(0,0,0,0.4)',
+                transition: 'all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1)',
+                transform: hovered ? 'scale(1.08)' : 'scale(1)',
             }}
         >
-            {/* SVG: progress ring + glass circle */}
             <svg
-                width="56" height="56"
-                viewBox="0 0 56 56"
-                style={{ display: 'block', overflow: 'visible' }}
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill={hovered ? '#25D366' : 'rgba(250, 250, 250, 0.85)'}
+                style={{ transition: 'fill 0.4s ease' }}
             >
-                {/* Blurred glass background disc */}
-                <defs>
-                    <filter id="btt-blur">
-                        <feGaussianBlur stdDeviation="0" />
-                    </filter>
-                    <clipPath id="btt-clip">
-                        <circle cx="28" cy="28" r="22" />
-                    </clipPath>
-                </defs>
-
-                {/* Glass disc background */}
-                <circle
-                    cx="28" cy="28" r="22"
-                    fill="rgba(15,15,20,0.55)"
-                    stroke="rgba(190,169,142,0.18)"
-                    strokeWidth="1"
-                    style={{
-                        backdropFilter: 'blur(16px)',
-                        transition: 'fill 0.3s ease',
-                        ...(hovered && { fill: 'rgba(190,169,142,0.12)' })
-                    }}
-                />
-
-                {/* Track ring (dim) */}
-                <circle
-                    cx="28" cy="28" r={RADIUS}
-                    fill="none"
-                    stroke="rgba(190,169,142,0.12)"
-                    strokeWidth="2.5"
-                />
-
-                {/* Progress arc */}
-                <circle
-                    cx="28" cy="28" r={RADIUS}
-                    fill="none"
-                    stroke="#D4AF80"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeDasharray={CIRCUMFERENCE}
-                    strokeDashoffset={strokeOffset}
-                    transform="rotate(-90 28 28)"
-                    style={{ transition: 'stroke-dashoffset 0.15s linear' }}
-                />
-
-                {/* Up chevron arrow */}
-                <path
-                    d="M22 31 L28 24 L34 31"
-                    fill="none"
-                    stroke={hovered ? '#D4AF80' : 'rgba(250,250,250,0.85)'}
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{ transition: 'stroke 0.25s ease' }}
-                />
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.81 11.81 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413Z" />
             </svg>
-        </button>
+        </a>
     );
 };

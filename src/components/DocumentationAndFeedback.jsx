@@ -66,11 +66,9 @@ const testimonials = [
 ];
 
 export const DocumentationAndFeedback = () => {
-    const sectionWrapperRef = useRef(null);
-    const innerPanelRef = useRef(null);
-    const galleryWrapperRef = useRef(null);
     const feedbackSectionRef = useRef(null);
     const cardRef = useRef(null);
+    const sectionWrapperRef = useRef(null);
 
     /* ── Mobile detection ──────────────────────────────────── */
     const [isMobileView, setIsMobileView] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 900);
@@ -81,23 +79,29 @@ export const DocumentationAndFeedback = () => {
         return () => mq.removeEventListener('change', handler);
     }, []);
 
-    /* ── Mobile stacked cards scroll-reveal ──────────────────── */
-    const mobileCardsRef = useRef(null);
+    useScrollReveal(sectionWrapperRef);
+    useScrollReveal(feedbackSectionRef);
+
+    /* ── Documentation Cards GSAP ScrollReveal ──────────────────── */
+    const docCardsRef = useRef(null);
     useEffect(() => {
-        if (!isMobileView || !mobileCardsRef.current) return;
-        const cards = mobileCardsRef.current.querySelectorAll('.doc-stack-card');
+        if (!docCardsRef.current) return;
+        const cards = docCardsRef.current.querySelectorAll('.doc-grid-card');
         gsap.set(cards, { opacity: 0, y: 40 });
+
         ScrollTrigger.batch(cards, {
             onEnter: (batch) =>
                 gsap.to(batch, {
-                    opacity: 1, y: 0, duration: 0.6,
-                    ease: 'power3.out', stagger: 0.15,
+                    opacity: 1, y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    stagger: 0.15,
                 }),
-            start: 'top 88%',
+            start: 'top 85%',
             once: true,
         });
         return () => ScrollTrigger.getAll().forEach(t => t.kill());
-    }, [isMobileView]);
+    }, []);
 
     /* ── Testimonial carousel state ────────────────────────── */
     const [activeIdx, setActiveIdx] = useState(0);
@@ -131,177 +135,178 @@ export const DocumentationAndFeedback = () => {
         return () => clearInterval(timer);
     }, [isHovered, total]);
 
-    useScrollReveal(feedbackSectionRef);
-
-    /* ── Desktop horizontal ScrollTrigger ───────────────────── */
-    useEffect(() => {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const wrapper = sectionWrapperRef.current;
-        const inner = innerPanelRef.current;
-        const gallery = galleryWrapperRef.current;
-        if (!wrapper || !inner || !gallery) return;
-
-        if (!prefersReducedMotion && !isMobileView) {
-            const getScrollAmount = () => -(gallery.scrollWidth - window.innerWidth);
-            const masterTl = gsap.timeline();
-            masterTl.to(gallery, { x: getScrollAmount, ease: 'none' });
-            const galleryTravel = Math.abs(getScrollAmount());
-            wrapper.dataset.galleryTravel = String(galleryTravel);
-            wrapper.dataset.totalScroll = String(galleryTravel);
-            ScrollTrigger.create({
-                trigger: wrapper, start: 'top top',
-                end: () => `+=${Math.abs(getScrollAmount())}`,
-                pin: true, pinSpacing: true, scrub: 1,
-                animation: masterTl, invalidateOnRefresh: true,
-            });
-        } else {
-            gsap.set(inner, { yPercent: 0 });
-            gsap.set(gallery, { x: 0 });
+    /* ── Testimonial swipe gestures (mobile) ────────────────── */
+    const tTouchStartX = useRef(0);
+    const tTouchDelta = useRef(0);
+    const onTestimonialTouchStart = useCallback((e) => {
+        tTouchStartX.current = e.touches[0].clientX;
+        tTouchDelta.current = 0;
+        setIsHovered(true); // pause auto-advance while touching
+    }, []);
+    const onTestimonialTouchMove = useCallback((e) => {
+        tTouchDelta.current = e.touches[0].clientX - tTouchStartX.current;
+    }, []);
+    const onTestimonialTouchEnd = useCallback(() => {
+        setIsHovered(false);
+        if (Math.abs(tTouchDelta.current) > 40) {
+            if (tTouchDelta.current < 0) goNext();
+            else goPrev();
         }
-        return () => { ScrollTrigger.getAll().forEach(t => t.kill()); };
-    }, [isMobileView]);
+    }, [goNext, goPrev]);
 
     return (
         <>
-            {/*
-             * OUTER WRAPPER — this is what ScrollTrigger pins.
-             * overflow:hidden clips the sliding inner panel cleanly.
-             */}
+            {/* ------------------------------------------------------------------ */}
+            {/* DOCUMENTATION SHOWCASE — Now constrained to max-width 1400px        */}
+            {/* ------------------------------------------------------------------ */}
             <section
                 id="documentation"
                 ref={sectionWrapperRef}
+                className="section-padding"
                 style={{
                     position: 'relative',
                     zIndex: 10,
-                    height: '100vh',
-                    overflow: 'hidden',
                 }}
             >
-                {/*
-                 * INNER PANEL — this slides in from below and exits upward.
-                 * It starts at yPercent: 100 (off the bottom) and animates to 0 (fully visible).
-                 */}
-                <div
-                    ref={innerPanelRef}
-                    style={{
-                        height: '100%',
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        willChange: 'transform',
-                    }}
-                >
+                <div className="global-container">
+
                     {/* Section heading */}
-                    <div style={{ padding: '8rem 5% 0', marginBottom: '2.5rem' }}>
-                        <span className="eyebrow-pill" style={{ marginBottom: '0.75rem' }}>04 — Documentation</span>
-                        <h2 style={{
+                    <div style={{ marginBottom: '4rem' }}>
+                        <span className="eyebrow-pill animate-eyebrow" style={{ marginBottom: '0.75rem' }}>04 — Documentation</span>
+                        <h2 className="animate-heading" style={{
                             fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
                             letterSpacing: '-0.02em',
                             marginBottom: '0.5rem',
                         }}>
                             Documentation Showcase
                         </h2>
-                        <hr className="section-rule" style={{ marginBottom: '1.25rem' }} />
-                        <p style={{ color: '#a1a1aa', fontSize: '1.05rem', marginTop: '0', maxWidth: '55ch' }}>
+                        <hr className="section-rule animate-rule" style={{ marginBottom: '1.25rem' }} />
+                        <p className="animate-heading" style={{ color: '#a1a1aa', fontSize: '1.05rem', marginTop: '0', maxWidth: '55ch', lineHeight: 1.6 }}>
                             A glimpse into the internal frameworks, knowledge bases, and architectural flows I use to scale operations. (Sanitized for public viewing).
                         </p>
                     </div>
 
-                    {/* ── MOBILE: Stacked vertical cards with scroll-reveal ── */}
-                    {isMobileView && (
-                        <div ref={mobileCardsRef} style={{ padding: '0 5% 2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            {galleryCards.map((card, i) => (
-                                <article
-                                    key={card.id}
-                                    className="doc-stack-card"
-                                    style={{
-                                        background: 'rgba(255,255,255,0.015)',
-                                        border: '1px solid rgba(255,255,255,0.07)',
-                                        borderRadius: '16px',
-                                        overflow: 'hidden',
-                                        transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
-                                    }}
-                                >
-                                    {/* Image */}
+                    {/* Premium Grid Layout */}
+                    <div
+                        ref={docCardsRef}
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: isMobileView ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))',
+                            gap: '2rem'
+                        }}
+                    >
+                        {galleryCards.map((card, i) => (
+                            <article
+                                key={card.id}
+                                className="doc-grid-card glass-card"
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    padding: '1.25rem',
+                                    paddingBottom: '2rem',
+                                    borderRadius: '20px',
+                                }}
+                            >
+                                {/* Image Wrapper */}
+                                <div style={{
+                                    width: '100%',
+                                    aspectRatio: '4/3',
+                                    backgroundColor: '#1a1a1a',
+                                    borderRadius: '12px',
+                                    overflow: 'hidden',
+                                    border: '1px solid rgba(255,255,255,0.06)',
+                                    position: 'relative',
+                                    marginBottom: '1.75rem',
+                                }}>
+                                    <img src={card.image} alt={card.alt}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            filter: 'blur(8px) grayscale(40%)',
+                                            opacity: 0.65,
+                                            transition: 'all 0.5s ease'
+                                        }}
+                                        className="doc-card-bg-img"
+                                    />
+                                    {/* Gradient overlay for premium feel */}
                                     <div style={{
-                                        height: '44vw', minHeight: '160px', maxHeight: '220px',
-                                        position: 'relative', overflow: 'hidden',
-                                    }}>
-                                        <img src={card.image} alt={card.alt}
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
-                                        />
-                                        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    {/* Info row */}
-                                    <div style={{ padding: '1rem 1.25rem 1.15rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
-                                        <div style={{ minWidth: 0 }}>
-                                            <h3 style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '-0.01em', marginBottom: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                {card.title}
-                                            </h3>
-                                            <span className="eyebrow" style={{ marginBottom: 0, fontSize: '0.68rem' }}>{card.category}</span>
-                                        </div>
-                                        {/* Number badge */}
-                                        <span style={{
-                                            flexShrink: 0, width: '32px', height: '32px', borderRadius: '50%',
-                                            background: 'rgba(190,169,142,0.08)', border: '1px solid rgba(190,169,142,0.2)',
-                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                            fontSize: '0.75rem', fontWeight: 600, color: '#bea98e',
-                                            fontFamily: 'var(--font-body)',
-                                        }}>
-                                            {String(i + 1).padStart(2, '0')}
-                                        </span>
-                                    </div>
-                                </article>
-                            ))}
-                        </div>
-                    )}
+                                        position: 'absolute',
+                                        inset: 0,
+                                        background: 'linear-gradient(180deg, transparent 40%, rgba(12,12,12,0.8) 100%)',
+                                        pointerEvents: 'none'
+                                    }} />
 
-                    {/* ── DESKTOP: Horizontal panning gallery ───────── */}
-                    {!isMobileView && (
-                        <div
-                            ref={galleryWrapperRef}
-                            data-gallery="true"
-                            style={{
-                                display: 'flex', gap: '4rem', padding: '0 5%',
-                                width: 'max-content', willChange: 'transform',
-                            }}
-                        >
-                            {galleryCards.map((card, i) => (
-                                <article key={card.id} style={{ width: '60vw', minWidth: 0, flexShrink: 0, ...(i === galleryCards.length - 1 ? { paddingRight: '5vw' } : {}) }}>
+                                    {/* Center lock icon */}
                                     <div style={{
-                                        height: '50vh', backgroundColor: 'var(--bg-surface)',
-                                        borderRadius: '16px', overflow: 'hidden',
-                                        border: '1px solid rgba(255,255,255,0.1)', position: 'relative',
-                                    }}>
-                                        <img src={card.image} alt={card.alt}
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(8px) grayscale(50%)', opacity: 0.7 }}
-                                        />
-                                        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        position: 'absolute',
+                                        inset: 0,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                                    }} className="doc-card-icon">
+                                        <div style={{
+                                            width: '64px', height: '64px',
+                                            borderRadius: '50%',
+                                            background: 'rgba(12,12,12,0.4)',
+                                            backdropFilter: 'blur(12px)',
+                                            WebkitBackdropFilter: 'blur(12px)',
+                                            border: '1px solid rgba(190,169,142,0.2)',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.05)'
+                                        }}>
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
                                             </svg>
                                         </div>
                                     </div>
-                                    <h3 style={{ marginTop: '1.25rem', fontSize: '1.3rem', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{card.title}</h3>
-                                    <span className="eyebrow" style={{ marginTop: '0.4rem' }}>{card.category}</span>
-                                </article>
-                            ))}
-                        </div>
-                    )}
+
+                                    {/* Number Badge inside image */}
+                                    <span style={{
+                                        position: 'absolute',
+                                        top: '1rem', right: '1rem',
+                                        width: '36px', height: '36px', borderRadius: '50%',
+                                        background: 'rgba(12,12,12,0.5)',
+                                        backdropFilter: 'blur(8px)',
+                                        border: '1px solid rgba(255,255,255,0.1)',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        fontSize: '0.8rem', fontWeight: 600, color: 'rgba(250,250,250,0.8)',
+                                        fontFamily: 'var(--font-body)',
+                                    }}>
+                                        {String(i + 1).padStart(2, '0')}
+                                    </span>
+                                </div>
+
+                                {/* Info text */}
+                                <div style={{ padding: '0 0.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-between' }}>
+                                    <div>
+                                        <h3 style={{
+                                            fontSize: '1.2rem',
+                                            color: 'var(--text-primary)',
+                                            letterSpacing: '-0.01em',
+                                            marginBottom: '0.75rem',
+                                            lineHeight: 1.4
+                                        }}>
+                                            {card.title}
+                                        </h3>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)', opacity: 0.8 }} />
+                                        <span className="eyebrow" style={{ marginBottom: 0, fontSize: '0.75rem', opacity: 0.9 }}>{card.category}</span>
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
                 </div>
             </section>
 
             {/* ------------------------------------------------------------------ */}
-            {/* TESTIMONIALS — separate section with a higher z-index and solid     */}
-            {/* background so it covers the pinned Documentation panel on scroll-up */}
+            {/* TESTIMONIALS                                                       */}
             {/* ------------------------------------------------------------------ */}
-            <section ref={feedbackSectionRef} style={{ position: 'relative', zIndex: 20 }}>
-                <div style={{ padding: '8rem 5%', maxWidth: '1000px', margin: '0 auto' }}>
+            <section id="reputation" ref={feedbackSectionRef} className="section-padding" style={{ position: 'relative', zIndex: 10, paddingTop: isMobileView ? '2rem' : '4rem' }}>
+                <div className="global-container">
                     <span className="eyebrow-pill animate-eyebrow">05 — Reputation</span>
                     <h2 className="animate-heading" style={{
                         fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
@@ -316,14 +321,17 @@ export const DocumentationAndFeedback = () => {
                     <div
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
+                        onTouchStart={onTestimonialTouchStart}
+                        onTouchMove={onTestimonialTouchMove}
+                        onTouchEnd={onTestimonialTouchEnd}
                         style={{ position: 'relative' }}
                     >
-                        {/* Fixed-height glass card */}
+                        {/* Glass card */}
                         <div
                             ref={cardRef}
-                            className="glass-testimonial"
+                            className="glass-testimonial glass-card"
                             style={{
-                                height: '320px',
+                                minHeight: '280px',
                                 padding: '3rem 3.5rem',
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -345,6 +353,22 @@ export const DocumentationAndFeedback = () => {
                                 userSelect: 'none',
                             }}>&ldquo;</span>
 
+                            {/* Type badge — top-left */}
+                            <span style={{
+                                display: 'inline-block',
+                                alignSelf: 'flex-start',
+                                padding: '0.32rem 0.85rem',
+                                background: 'rgba(190,169,142,0.07)',
+                                border: '1px solid rgba(190,169,142,0.16)',
+                                color: '#bea98e', borderRadius: '100px',
+                                fontSize: '0.68rem', textTransform: 'uppercase',
+                                letterSpacing: '0.12em', whiteSpace: 'nowrap',
+                                position: 'relative', zIndex: 2,
+                                marginBottom: '0.75rem',
+                            }}>
+                                {testimonials[activeIdx].type}
+                            </span>
+
                             {/* Quote */}
                             <p style={{
                                 color: 'rgba(250,250,250,0.88)',
@@ -364,7 +388,7 @@ export const DocumentationAndFeedback = () => {
                             </p>
 
                             {/* Author row */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1.75rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1.25rem' }}>
                                 {/* Monogram avatar */}
                                 <div style={{
                                     width: '42px', height: '42px', borderRadius: '50%',
@@ -380,24 +404,12 @@ export const DocumentationAndFeedback = () => {
                                     <h4 style={{ color: '#FAFAFA', fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.15rem' }}>
                                         {testimonials[activeIdx].author}
                                     </h4>
-                                    <p style={{ color: '#a1a1aa', fontSize: '0.8rem', margin: 0, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                    <p style={{ color: '#a1a1aa', fontSize: '0.8rem', margin: 0, display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
                                         {testimonials[activeIdx].role}
                                         <span style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(190,169,142,0.5)', display: 'inline-block', flexShrink: 0 }} />
                                         <span style={{ color: '#bea98e', opacity: 0.8 }}>{testimonials[activeIdx].company}</span>
                                     </p>
                                 </div>
-                                {/* Type badge */}
-                                <span style={{
-                                    marginLeft: 'auto',
-                                    padding: '0.32rem 0.85rem',
-                                    background: 'rgba(190,169,142,0.07)',
-                                    border: '1px solid rgba(190,169,142,0.16)',
-                                    color: '#bea98e', borderRadius: '100px',
-                                    fontSize: '0.7rem', textTransform: 'uppercase',
-                                    letterSpacing: '0.12em', whiteSpace: 'nowrap',
-                                }}>
-                                    {testimonials[activeIdx].type}
-                                </span>
                             </div>
                         </div>
 
@@ -406,6 +418,17 @@ export const DocumentationAndFeedback = () => {
                             @keyframes sweepFill {
                                 from { transform: scaleX(0); }
                                 to   { transform: scaleX(1); }
+                            }
+                            
+                            /* Hover effects for doc cards */
+                            .doc-grid-card:hover .doc-card-bg-img {
+                                opacity: 0.85 !important;
+                                filter: blur(4px) grayscale(20%) !important;
+                                transform: scale(1.05);
+                            }
+                            
+                            .doc-grid-card:hover .doc-card-icon {
+                                transform: scale(1.1) translateY(-4px);
                             }
                         `}</style>
 
@@ -466,14 +489,14 @@ export const DocumentationAndFeedback = () => {
                                     {String(activeIdx + 1).padStart(2, '0')}&thinsp;/&thinsp;{String(total).padStart(2, '0')}
                                 </span>
 
-                                {/* Prev pill */}
+                                {/* Prev button */}
                                 <button
                                     onClick={goPrev}
                                     aria-label="Previous testimonial"
-                                    className="interactive-element"
+                                    className="interactive-element testimonial-nav-btn"
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: '0.4rem',
-                                        padding: '0.55rem 1.1rem',
+                                        padding: isMobileView ? '0.55rem' : '0.55rem 1.1rem',
                                         borderRadius: '100px',
                                         border: '1px solid rgba(255,255,255,0.1)',
                                         background: 'rgba(255,255,255,0.03)',
@@ -498,17 +521,17 @@ export const DocumentationAndFeedback = () => {
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <polyline points="15 18 9 12 15 6" />
                                     </svg>
-                                    Prev
+                                    {!isMobileView && 'Prev'}
                                 </button>
 
-                                {/* Next pill */}
+                                {/* Next button */}
                                 <button
                                     onClick={goNext}
                                     aria-label="Next testimonial"
-                                    className="interactive-element"
+                                    className="interactive-element testimonial-nav-btn"
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: '0.4rem',
-                                        padding: '0.55rem 1.1rem',
+                                        padding: isMobileView ? '0.55rem' : '0.55rem 1.1rem',
                                         borderRadius: '100px',
                                         border: '1px solid rgba(190,169,142,0.25)',
                                         background: 'rgba(190,169,142,0.07)',
@@ -531,7 +554,7 @@ export const DocumentationAndFeedback = () => {
                                         e.currentTarget.style.borderColor = 'rgba(190,169,142,0.25)';
                                     }}
                                 >
-                                    Next
+                                    {!isMobileView && 'Next'}
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <polyline points="9 18 15 12 9 6" />
                                     </svg>
@@ -545,23 +568,6 @@ export const DocumentationAndFeedback = () => {
             <style dangerouslySetInnerHTML={{
                 __html: `
                 @media (max-width: 900px) {
-                    #documentation {
-                        height: auto !important;
-                        overflow: visible !important;
-                    }
-                    #documentation > div {
-                        height: auto !important;
-                    }
-                    #documentation > div > div:first-child {
-                        padding: 4rem 5% 0 !important;
-                        margin-bottom: 1.5rem !important;
-                    }
-                    #documentation > div > div:first-child h2 {
-                        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
-                    }
-                    #documentation > div > div:first-child p {
-                        font-size: 0.9rem !important;
-                    }
                     .glass-testimonial {
                         height: auto !important;
                         min-height: 0 !important;

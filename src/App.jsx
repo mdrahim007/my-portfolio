@@ -11,7 +11,7 @@ import { DocumentationAndFeedback } from './components/DocumentationAndFeedback'
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { CustomCursor } from './components/CustomCursor';
-import { BackToTop } from './components/BackToTop';
+import { WhatsAppButton } from './components/BackToTop';
 import { TiltEffect } from './components/TiltEffect';
 import { IntroScreen } from './components/IntroScreen';
 
@@ -60,7 +60,7 @@ function App() {
         <About />
         <Contact />
       </main>
-      <BackToTop />
+      <WhatsAppButton />
 
     </>
   );

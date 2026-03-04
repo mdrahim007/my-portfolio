@@ -185,7 +185,7 @@ export const Hero = () => {
 
 
                 {/* Split Screen Layout */}
-                <div className="hero-grid">
+                <div className="hero-grid global-container">
                     {/* Left Side: Text Content */}
                     <div className="hero-content-block" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {/* Section eyebrow */}

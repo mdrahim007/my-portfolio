@@ -74,7 +74,7 @@ export const BentoGrid = () => {
                 zIndex: 10,
             }}
         >
-            <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <div className="global-container">
                 <span className="eyebrow-pill animate-eyebrow">02 — Expertise</span>
                 <h2
                     className="animate-heading"

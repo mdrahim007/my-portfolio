@@ -35,19 +35,11 @@ export const TiltEffect = () => {
                 const cx = rect.width / 2;
                 const cy = rect.height / 2;
 
-                const rotY = ((x - cx) / cx) * MAX_TILT;
-                const rotX = -((y - cy) / cy) * MAX_TILT;
-
                 // Position the specular highlight at the cursor
                 const pctX = (x / rect.width) * 100;
                 const pctY = (y / rect.height) * 100;
 
-                card.style.transform = `
-                    perspective(800px)
-                    rotateX(${rotX}deg)
-                    rotateY(${rotY}deg)
-                    scale3d(1.015, 1.015, 1.015)
-                `;
+                card.style.transform = `scale3d(1.015, 1.015, 1.015)`;
                 card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
                 card.style.zIndex = '2';
 
@@ -56,7 +48,7 @@ export const TiltEffect = () => {
             };
 
             const onLeave = () => {
-                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+                card.style.transform = 'scale3d(1,1,1)';
                 card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
                 card.style.zIndex = '';
                 shine.style.opacity = '0';

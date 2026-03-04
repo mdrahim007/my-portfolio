@@ -294,6 +294,11 @@ h6 {
   color: rgba(250, 250, 250, 0.35);
 }
 
+/* ── Scroll offset: leave room for the 64px fixed navbar ── */
+html {
+  scroll-padding-top: 80px;
+}
+
 /* Lenis */
 html.lenis,
 html.lenis body {
@@ -316,9 +321,9 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* section anchor offset for nav */
+/* Section anchor offset is now handled via html { scroll-padding-top } above */
 section[id] {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 0;
 }
 
 /* --- Bento Grid Asymmetrical Layout --- */
@@ -457,13 +462,22 @@ body.hide-custom-cursor {
 
 /* ── Global Layout Utilities ────────────────────────────────────── */
 
+.global-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 5%;
+}
+
 .section-padding {
-  padding: 8rem 5%;
+  /* Small top so content shows right after navbar on anchor-click;
+     large bottom preserves visual breathing room before the next section. */
+  padding: 1.5rem 0 8rem;
 }
 
 @media (max-width: 900px) {
   .section-padding {
-    padding: 4rem 5%;
+    padding: 1.5rem 5% 4rem;
   }
 }
 

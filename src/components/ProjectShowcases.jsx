@@ -27,27 +27,19 @@ const ProjectCard = ({ title, defaultTab, isReversed, imageSrc, data }) => {
     return (
         <article
             ref={cardRef}
-            className="interactive-element"
+            className="interactive-element glass-card"
             style={{
                 display: 'grid',
                 gridTemplateColumns: isReversed ? '1fr 1.2fr' : '1.2fr 1fr',
                 gap: '0', // Flush edges
-                backgroundColor: 'var(--bg-surface)',
-                borderRadius: '24px',
                 overflow: 'hidden',
-                border: '1px solid rgba(255,255,255,0.05)',
-                transition: 'background-color 0.3s ease, border-color 0.3s ease',
                 cursor: 'none' // Custom cursor handles it
             }}
             onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = '#383838'; // Slightly brighten surface
-                e.currentTarget.style.borderColor = 'rgba(190, 169, 142, 0.3)';
                 const img = cardRef.current.querySelector('img');
                 if (img) img.style.transform = 'scale(1.05)';
             }}
             onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--bg-surface)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
                 const img = cardRef.current.querySelector('img');
                 if (img) img.style.transform = 'scale(1)';
             }}
@@ -174,12 +166,12 @@ export const ProjectShowcases = () => {
             ref={containerRef}
             id="work"
             style={{
-                padding: '8rem 5%',
+                padding: '1.5rem 5% 8rem',
                 position: 'relative',
                 zIndex: 10,
             }}
         >
-            <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <div className="global-container">
                 <span className="eyebrow-pill animate-eyebrow">03 — Work</span>
                 <h2
                     className="animate-heading"
