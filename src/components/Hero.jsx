@@ -12,10 +12,9 @@ export const Hero = () => {
     const imageColRef = useRef(null);
     const [cvOpen, setCvOpen] = useState(false);
 
-    // ── Typewriter designation cycling ──────────────────────────────────
     const TITLES = [
-        'Support Manager @ myGov ITSM Project',
-        'Implementation Head @ myGov ITSM Project',
+        'Project Coordinator @ myGov ITSM',
+        'Support Manager @ myGov ITSM',
     ];
     const [displayText, setDisplayText] = useState('');
     const [titleIdx, setTitleIdx] = useState(0);
@@ -56,55 +55,29 @@ export const Hero = () => {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const ctx = gsap.context(() => {
-            // Basic text splitting utility for characters
-            const splitTextToChars = (element) => {
-                const text = element.innerText;
-                element.innerHTML = '';
-                const chars = [];
-                text.split('').forEach((char) => {
-                    if (char === ' ') {
-                        element.appendChild(document.createTextNode(' '));
-                    } else {
-                        const span = document.createElement('span');
-                        span.innerText = char;
-                        span.style.display = 'inline-block';
-                        span.style.opacity = '0'; // Start hidden
-                        span.style.transform = 'translateY(40px)'; // Start offset
-                        element.appendChild(span);
-                        chars.push(span);
-                    }
-                });
-                return chars;
-            };
-
             if (!prefersReducedMotion) {
                 if (headlineRef.current) {
-                    headlineRef.current.style.opacity = 1; // Make parent visible so child span animations appear
-                    const chars = splitTextToChars(headlineRef.current);
+                    headlineRef.current.style.opacity = 1; // Make parent visible
+                    const lines = headlineRef.current.querySelectorAll('.reveal-text-line');
+                    gsap.set(lines, { y: 35, opacity: 0 });
 
                     const tl = gsap.timeline();
 
-                    // Reveal character by character
-                    tl.to(chars, {
+                    // Reveal line by line
+                    tl.to(lines, {
                         y: 0,
                         opacity: 1,
-                        duration: 0.8,
-                        stagger: 0.03,
-                        ease: 'back.out(1.2)',
-                        delay: 0.3,
-                        onComplete: () => {
-                            const el = headlineRef.current;
-                            if (!el) return;
-                            el.textContent = 'Md. Abdur Rahim';
-                            el.classList.add('pointer-sweep');
-                        }
+                        duration: 1.1,
+                        stagger: 0.18,
+                        ease: 'power3.out',
+                        delay: 0.2,
                     })
                         // Fade in subtitle, summary, and button sequentially
                         .fromTo(
                             [subtitleRef.current, summaryRef.current, buttonRef.current],
                             { opacity: 0, y: 15 },
                             { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' },
-                            '-=0.2'
+                            '-=0.4'
                         );
                 }
 
@@ -171,15 +144,9 @@ export const Hero = () => {
                 id="home"
                 ref={containerRef}
                 style={{
-                    minHeight: '100vh',
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    position: 'relative',
                     zIndex: 10,
-                    paddingTop: '5rem' // Ensure space for nav
+                    paddingTop: 'var(--section-padding)',
+                    paddingBottom: 'var(--section-padding)'
                 }}
             >
 
@@ -189,48 +156,27 @@ export const Hero = () => {
                     {/* Left Side: Text Content */}
                     <div className="hero-content-block" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {/* Section eyebrow */}
-                        <span className="eyebrow-pill">01 — Identity</span>
+                        <span className="eyebrow-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)' }}></span>
+                            Hello, I’m Md. Abdur Rahim
+                        </span>
 
                         <h1
                             ref={headlineRef}
                             style={{
-                                fontSize: 'clamp(2.4rem, 4.5vw, 4.8rem)',
+                                fontSize: 'clamp(2.4rem, 4.5vw, 5rem)',
                                 margin: 0,
                                 letterSpacing: '-0.03em',
-                                textTransform: 'uppercase',
-                                lineHeight: 1.0,
+                                lineHeight: 1.05,
                                 color: 'var(--text-primary)',
                                 opacity: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0
                             }}
                         >
-                            Md. Abdur Rahim
+                            <div className="reveal-text-line">Leading IT projects</div>
+                            <div className="reveal-text-line" style={{ marginTop: '0.1rem' }}>and
+                                <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}> reliable support.</span>
+                            </div>
                         </h1>
-                        <style>{`
-                        @keyframes pointerSweep {
-                            0%   { background-position: -250% center; }
-                            100% { background-position:  250% center; }
-                        }
-                        .pointer-sweep {
-                            background: linear-gradient(
-                                90deg,
-                                #FAFAFA  0%,
-                                #FAFAFA  38%,
-                                #EAD9C0  43%,
-                                #D4AF80  47%,
-                                #FFE8B0  50%,
-                                #D4AF80  53%,
-                                #EAD9C0  57%,
-                                #FAFAFA  62%,
-                                #FAFAFA  100%
-                            );
-                            background-size: 250% auto;
-                            -webkit-background-clip: text;
-                            background-clip: text;
-                            -webkit-text-fill-color: transparent;
-                            color: transparent;
-                            animation: pointerSweep 13s linear infinite;
-                        }
-                    `}</style>
 
                         <h2
                             ref={subtitleRef}
@@ -269,12 +215,12 @@ export const Hero = () => {
                                 fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)',
                                 color: 'rgba(250,250,250,0.55)',
                                 lineHeight: 1.7,
-                                maxWidth: '48ch',
+                                maxWidth: '55ch',
                                 fontWeight: 400,
                                 opacity: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0
                             }}
                         >
-                            Leading the Support and Implementation team for the myGov ITSM project. Specializing in Service Level Agreements, detailed progress reporting, and resolving escalated technical issues.
+                            As a Project Coordinator and Support Manager, I lead the implementation and support teams for the national myGov ITSM project. We help government agencies adopt this solution while ensuring stable operations and reliable support for all our stakeholders.
                         </p>
 
                         <div className="hero-cta-row" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
@@ -283,11 +229,15 @@ export const Hero = () => {
                                 ref={buttonRef}
                                 className="interactive-element"
                                 style={{
-                                    display: 'inline-block',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
                                     background: 'transparent',
                                     border: '1px solid #bea98e',
                                     color: '#bea98e',
-                                    padding: '1.1rem 3rem',
+                                    padding: '0',
+                                    height: '3.5rem',
+                                    width: '14rem',
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.2em',
@@ -295,6 +245,8 @@ export const Hero = () => {
                                     textDecoration: 'none',
                                     transition: 'all 0.3s ease',
                                     cursor: 'none',
+                                    borderRadius: '4px',
+                                    boxSizing: 'border-box',
                                     opacity: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0
                                 }}
                                 onMouseOver={(e) => {
@@ -316,19 +268,23 @@ export const Hero = () => {
                                 style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
+                                    justifyContent: 'center',
                                     gap: '0.5rem',
                                     background: 'rgba(190,169,142,0.06)',
                                     border: '1px solid rgba(190,169,142,0.25)',
                                     backdropFilter: 'blur(8px)',
                                     color: 'rgba(250,250,250,0.7)',
-                                    padding: '1.1rem 1.75rem',
+                                    padding: '0',
+                                    height: '3.5rem',
+                                    width: '14rem',
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.2em',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     borderRadius: '4px',
                                     transition: 'all 0.3s ease',
                                     cursor: 'none',
+                                    boxSizing: 'border-box',
                                     opacity: 1,
                                 }}
                                 onMouseOver={(e) => {
@@ -395,7 +351,7 @@ export const Hero = () => {
                 {/* Scroll indicator arrow — hidden on mobile via CSS class */}
                 <div className="hero-scroll-indicator" style={{
                     position: 'absolute',
-                    bottom: '2.5rem',
+                    bottom: '2rem',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     display: 'flex',
@@ -420,7 +376,6 @@ export const Hero = () => {
                 }
                 @media (max-width: 900px) {
                     #home {
-                        min-height: auto !important;
                         padding-top: 6.5rem !important;
                         padding-bottom: 3rem !important;
                     }

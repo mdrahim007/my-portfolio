@@ -15,6 +15,9 @@
 
   --radius-card: 20px;
   --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Standardized Section Spacing */
+  --section-padding: 5.5rem;
 }
 
 * {
@@ -469,10 +472,15 @@ body.hide-custom-cursor {
   padding: 0 5%;
 }
 
+@media (max-width: 900px) {
+  .global-container {
+    padding: 0;
+  }
+}
+
 .section-padding {
-  /* Small top so content shows right after navbar on anchor-click;
-     large bottom preserves visual breathing room before the next section. */
-  padding: 1.5rem 0 8rem;
+  /* Balanced top and bottom padding for standard section gaps */
+  padding: var(--section-padding) 0;
 }
 
 @media (max-width: 900px) {

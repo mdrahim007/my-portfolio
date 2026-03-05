@@ -69,24 +69,27 @@ export const BentoGrid = () => {
             ref={sectionRef}
             className="section-padding"
             style={{
-                minHeight: '100vh',
                 position: 'relative',
                 zIndex: 10,
             }}
         >
             <div className="global-container">
-                <span className="eyebrow-pill animate-eyebrow">02 — Expertise</span>
+                <div style={{ marginBottom: '0.5rem' }}>
+                    <span className="eyebrow-pill animate-eyebrow">02 — Expertise</span>
+                </div>
                 <h2
                     className="animate-heading"
                     style={{
-                        fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
-                        marginBottom: '0.5rem',
-                        letterSpacing: '-0.02em',
+                        fontSize: 'clamp(2rem, 4.2vw, 4rem)',
+                        marginTop: 0,
+                        marginBottom: '1.5rem',
+                        color: 'var(--text-primary)',
+                        letterSpacing: '-0.03em',
+                        lineHeight: 1.05,
                     }}
                 >
-                    Core Competencies & Impact
+                    Core Competencies <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>& Impact.</span>
                 </h2>
-                <hr className="section-rule animate-rule" />
 
                 <div style={{
                     display: 'grid',
@@ -105,8 +108,13 @@ export const BentoGrid = () => {
                         gap: '1rem',
                     }}>
                         <span className="eyebrow" style={{ marginBottom: '1.25rem' }}>Leadership Philosophy</span>
-                        <p style={{ fontSize: 'clamp(1rem, 1.1vw, 1.15rem)', lineHeight: 1.8, color: 'var(--text-primary)', fontWeight: 300, fontFamily: 'var(--font-heading)' }}>
-                            As a Support Manager and ITSM Implementation Head, I believe great support operations are built on two foundations: empowered people and disciplined systems. My approach centers on cultivating teams that resolve issues with genuine ownership — not just compliance — while designing escalation frameworks, SLA structures, and knowledge architectures that scale without losing the human touch. Leading the myGov ITSM implementation reinforced a core lesson: technical rollouts succeed only when the support layer is fully prepared to absorb change. <span style={{ color: '#bea98e', fontStyle: 'italic' }}>Precision, continuous improvement, and empathy at every tier are not ideals — they are operational standards I enforce daily.</span>
+                        <p style={{
+                            color: 'rgba(250,250,250,0.88)',
+                            fontSize: 'clamp(0.85rem, 1.2vw, 0.95rem)',
+                            lineHeight: 1.8,
+                            marginBottom: 0,
+                        }}>
+                            Operating as a Project Manager and Coordinator, I believe successful technical rollouts demand a seamless convergence of Agile methodology, rigorous stakeholder alignment, and proactive risk mitigation. My approach breaks down complex initiatives into actionable sprints, bridging cross-functional silos through exhaustive documentation and continuous progress reporting. Steering the myGov ITSM implementation reinforced my core belief: <span className="text-highlight">precision, transparent communication, and dynamic resource allocation are not ideals — they are project standards I enforce daily.</span>
                         </p>
                     </article>
 
@@ -123,15 +131,15 @@ export const BentoGrid = () => {
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '2.5rem' }}>
                             <div>
-                                <div style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}><span ref={csatRef}>0</span>%</div>
+                                <div className="impact-number" style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}><span ref={csatRef}>0</span>%</div>
                                 <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>SLA Compliance</div>
                             </div>
                             <div>
-                                <div style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}>+<span ref={npsRef}>0</span></div>
+                                <div className="impact-number" style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}>+<span ref={npsRef}>0</span></div>
                                 <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Team Members Mentored</div>
                             </div>
                             <div>
-                                <div style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}><span ref={ahtRef}>0</span>%</div>
+                                <div className="impact-number" style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}><span ref={ahtRef}>0</span>%</div>
                                 <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Data Precision</div>
                             </div>
                         </div>
@@ -150,7 +158,7 @@ export const BentoGrid = () => {
                             {['myGov ITSM Ecosystem', 'Zendesk Suite', 'Jira Service Management', 'National Portal Framework'].map(tool => (
                                 <div key={tool} className="glass-inner" style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', padding: '1.2rem 1.5rem' }}>
                                     <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#bea98e', boxShadow: '0 0 10px rgba(190, 169, 142, 0.5)' }}></div>
-                                    <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#FAFAFA' }}>{tool}</span>
+                                    <span className="tool-name" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#FAFAFA' }}>{tool}</span>
                                 </div>
                             ))}
                         </div>
@@ -167,16 +175,19 @@ export const BentoGrid = () => {
                         <span className="eyebrow" style={{ marginBottom: '2rem' }}>Methodologies</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', flexGrow: 1, justifyContent: 'center' }}>
                             <div className="glass-inner" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>QA & Requirement Validation</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5 }}>Executing manual testing procedures to verify government website functionality against requirements.</p>
+                                <h4 style={{ color: '#FAFAFA', fontSize: '1rem', letterSpacing: '-0.01em', marginBottom: '0.6rem', lineHeight: 1.3 }}>
+                                    Agile &amp; Waterfall <br />Delivery
+                                </h4>
+                                <p style={{ color: 'rgba(250,250,250,0.5)', fontSize: '0.82rem', lineHeight: 1.6, margin: 0 }}>
+                                    Adapting hybrid lifecycle models to execute iterative sprints while preserving fixed critical milestones.
+                                </p></div>
+                            <div className="glass-inner" style={{ padding: '1.5rem' }}>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Stakeholder Management</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5 }}>Aligning cross-functional priorities, facilitating communication, and delivering executive progress dashboards.</p>
                             </div>
                             <div className="glass-inner" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>SLA Coordination</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5 }}>Coordinating daily operations and multi-channel support to ensure Service Level Agreements are met.</p>
-                            </div>
-                            <div className="glass-inner" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Data-Driven Reporting</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5 }}>Managing all reporting requirements, generating detailed progress reports and performance metrics.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Risk &amp; Resource Allocation</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5 }}>Proactively identifying scope creep, managing bottlenecks, and optimizing team bandwidth.</p>
                             </div>
                         </div>
                     </article>
@@ -218,6 +229,9 @@ export const BentoGrid = () => {
                     #expertise h2 {
                         font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
                     }
+                    .tool-name {
+                        font-size: 0.82rem !important;
+                    }
                 }
                 @media (max-width: 480px) {
                     #expertise > div > div > article {
@@ -231,6 +245,12 @@ export const BentoGrid = () => {
                     }
                     #expertise > div > div > article .glass-inner p {
                         font-size: 0.85rem !important;
+                    }
+                    .impact-number {
+                        font-size: 2rem !important;
+                    }
+                    .tool-name {
+                        font-size: 0.75rem !important;
                     }
                 }
             `}} />

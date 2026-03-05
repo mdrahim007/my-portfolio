@@ -104,9 +104,11 @@ export const About = () => {
             ref={sectionRef}
             className="section-padding"
             style={{
-                minHeight: isMobile ? 'auto' : '100vh',
                 position: 'relative',
-                zIndex: 10,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                overflow: 'hidden',
             }}
         >
             <div className="about-layout global-container" style={{
@@ -114,6 +116,7 @@ export const About = () => {
                 gridTemplateColumns: isMobile ? '1fr' : '0.45fr 0.55fr',
                 gap: isMobile ? '2.5rem' : '4rem',
                 alignItems: isMobile ? 'center' : 'stretch',
+                margin: 0,
             }}>
                 {/* ── Left: Premium Photo Frame ── */}
                 <div className="about-photo-wrapper" style={{
@@ -243,19 +246,22 @@ export const About = () => {
                 <div ref={textContainerRef} style={{
                     order: isMobile ? 1 : 0,
                 }}>
-                    <span className="eyebrow-pill animate-eyebrow">06 — About</span>
+                    <div style={{ marginBottom: '0.5rem' }}>
+                        <span className="eyebrow-pill animate-eyebrow">06 — About</span>
+                    </div>
 
                     <h2
                         className="animate-heading"
                         style={{
-                            fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+                            fontSize: 'clamp(2rem, 4.2vw, 3.5rem)',
+                            marginTop: 0,
                             marginBottom: '0.5rem',
                             color: 'var(--text-primary)',
                             letterSpacing: '-0.03em',
                             lineHeight: 1.1,
                         }}
                     >
-                        Bridging Systems <br />&amp; Support
+                        Bridging Strategy <br /><span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>&amp; Execution.</span>
                     </h2>
 
                     {/* Accent flourish divider */}
@@ -290,10 +296,7 @@ export const About = () => {
                         lineHeight: 1.8,
                         maxWidth: '55ch',
                     }}>
-                        With over 5 years of experience in the IT Support domain, I currently lead
-                        the Support and Implementation team for the myGov ITSM project. My focus is
-                        on architecting environments where rapid resolution and strict Service Level
-                        Agreements (SLAs) are consistently met.
+                        With a foundation built in high-stakes IT service delivery, I have successfully transitioned into elite Project Management, currently orchestrating technical deployments for the national myGov ITSM ecosystem.
                     </p>
 
                     <p className="about-text-block" style={{
@@ -303,22 +306,17 @@ export const About = () => {
                         lineHeight: 1.8,
                         maxWidth: '55ch',
                     }}>
-                        Beyond day-to-day team leadership, I oversee the deployment of ITSM scalable
-                        solutions, analyze complex client requirements for system optimization, and
-                        execute extensive manual QA testing to verify government website functionality
-                        against national requirements.
+                        My approach to project management is deeply rooted in Agile operational reality. Having managed front-line support teams, I anticipate deployment frictions before they occur, bridging the gap between strategic business objectives and technical execution through rigorous planning, transparent stakeholder reporting, and proactive risk mitigation.
                     </p>
 
                     <p className="about-text-block" style={{
                         fontSize: isMobile ? '0.95rem' : '1.05rem',
                         color: 'rgba(250,250,250,0.65)',
+                        marginBottom: '2rem',
                         lineHeight: 1.8,
                         maxWidth: '55ch',
-                        marginBottom: isMobile ? '1.5rem' : '2.5rem',
                     }}>
-                        When I'm not managing multi-channel support or generating detailed performance
-                        reports, you can find me conducting capability-building training sessions on the
-                        National Portal Framework.
+                        Beyond simply hitting launch dates, my passion lies in optimizing the entire delivery lifecycle—from initial requirement gathering (BRDs) to establishing analytical frameworks that ensure long-term, sustainable product success across massive digital ecosystems.
                     </p>
 
                     {/* ── Stats Highlights Row ── */}

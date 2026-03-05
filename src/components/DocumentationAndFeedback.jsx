@@ -9,31 +9,31 @@ gsap.registerPlugin(ScrollTrigger);
 const galleryCards = [
     {
         id: 1,
-        title: 'a2i National Portal Knowledge Base',
-        category: 'Documentation',
+        title: 'a2i National Portal Project Charter',
+        category: 'Project Initiation',
         image: 'https://images.unsplash.com/photo-1555529771-447544062c3e?q=80&w=1600&auto=format&fit=crop',
-        alt: 'Knowledge Base Article',
+        alt: 'Project Charter Document',
     },
     {
         id: 2,
-        title: 'SLA Escalation Routing Flowchart',
-        category: 'Process Flow',
+        title: 'Agile Sprint Delivery Roadmap',
+        category: 'Agile Planning',
         image: 'https://images.unsplash.com/photo-1618609378039-b572a138dbaa?q=80&w=1600&auto=format&fit=crop',
-        alt: 'Support Procedure Flowchart',
+        alt: 'Sprint Roadmap Flowchart',
     },
     {
         id: 3,
-        title: 'myGov Performance Metrics Dashboard',
+        title: 'Executive Stakeholder Dashboard',
         category: 'Data Visualization',
         image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop',
-        alt: 'Performance Dashboard',
+        alt: 'Executive Dashboard',
     },
 ];
 
 const testimonials = [
     {
         id: 1,
-        quote: "Abdur completely overhauled our tier-1 response protocols. The new AI deflection strategy he implemented saved us 40 hours a week in manual triage. He's a visionary leader when it comes to scalable support.",
+        quote: "Abdur Rahim's project management completely transformed our delivery lifecycle. His ability to align cross-functional teams, enforce agile ceremonies, and communicate progress to stakeholders saved us months of friction.",
         author: "Sarah Jenkins",
         role: "VP of Product",
         company: "myGov Digital Services",
@@ -41,15 +41,15 @@ const testimonials = [
     },
     {
         id: 2,
-        quote: "Before Abdur joined, our support team was siloed and burning out. He introduced a culture of empathy and continuous learning that cut our attrition rate in half. The best Support Manager I've ever worked under.",
+        quote: "Before Abdur took over coordination, our development sprints were siloed and chaotic. He introduced a structured roadmap and risk mitigation framework that ensured we hit every critical milestone on time.",
         author: "Michael Chang",
-        role: "Senior Support Specialist",
+        role: "Lead Technical Architect",
         company: "myGov ITSM Project",
         type: "Peer Feedback"
     },
     {
         id: 3,
-        quote: "I was extremely frustrated with a billing issue that dragged on for days. Abdur personally took over my ticket, resolved it within an hour, and even sent a follow-up a week later to ensure everything was still perfect. Incredible service.",
+        quote: "It's rare to find a PM who handles both the technical scope and stakeholder expectations so effortlessly. His flawless reporting and Business Requirement Documents (BRDs) kept the entire joint venture aligned.",
         author: "Alex Rivera",
         role: "Enterprise Client",
         company: "National Portal Framework",
@@ -57,11 +57,11 @@ const testimonials = [
     },
     {
         id: 4,
-        quote: "Data-driven and deeply empathetic. Abdur knows exactly how to balance strict KPIs like AHT with authentic, human-centric customer conversations.",
+        quote: "Data-driven and deeply strategic. Abdur knows exactly how to balance strict project timelines with the flexibility required to navigate complex government technology deployments.",
         author: "Elena Rostova",
-        role: "Customer Success Director",
+        role: "Program Director",
         company: "Government Technology Division",
-        type: "Stakeholder Feedback"
+        type: "Executive Feedback"
     }
 ];
 
@@ -172,17 +172,21 @@ export const DocumentationAndFeedback = () => {
 
                     {/* Section heading */}
                     <div style={{ marginBottom: '4rem' }}>
-                        <span className="eyebrow-pill animate-eyebrow" style={{ marginBottom: '0.75rem' }}>04 — Documentation</span>
+                        <div style={{ marginBottom: '0.5rem' }}>
+                            <span className="eyebrow-pill animate-eyebrow" style={{ marginBottom: '0.75rem' }}>04 — Documentation</span>
+                        </div>
                         <h2 className="animate-heading" style={{
-                            fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
-                            letterSpacing: '-0.02em',
-                            marginBottom: '0.5rem',
+                            fontSize: 'clamp(2rem, 4.2vw, 4rem)',
+                            marginTop: 0,
+                            marginBottom: '1.5rem',
+                            color: 'var(--text-primary)',
+                            letterSpacing: '-0.03em',
+                            lineHeight: 1.05,
                         }}>
-                            Documentation Showcase
+                            Documentation <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>Showcase.</span>
                         </h2>
-                        <hr className="section-rule animate-rule" style={{ marginBottom: '1.25rem' }} />
                         <p className="animate-heading" style={{ color: '#a1a1aa', fontSize: '1.05rem', marginTop: '0', maxWidth: '55ch', lineHeight: 1.6 }}>
-                            A glimpse into the internal frameworks, knowledge bases, and architectural flows I use to scale operations. (Sanitized for public viewing).
+                            A glimpse into the project reports, operational frameworks, and knowledge bases I use to coordinate cross-functional teams and align project delivery. (Sanitized for public viewing).
                         </p>
                     </div>
 
@@ -305,17 +309,21 @@ export const DocumentationAndFeedback = () => {
             {/* ------------------------------------------------------------------ */}
             {/* TESTIMONIALS                                                       */}
             {/* ------------------------------------------------------------------ */}
-            <section id="reputation" ref={feedbackSectionRef} className="section-padding" style={{ position: 'relative', zIndex: 10, paddingTop: isMobileView ? '2rem' : '4rem' }}>
+            <section id="reputation" ref={feedbackSectionRef} className="section-padding" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="global-container">
-                    <span className="eyebrow-pill animate-eyebrow">05 — Reputation</span>
+                    <div style={{ marginBottom: '0.5rem' }}>
+                        <span className="eyebrow-pill animate-eyebrow">05 — Reputation</span>
+                    </div>
                     <h2 className="animate-heading" style={{
-                        fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
-                        marginBottom: '0.5rem',
-                        letterSpacing: '-0.02em',
+                        fontSize: 'clamp(2rem, 4.2vw, 4rem)',
+                        marginTop: 0,
+                        marginBottom: '1.5rem',
+                        color: 'var(--text-primary)',
+                        letterSpacing: '-0.03em',
+                        lineHeight: 1.05,
                     }}>
-                        Feedback &amp; Reputation
+                        Feedback <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>&amp; Reputation.</span>
                     </h2>
-                    <hr className="section-rule animate-rule" />
 
                     {/* ── Featured single-card carousel ─────────────────── */}
                     <div

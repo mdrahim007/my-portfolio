@@ -57,14 +57,16 @@ const NAV_LINKS = [
 ];
 
 /* ── NavItem ──────────────────────────────────────────────────────────── */
-const NavItem = ({ label, href, Icon, isActive, scrolled, onClick }) => {
+const NavItem = ({ label, href, Icon, isActive, scrolled, onClick, isMobile }) => {
     const [hovered, setHovered] = useState(false);
-    const showLabel = isActive || hovered;
+    // On mobile: never show label; on desktop: show when active or hovered
+    const showLabel = !isMobile && (isActive || hovered);
 
     return (
         <a
             href={href}
             className="interactive-element nav-item"
+            aria-label={label}
             aria-current={isActive ? 'page' : undefined}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -73,9 +75,11 @@ const NavItem = ({ label, href, Icon, isActive, scrolled, onClick }) => {
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: isMobile ? 'column' : 'row',
                 gap: showLabel ? '7px' : '0px',
-                padding: '0.45rem 0.7rem',
-                borderRadius: '100px',
+                padding: isMobile ? '0.5rem' : '0.45rem 0.7rem',
+                borderRadius: isMobile ? '12px' : '100px',
                 border: isActive
                     ? '1px solid rgba(190,169,142,0.35)'
                     : hovered
@@ -101,9 +105,10 @@ const NavItem = ({ label, href, Icon, isActive, scrolled, onClick }) => {
                     'gap 0.35s cubic-bezier(0.34,1.2,0.64,1)',
                     'box-shadow 0.3s ease',
                 ].join(', '),
-                whiteSpace: 'nowrap',
                 position: 'relative',
-                overflow: 'hidden',
+                minWidth: isMobile ? '36px' : 'auto',
+                minHeight: isMobile ? '36px' : 'auto',
+                overflow: 'visible',
             }}
         >
             {/* Icon — always visible */}
@@ -115,25 +120,42 @@ const NavItem = ({ label, href, Icon, isActive, scrolled, onClick }) => {
                 <Icon />
             </span>
 
-            {/* Label — expands/collapses smoothly via max-width */}
-            <span style={{
-                display: 'inline-block',
-                maxWidth: showLabel ? '120px' : '0px',
-                opacity: showLabel ? 1 : 0,
-                overflow: 'hidden',
-                fontSize: '0.72rem',
-                fontWeight: isActive ? 700 : 500,
-                fontFamily: 'var(--font-body)',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                lineHeight: 1,
-                /* Stagger the reveal slightly after the gap animates */
-                transition: showLabel
-                    ? 'max-width 0.4s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s ease 0.07s'
-                    : 'max-width 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.15s ease',
-            }}>
-                {label}
-            </span>
+            {/* Label — hidden on mobile, expands on desktop */}
+            {!isMobile && (
+                <span style={{
+                    display: 'inline-block',
+                    maxWidth: showLabel ? '120px' : '0px',
+                    opacity: showLabel ? 1 : 0,
+                    overflow: 'hidden',
+                    fontSize: '0.72rem',
+                    fontWeight: isActive ? 700 : 500,
+                    fontFamily: 'var(--font-body)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    lineHeight: 1,
+                    whiteSpace: 'nowrap',
+                    transition: showLabel
+                        ? 'max-width 0.4s cubic-bezier(0.34,1.2,0.64,1), opacity 0.25s ease 0.07s'
+                        : 'max-width 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.15s ease',
+                }}>
+                    {label}
+                </span>
+            )}
+
+            {/* Active dot indicator — mobile only */}
+            {isMobile && isActive && (
+                <span style={{
+                    position: 'absolute',
+                    bottom: '-6px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '4px',
+                    height: '4px',
+                    borderRadius: '50%',
+                    background: '#bea98e',
+                    boxShadow: '0 0 6px rgba(190,169,142,0.6)',
+                }} />
+            )}
         </a>
     );
 };
@@ -149,6 +171,16 @@ const Navbar = () => {
 
     const [activeSection, setActiveSection] = useState('home');
     const [scrolled, setScrolled] = useState(false);
+    const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 640);
+
+    // Detect mobile breakpoint
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 640px)');
+        const handler = (e) => setIsMobile(e.matches);
+        mq.addEventListener('change', handler);
+        setIsMobile(mq.matches);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
 
     /* ── Smart hide / show ───────────────────────────────────────────── */
     useEffect(() => {
@@ -221,17 +253,17 @@ const Navbar = () => {
 
     /* ── Glass pill style ────────────────────────────────────────────── */
     const glassStyle = scrolled ? {
-        background: 'rgba(8,8,14,0.88)',
-        backdropFilter: 'blur(40px) saturate(200%)',
-        WebkitBackdropFilter: 'blur(40px) saturate(200%)',
-        boxShadow: '0 1px 0 rgba(255,255,255,0.05) inset, 0 8px 32px rgba(0,0,0,0.5)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'rgba(10,10,18,0.75)',
+        backdropFilter: 'blur(24px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+        boxShadow: '0 0 0 1px rgba(190,169,142,0.15), 0 8px 32px rgba(0,0,0,0.4)',
+        border: '1px solid rgba(190,169,142,0.25)',
     } : {
-        background: 'rgba(8,8,14,0.25)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        boxShadow: 'none',
-        border: '1px solid rgba(255,255,255,0.04)',
+        background: 'rgba(10,10,18,0.25)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
+        border: '1px solid rgba(190,169,142,0.12)',
     };
 
     return (
@@ -259,13 +291,11 @@ const Navbar = () => {
                     <div className="nav-pill-container" style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '2px',
-                        borderRadius: '100px',
-                        padding: '6px',
+                        gap: isMobile ? '2px' : '2px',
+                        borderRadius: isMobile ? '18px' : '100px',
+                        padding: isMobile ? '5px' : '6px',
                         transition: 'background 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease',
-                        /* On very small devices, allow subtle horizontal scrolling if required */
-                        overflowX: 'auto',
-                        /* Hide scrollbar */
+                        overflowX: 'visible',
                         scrollbarWidth: 'none',
                         msOverflowStyle: 'none',
                         ...glassStyle,
@@ -279,6 +309,7 @@ const Navbar = () => {
                                 isActive={activeSection === section}
                                 scrolled={scrolled}
                                 onClick={handleNavClick}
+                                isMobile={isMobile}
                             />
                         ))}
                     </div>
@@ -297,31 +328,35 @@ const Navbar = () => {
                         alignItems: 'center',
                         gap: '10px',
                         padding: '0.6rem 1.2rem',
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        background: glassStyle.background,
+                        border: glassStyle.border,
                         borderRadius: '100px',
-                        color: 'rgba(250,250,250,0.85)',
+                        color: 'rgba(250,250,250,0.95)',
                         textDecoration: 'none',
                         fontSize: '0.72rem',
-                        fontWeight: 600,
+                        fontWeight: 700,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        transition: 'all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                        transition: 'all 0.5s cubic-bezier(0.34, 1.5, 0.64, 1)',
+                        backdropFilter: glassStyle.backdropFilter,
+                        WebkitBackdropFilter: glassStyle.WebkitBackdropFilter,
+                        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.3)' : '0 10px 30px rgba(190, 169, 142, 0.1)',
+                        opacity: scrolled ? 0.85 : 1,
+                        transform: scrolled ? 'scale(0.95)' : 'scale(1)',
                     }}
                         onMouseOver={e => {
-                            e.currentTarget.style.background = 'rgba(190, 169, 142, 0.1)';
-                            e.currentTarget.style.borderColor = 'rgba(190, 169, 142, 0.3)';
-                            e.currentTarget.style.color = '#bea98e';
-                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.background = 'rgba(190, 169, 142, 0.2)';
+                            e.currentTarget.style.borderColor = '#bea98e';
+                            e.currentTarget.style.color = '#FAFAFA';
+                            e.currentTarget.style.transform = (scrolled ? 'scale(0.98)' : 'scale(1.05)') + ' translateY(-2px)';
+                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(190, 169, 142, 0.2)';
                         }}
                         onMouseOut={e => {
-                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                            e.currentTarget.style.color = 'rgba(250,250,250,0.85)';
-                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.background = glassStyle.background;
+                            e.currentTarget.style.borderColor = glassStyle.border;
+                            e.currentTarget.style.color = 'rgba(250,250,250,0.95)';
+                            e.currentTarget.style.transform = scrolled ? 'scale(0.95)' : 'scale(1)';
+                            e.currentTarget.style.boxShadow = scrolled ? '0 4px 20px rgba(0,0,0,0.3)' : '0 10px 30px rgba(190, 169, 142, 0.1)';
                         }}
                     >
                         <span style={{
@@ -343,13 +378,33 @@ const Navbar = () => {
 
             {/* ── Styles ───────────────────────────────────────────── */}
             <style>{`
-                /* Hide scrollbar for nav contianer if it overflows on very tiny devices */
+                /* Hide scrollbar for nav container if it overflows on very tiny devices */
                 .nav-pill-container::-webkit-scrollbar {
                     display: none;
                 }
 
                 @media (max-width: 860px) {
                     .hire-me-btn { display: none !important; }
+                }
+
+                /* Mobile icon-only nav: compact square icons in a tight pill */
+                @media (max-width: 640px) {
+                    .nav-pill-container {
+                        gap: 1px !important;
+                        padding: 4px !important;
+                        border-radius: 16px !important;
+                    }
+                    .nav-item {
+                        min-width: 34px !important;
+                        min-height: 34px !important;
+                        padding: 0.4rem !important;
+                        border-radius: 10px !important;
+                    }
+                    /* Icon scale down slightly on very small screens */
+                    .nav-item svg {
+                        width: 15px !important;
+                        height: 15px !important;
+                    }
                 }
 
                 @keyframes pulseGreen {
