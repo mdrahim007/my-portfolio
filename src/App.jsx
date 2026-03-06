@@ -14,6 +14,7 @@ import { CustomCursor } from './components/CustomCursor';
 import { WhatsAppButton } from './components/BackToTop';
 import { TiltEffect } from './components/TiltEffect';
 import { IntroScreen } from './components/IntroScreen';
+import { HireMeButton } from './components/HireMeButton';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -49,6 +50,7 @@ function App() {
     <>
       {showIntro && <IntroScreen onComplete={() => setShowIntro(false)} />}
       <Navbar />
+      <HireMeButton />
       <CustomCursor />
       <TiltEffect />
       <CanvasBackground />

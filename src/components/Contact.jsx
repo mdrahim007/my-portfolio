@@ -180,10 +180,22 @@ export const Contact = () => {
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
     const [errorMsg, setErrorMsg] = useState('');
     const [focusedField, setFocusedField] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const sectionRef = useRef(null);
     const formRef = useRef(null);
     const infoRef = useRef(null);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     useScrollReveal(sectionRef);
 
@@ -407,47 +419,132 @@ export const Contact = () => {
                                             />
                                         </FloatField>
 
-                                        {/* Visitor Type Dropdown */}
-                                        <div className="form-field-wrapper" style={{ position: 'relative' }}>
-                                            <label htmlFor="visitor_type" style={{
+                                        {/* Visitor Type Custom Dropdown */}
+                                        <div className="form-field-wrapper" style={{ position: 'relative', zIndex: isDropdownOpen ? 100 : 1 }} ref={dropdownRef}>
+                                            <label style={{
                                                 position: 'absolute',
-                                                top: (focusedField === 'visitor_type' || formData.visitor_type) ? '-1.2rem' : '0.5rem',
+                                                top: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? '-1.2rem' : '0.5rem',
                                                 left: 0,
-                                                fontSize: (focusedField === 'visitor_type' || formData.visitor_type) ? '0.72rem' : '1rem',
-                                                color: errors.visitor_type ? '#ef4444' : (focusedField === 'visitor_type' || formData.visitor_type) ? 'var(--accent)' : 'rgba(250,250,250,0.4)',
-                                                textTransform: (focusedField === 'visitor_type' || formData.visitor_type) ? 'uppercase' : 'none',
-                                                letterSpacing: (focusedField === 'visitor_type' || formData.visitor_type) ? '0.1em' : 'normal',
+                                                fontSize: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? '0.72rem' : '1rem',
+                                                color: errors.visitor_type ? '#ef4444' : (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? 'var(--accent)' : 'rgba(250,250,250,0.4)',
+                                                textTransform: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? 'uppercase' : 'none',
+                                                letterSpacing: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? '0.1em' : 'normal',
                                                 pointerEvents: 'none',
                                                 transition: 'all 0.3s ease',
-                                                fontFamily: (focusedField === 'visitor_type' || formData.visitor_type) ? 'var(--font-body)' : 'var(--font-heading)',
+                                                fontFamily: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? 'var(--font-body)' : 'var(--font-heading)',
                                                 zIndex: 1,
                                             }}>
                                                 Visitor Type
                                             </label>
-                                            <select
-                                                id="visitor_type"
-                                                name="visitor_type"
-                                                value={formData.visitor_type}
-                                                onChange={handleChange}
-                                                onFocus={() => setFocusedField('visitor_type')}
-                                                onBlur={() => setFocusedField(null)}
+
+                                            <div
                                                 className="interactive-element"
+                                                onClick={() => {
+                                                    setIsDropdownOpen(!isDropdownOpen);
+                                                    setFocusedField(isDropdownOpen ? null : 'visitor_type');
+                                                }}
                                                 style={{
-                                                    ...inputBaseStyle(focusedField === 'visitor_type', errors.visitor_type),
-                                                    color: formData.visitor_type === '' ? 'transparent' : 'var(--text-primary)',
+                                                    ...inputBaseStyle(focusedField === 'visitor_type' || isDropdownOpen, errors.visitor_type),
+                                                    color: 'var(--text-primary)',
                                                     cursor: 'pointer',
-                                                    appearance: 'none',
-                                                    WebkitAppearance: 'none',
-                                                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(250,250,250,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`,
-                                                    backgroundRepeat: 'no-repeat',
-                                                    backgroundPosition: 'right 0.25rem center',
-                                                    paddingRight: '1.5rem',
+                                                    position: 'relative',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
+                                                    paddingRight: '0',
+                                                    userSelect: 'none'
                                                 }}
                                             >
-                                                {VISITOR_TYPES.map(({ value, label }) => (
-                                                    <option key={value} value={value} style={{ background: '#1e1e1e', color: '#FAFAFA' }}>{label}</option>
-                                                ))}
-                                            </select>
+                                                <span style={{
+                                                    color: formData.visitor_type === '' ? 'transparent' : 'var(--text-primary)',
+                                                    transition: 'color 0.3s ease'
+                                                }}>
+                                                    {formData.visitor_type ? VISITOR_TYPES.find(v => v.value === formData.visitor_type)?.label : 'Select Visitor Type'}
+                                                </span>
+                                                <svg
+                                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                                    style={{
+                                                        transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                                                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                        color: 'rgba(250,250,250,0.4)'
+                                                    }}
+                                                >
+                                                    <polyline points="6 9 12 15 18 9" />
+                                                </svg>
+
+                                                {/* Dropdown Menu Options */}
+                                                <div style={{
+                                                    position: 'absolute',
+                                                    top: 'calc(100% + 8px)',
+                                                    left: 0,
+                                                    right: 0,
+                                                    background: 'rgba(15, 15, 20, 0.95)',
+                                                    backdropFilter: 'blur(16px)',
+                                                    WebkitBackdropFilter: 'blur(16px)',
+                                                    border: '1px solid rgba(190,169,142,0.15)',
+                                                    borderRadius: '12px',
+                                                    boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+                                                    opacity: isDropdownOpen ? 1 : 0,
+                                                    visibility: isDropdownOpen ? 'visible' : 'hidden',
+                                                    pointerEvents: isDropdownOpen ? 'auto' : 'none',
+                                                    transform: isDropdownOpen ? 'translateY(0)' : 'translateY(-10px)',
+                                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                    zIndex: 50,
+                                                    overflow: 'hidden',
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                }}>
+                                                    {VISITOR_TYPES.filter(v => v.value !== '').map(({ value, label }) => (
+                                                        <div
+                                                            key={value}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleChange({ target: { name: 'visitor_type', value } });
+                                                                setIsDropdownOpen(false);
+                                                                setFocusedField(null);
+                                                            }}
+                                                            style={{
+                                                                padding: '0.8rem 1.2rem',
+                                                                fontSize: '0.9rem',
+                                                                color: formData.visitor_type === value ? '#bea98e' : 'rgba(250,250,250,0.8)',
+                                                                background: formData.visitor_type === value ? 'rgba(190,169,142,0.1)' : 'transparent',
+                                                                cursor: 'pointer',
+                                                                transition: 'all 0.2s ease',
+                                                                borderBottom: '1px solid rgba(255,255,255,0.03)',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                gap: '0.8rem'
+                                                            }}
+                                                            onMouseOver={(e) => {
+                                                                if (formData.visitor_type !== value) {
+                                                                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                                                                    e.currentTarget.style.color = '#FAFAFA';
+                                                                }
+                                                            }}
+                                                            onMouseOut={(e) => {
+                                                                if (formData.visitor_type !== value) {
+                                                                    e.currentTarget.style.background = 'transparent';
+                                                                    e.currentTarget.style.color = 'rgba(250,250,250,0.8)';
+                                                                }
+                                                            }}
+                                                        >
+                                                            {/* Checkmark placeholder for selection */}
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                                                                style={{
+                                                                    opacity: formData.visitor_type === value ? 1 : 0,
+                                                                    color: '#bea98e',
+                                                                    transform: formData.visitor_type === value ? 'scale(1)' : 'scale(0.5)',
+                                                                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                                                                }}
+                                                            >
+                                                                <polyline points="20 6 9 17 4 12" />
+                                                            </svg>
+                                                            {label}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
                                             {errors.visitor_type && <span style={{ color: '#ef4444', fontSize: '0.75rem', position: 'absolute', bottom: '-1.4rem', left: 0 }}>{errors.visitor_type}</span>}
                                         </div>
                                     </div>

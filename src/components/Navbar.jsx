@@ -142,18 +142,20 @@ const NavItem = ({ label, href, Icon, isActive, scrolled, onClick, isMobile }) =
                 </span>
             )}
 
-            {/* Active dot indicator — mobile only */}
-            {isMobile && isActive && (
+            {/* Active dot indicator */}
+            {isActive && (
                 <span style={{
                     position: 'absolute',
-                    bottom: '-6px',
+                    bottom: isMobile ? '-6px' : '-8px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    width: '4px',
-                    height: '4px',
+                    width: isMobile ? '4px' : '5px',
+                    height: isMobile ? '4px' : '5px',
                     borderRadius: '50%',
                     background: '#bea98e',
-                    boxShadow: '0 0 6px rgba(190,169,142,0.6)',
+                    boxShadow: '0 0 8px rgba(190,169,142,0.8), 0 0 16px rgba(190,169,142,0.4)',
+                    opacity: 1,
+                    transition: 'all 0.3s ease',
                 }} />
             )}
         </a>
@@ -251,20 +253,8 @@ const Navbar = () => {
         navTimer.current = setTimeout(() => { isNavigating.current = false; }, 900);
     };
 
-    /* ── Glass pill style ────────────────────────────────────────────── */
-    const glassStyle = scrolled ? {
-        background: 'rgba(10,10,18,0.75)',
-        backdropFilter: 'blur(24px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-        boxShadow: '0 0 0 1px rgba(190,169,142,0.15), 0 8px 32px rgba(0,0,0,0.4)',
-        border: '1px solid rgba(190,169,142,0.25)',
-    } : {
-        background: 'rgba(10,10,18,0.25)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
-        border: '1px solid rgba(190,169,142,0.12)',
-    };
+    /* ── Glass pill style is now handled by CSS classes to fix browser support ── */
+
 
     return (
         <>
@@ -288,7 +278,7 @@ const Navbar = () => {
                     pointerEvents: 'auto', // Re-enable clicks
                     maxWidth: '100vw',
                 }}>
-                    <div className="nav-pill-container" style={{
+                    <div className={`nav-pill-container ${scrolled ? 'nav-glass-scrolled' : 'nav-glass'}`} style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: isMobile ? '2px' : '2px',
@@ -298,7 +288,6 @@ const Navbar = () => {
                         overflowX: 'visible',
                         scrollbarWidth: 'none',
                         msOverflowStyle: 'none',
-                        ...glassStyle,
                     }}>
                         {NAV_LINKS.map(({ label, href, section, Icon }) => (
                             <NavItem
@@ -315,69 +304,33 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* ── Premium "Hire Me" / Available Badge ── */}
-                <div className="hire-me-btn" style={{
-                    position: 'absolute',
-                    right: 'max(1.5rem, calc((100vw - 1200px) / 2))',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    pointerEvents: 'auto',
-                }}>
-                    <a href="#contact" className="interactive-element" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        padding: '0.6rem 1.2rem',
-                        background: glassStyle.background,
-                        border: glassStyle.border,
-                        borderRadius: '100px',
-                        color: 'rgba(250,250,250,0.95)',
-                        textDecoration: 'none',
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        transition: 'all 0.5s cubic-bezier(0.34, 1.5, 0.64, 1)',
-                        backdropFilter: glassStyle.backdropFilter,
-                        WebkitBackdropFilter: glassStyle.WebkitBackdropFilter,
-                        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.3)' : '0 10px 30px rgba(190, 169, 142, 0.1)',
-                        opacity: scrolled ? 0.85 : 1,
-                        transform: scrolled ? 'scale(0.95)' : 'scale(1)',
-                    }}
-                        onMouseOver={e => {
-                            e.currentTarget.style.background = 'rgba(190, 169, 142, 0.2)';
-                            e.currentTarget.style.borderColor = '#bea98e';
-                            e.currentTarget.style.color = '#FAFAFA';
-                            e.currentTarget.style.transform = (scrolled ? 'scale(0.98)' : 'scale(1.05)') + ' translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(190, 169, 142, 0.2)';
-                        }}
-                        onMouseOut={e => {
-                            e.currentTarget.style.background = glassStyle.background;
-                            e.currentTarget.style.borderColor = glassStyle.border;
-                            e.currentTarget.style.color = 'rgba(250,250,250,0.95)';
-                            e.currentTarget.style.transform = scrolled ? 'scale(0.95)' : 'scale(1)';
-                            e.currentTarget.style.boxShadow = scrolled ? '0 4px 20px rgba(0,0,0,0.3)' : '0 10px 30px rgba(190, 169, 142, 0.1)';
-                        }}
-                    >
-                        <span style={{
-                            width: '6px',
-                            height: '6px',
-                            borderRadius: '50%',
-                            background: '#25D366',
-                            boxShadow: '0 0 8px #25D366',
-                            animation: 'pulseGreen 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                        }}></span>
-                        Hire Me
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '-2px' }}>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
+
             </nav>
 
             {/* ── Styles ───────────────────────────────────────────── */}
             <style>{`
+                /* Glassmorphism Classes */
+                .nav-glass {
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(190,169,142,0.25);
+                    box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
+                }
+                .nav-glass-scrolled {
+                    background: rgba(12, 12, 12, 0.70);
+                    border: 1px solid rgba(190,169,142,0.35);
+                    box-shadow: 0 0 0 1px rgba(190,169,142,0.15), 0 8px 32px rgba(0,0,0,0.5);
+                }
+                @supports (backdrop-filter: blur(1px)) {
+                    .nav-glass {
+                        backdrop-filter: blur(28px) saturate(150%);
+                        -webkit-backdrop-filter: blur(28px) saturate(150%);
+                    }
+                    .nav-glass-scrolled {
+                        backdrop-filter: blur(70px) saturate(180%);
+                        -webkit-backdrop-filter: blur(70px) saturate(180%);
+                    }
+                }
+
                 /* Hide scrollbar for nav container if it overflows on very tiny devices */
                 .nav-pill-container::-webkit-scrollbar {
                     display: none;

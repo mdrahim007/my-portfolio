@@ -156,9 +156,41 @@ export const Hero = () => {
                     {/* Left Side: Text Content */}
                     <div className="hero-content-block" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {/* Section eyebrow */}
-                        <span className="eyebrow-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)' }}></span>
-                            Hello, I’m Md. Abdur Rahim
+                        <span className="eyebrow-pill" style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.6rem',
+                            fontWeight: 600,
+                            letterSpacing: '0.05em',
+                            position: 'relative',
+                            overflow: 'hidden',
+                        }}>
+                            {/* Sweeping Sheen Animation */}
+                            <span style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: '-100%',
+                                width: '50%',
+                                height: '100%',
+                                background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
+                                animation: 'sweepSheen 4s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                                zIndex: 0,
+                            }} />
+
+                            {/* The elegant glowing dot indicator */}
+                            <span style={{
+                                display: 'inline-block',
+                                width: '8px',
+                                height: '8px',
+                                borderRadius: '50%',
+                                background: 'var(--accent)',
+                                boxShadow: '0 0 10px rgba(190, 169, 142, 0.6), 0 0 20px rgba(190, 169, 142, 0.4)',
+                                position: 'relative',
+                                zIndex: 1,
+                            }} />
+                            <span style={{ position: 'relative', zIndex: 1 }}>
+                                MD. ABDUR RAHIM • IT PROJECT MANAGEMENT
+                            </span>
                         </span>
 
                         <h1
@@ -190,22 +222,48 @@ export const Hero = () => {
                                 opacity: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0
                             }}
                         >
-                            {displayText}
-                            <span style={{
-                                display: 'inline-block',
-                                width: '2px',
-                                height: '1em',
-                                backgroundColor: '#bea98e',
-                                marginLeft: '3px',
-                                verticalAlign: 'middle',
-                                borderRadius: '1px',
-                                animation: 'cursorBlink 0.9s step-end infinite',
-                            }} />
+                            {/* Hidden from screen readers - visually animated */}
+                            <span aria-hidden="true">
+                                {displayText}
+                                <span style={{
+                                    display: 'inline-block',
+                                    width: '2px',
+                                    height: '1em',
+                                    backgroundColor: '#bea98e',
+                                    marginLeft: '3px',
+                                    verticalAlign: 'middle',
+                                    borderRadius: '1px',
+                                    animation: 'cursorBlink 0.9s step-end infinite',
+                                }} />
+                            </span>
+                            {/* Visible only to screen readers */}
+                            <span className="visually-hidden">
+                                Project Coordinator and Support Manager at myGov ITSM
+                            </span>
                         </h2>
                         <style>{`
+                        .visually-hidden {
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            padding: 0;
+                            margin: -1px;
+                            overflow: hidden;
+                            clip: rect(0, 0, 0, 0);
+                            white-space: nowrap;
+                            border: 0;
+                        }
                         @keyframes cursorBlink {
                             0%, 100% { opacity: 1; }
                             50% { opacity: 0; }
+                        }
+                        @keyframes pulseElegantDot {
+                            0%, 100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 5px rgba(190, 169, 142, 0.4); }
+                            50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 15px rgba(190, 169, 142, 0.8), 0 0 30px rgba(190, 169, 142, 0.4); }
+                        }
+                        @keyframes sweepSheen {
+                            0% { left: -100%; }
+                            20%, 100% { left: 200%; }
                         }
                     `}</style>
 
@@ -232,16 +290,16 @@ export const Hero = () => {
                                     display: 'inline-flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    background: 'transparent',
+                                    background: '#bea98e',
                                     border: '1px solid #bea98e',
-                                    color: '#bea98e',
+                                    color: '#0c0c0c',
                                     padding: '0',
                                     height: '3.5rem',
                                     width: '14rem',
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.2em',
-                                    fontWeight: 600,
+                                    fontWeight: 700,
                                     textDecoration: 'none',
                                     transition: 'all 0.3s ease',
                                     cursor: 'none',
@@ -250,12 +308,16 @@ export const Hero = () => {
                                     opacity: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0
                                 }}
                                 onMouseOver={(e) => {
-                                    e.currentTarget.style.background = '#bea98e';
-                                    e.currentTarget.style.color = '#0c0c0c';
-                                }}
-                                onMouseOut={(e) => {
                                     e.currentTarget.style.background = 'transparent';
                                     e.currentTarget.style.color = '#bea98e';
+                                    e.currentTarget.style.borderColor = '#bea98e';
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.background = '#bea98e';
+                                    e.currentTarget.style.color = '#0c0c0c';
+                                    e.currentTarget.style.borderColor = '#bea98e';
+                                    e.currentTarget.style.transform = 'translateY(0)';
                                 }}
                             >
                                 View My Impact

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export const TiltEffect = () => {
     useEffect(() => {
         const MAX_TILT = 6;          // degrees
-        const SHINE_OPACITY = 0.07;  // max shine brightness (subtle)
+        const SHINE_OPACITY = 0.035;  // max shine brightness (very subtle premium feel)
 
         let tracked = new Map(); // element → { shine, handler }
 
@@ -19,9 +19,9 @@ export const TiltEffect = () => {
                 inset: 0;
                 border-radius: inherit;
                 pointer-events: none;
-                background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12), transparent 65%);
+                background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 70%);
                 opacity: 0;
-                transition: opacity 0.3s ease;
+                transition: opacity 0.4s ease;
                 z-index: 1;
             `;
             // Ensure card has position:relative (glass-card already has it via CSS)
@@ -39,17 +39,18 @@ export const TiltEffect = () => {
                 const pctX = (x / rect.width) * 100;
                 const pctY = (y / rect.height) * 100;
 
-                card.style.transform = `scale3d(1.015, 1.015, 1.015)`;
-                card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
+                // We removed the transform scale effect as requested, keeping only the shine
+                card.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
                 card.style.zIndex = '2';
 
-                shine.style.background = `radial-gradient(circle at ${pctX}% ${pctY}%, rgba(255,255,255,${SHINE_OPACITY * 2}), transparent 60%)`;
+                // Soft diffracted light effect
+                shine.style.background = `radial-gradient(circle 400px at ${pctX}% ${pctY}%, rgba(190,169,142,${SHINE_OPACITY}), transparent 100%)`;
                 shine.style.opacity = '1';
             };
 
             const onLeave = () => {
-                card.style.transform = 'scale3d(1,1,1)';
-                card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
+                // Clear inline transition so CSS hover states take over smoothly
+                card.style.transition = '';
                 card.style.zIndex = '';
                 shine.style.opacity = '0';
             };
