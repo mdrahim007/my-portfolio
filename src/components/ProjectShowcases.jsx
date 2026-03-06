@@ -172,7 +172,7 @@ export const ProjectShowcases = () => {
         >
             <div className="global-container">
                 <div style={{ marginBottom: '0.5rem' }}>
-                    <span className="eyebrow-pill animate-eyebrow">03 — Work</span>
+                    <span className="eyebrow-pill animate-eyebrow">04 — Work</span>
                 </div>
                 <h2
                     className="animate-heading"

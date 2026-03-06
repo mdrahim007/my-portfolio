@@ -328,7 +328,7 @@ export const Contact = () => {
                     {/* ── LEFT: Editorial & Contact Info ── */}
                     <div ref={infoRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                         <div style={{ marginBottom: '0.5rem' }}>
-                            <span className="eyebrow-pill animate-eyebrow">07 — Contact</span>
+                            <span className="eyebrow-pill animate-eyebrow">08 — Contact</span>
                         </div>
                         <h2
                             className="animate-heading"

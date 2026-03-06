@@ -6,6 +6,7 @@ import CanvasBackground from './components/CanvasBackground';
 import Navbar from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BentoGrid } from './components/BentoGrid';
+import { Experience } from './components/Experience';
 import { ProjectShowcases } from './components/ProjectShowcases';
 import { DocumentationAndFeedback } from './components/DocumentationAndFeedback';
 import { About } from './components/About';
@@ -57,6 +58,7 @@ function App() {
       <main>
         <Hero />
         <BentoGrid />
+        <Experience />
         <ProjectShowcases />
         <DocumentationAndFeedback />
         <About />

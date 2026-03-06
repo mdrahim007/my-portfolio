@@ -12,6 +12,7 @@ export const BentoGrid = () => {
     const csatRef = useRef(null);
     const npsRef = useRef(null);
     const ahtRef = useRef(null);
+    const teamRef = useRef(null);
 
     // Shared scroll reveals (eyebrow, heading, section-rule)
     useScrollReveal(sectionRef);
@@ -49,6 +50,7 @@ export const BentoGrid = () => {
                 start: 'top 85%',
                 onEnter: () => {
                     gsap.to(csatRef.current, { innerHTML: 99, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
+                    gsap.to(teamRef.current, { innerHTML: 25, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
                     gsap.to(npsRef.current, { innerHTML: 4, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
                     gsap.to(ahtRef.current, { innerHTML: 2, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
                 },
@@ -82,7 +84,7 @@ export const BentoGrid = () => {
                     style={{
                         fontSize: 'clamp(2rem, 4.2vw, 4rem)',
                         marginTop: 0,
-                        marginBottom: '1.5rem',
+                        marginBottom: '2.5rem',
                         color: 'var(--text-primary)',
                         letterSpacing: '-0.03em',
                         lineHeight: 1.05,
@@ -107,16 +109,16 @@ export const BentoGrid = () => {
                         justifyContent: 'flex-start',
                         gap: '1rem',
                     }}>
-                        <span className="eyebrow" style={{ marginBottom: '1.25rem' }}>Leadership Philosophy</span>
+                        <span className="eyebrow" style={{ marginBottom: '0.75rem' }}>Leadership Philosophy</span>
                         <p style={{
                             color: 'rgba(250,250,250,0.88)',
-                            fontSize: 'clamp(1rem, 1.4vw, 1.15rem)',
+                            fontSize: 'clamp(1rem, 1.4vw, 1.1rem)',
                             lineHeight: 1.85,
                             marginBottom: 0,
-                            maxWidth: '100%',
+                            maxWidth: '99%',
                             // textAlign: 'justify',
                         }}>
-                            As a Project Coordinator and Support Manager, I believe successful IT implementation relies on clear communication, practical problem solving, and reliable daily support. My approach focuses on taking complex systems and making them easy for government agencies to adopt and use. Managing the myGov ITSM project has reinforced my core belief: <span className="text-highlight">strong team coordination, proactive risk management, and accurate reporting are the true drivers of project success.</span>
+                            As a Project Coordinator and Support Manager for the national myGov ITSM initiative, my leadership philosophy is anchored in driving seamless system implementation and reliable service delivery. I believe that successfully onboarding government agencies requires careful requirement gathering, rigorous stakeholder alignment, and proactive IT support. By bridging the gap between the core technology platform and public sector agencies, I ensure smooth adoption and stable daily operations. For me, transparent communication, multi-layered support, and strict SLA adherence are the true drivers of project success.
                         </p>
                     </article>
 
@@ -124,7 +126,7 @@ export const BentoGrid = () => {
                     <article ref={addToRefs} className="interactive-element glass-card" style={{
                         gridColumn: 'span 4',
                         borderRadius: '24px',
-                        padding: '3rem',
+                        padding: '2.5rem',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
@@ -137,12 +139,16 @@ export const BentoGrid = () => {
                                 <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>SLA Compliance</div>
                             </div>
                             <div>
+                                <div className="impact-number" style={{ fontSize: '3.5rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}>+<span ref={teamRef}>0</span></div>
+                                <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Team Members Coordinated</div>
+                            </div>
+                            <div>
                                 <div className="impact-number" style={{ fontSize: '3.5rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}>+<span ref={npsRef}>0</span></div>
                                 <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Years IT Experience</div>
                             </div>
                             <div>
                                 <div className="impact-number" style={{ fontSize: '3.5rem', fontWeight: 700, lineHeight: 1, fontFamily: 'var(--font-heading)', color: '#FAFAFA' }}><span ref={ahtRef}>0</span></div>
-                                <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>National Gov Projects</div>
+                                <div style={{ color: '#a1a1aa', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>National Govt. Projects</div>
                             </div>
                         </div>
                     </article>
@@ -151,24 +157,23 @@ export const BentoGrid = () => {
                     <article ref={addToRefs} className="interactive-element glass-card" style={{
                         gridColumn: 'span 4',
                         borderRadius: '24px',
-                        padding: '3rem',
+                        padding: '2.5rem',
                         display: 'flex',
                         flexDirection: 'column',
                     }}>
                         <span className="eyebrow" style={{ marginBottom: '2.5rem' }}>Tools & Platforms</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', justifyContent: 'flex-start' }}>
                             {[
-                                { name: 'myGov ITSM System', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> },
-                                { name: 'National Portal Framework', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg> },
-                                { name: 'Jira / Confluence', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg> },
-                                { name: 'MS Excel (Advanced)', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M8 13h2"></path><path d="M8 17h2"></path><path d="M14 13h2"></path><path d="M14 17h2"></path></svg> },
-                                { name: 'Wordpress', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a6 6 0 0 0-6 6v1a6 6 0 0 0 6 6h1a6 6 0 0 0 6-6V8a6 6 0 0 0-6-6H9"></path><path d="M16.5 10.5 12 16l-4.5-5.5"></path></svg> }
+                                'myGov ITSM Ecosystem',
+                                'National Portal Framework',
+                                'Jira Service Management',
+                                'MS Excel (Advanced)',
+                                'Wordpress',
+                                'OTRS Support System'
                             ].map(tool => (
-                                <div key={tool.name} className="glass-inner focus-card" style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', padding: '1.2rem 1.5rem', opacity: 0.9 }}>
-                                    <div style={{ color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        {tool.icon}
-                                    </div>
-                                    <span className="tool-name" style={{ fontSize: '1rem', fontWeight: 600, color: '#FAFAFA' }}>{tool.name}</span>
+                                <div key={tool} className="glass-inner focus-card" style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', padding: '1.2rem 1.5rem', opacity: 0.9 }}>
+                                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent)', boxShadow: '0 0 10px rgba(190, 169, 142, 0.5)' }}></div>
+                                    <span className="tool-name" style={{ fontSize: '1rem', fontWeight: 600, color: '#FAFAFA' }}>{tool}</span>
                                 </div>
                             ))}
                         </div>
@@ -178,23 +183,23 @@ export const BentoGrid = () => {
                     <article ref={addToRefs} className="interactive-element glass-card" style={{
                         gridColumn: 'span 4',
                         borderRadius: '24px',
-                        padding: '3rem',
+                        padding: '2.5rem',
                         display: 'flex',
                         flexDirection: 'column',
                     }}>
                         <span className="eyebrow" style={{ marginBottom: '2.5rem' }}>Core Focus Areas</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', justifyContent: 'flex-start' }}>
                             <div className="glass-inner focus-card" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Implementation &amp; Onboarding</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Managing the practical setup of IT systems for government agencies, including system configuration and live user training.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>System Implementation &amp; Onboarding</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Leading ITSM implementations from requirement gathering to system configuration and user training.</p>
                             </div>
                             <div className="glass-inner focus-card" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Stakeholder Reporting</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Building clear reporting systems to provide executives and government clients with accurate updates on project health and team performance.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Stakeholder Communication &amp; Reporting</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Aligning technical teams and stakeholders using business analysis and data-driven reporting.</p>
                             </div>
                             <div className="glass-inner focus-card" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>SLA &amp; Operations Management</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Handling daily support tasks and solving problems early to ensure our call center and support teams strictly meet client service agreements.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>IT Service Management (ITSM)</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Managing 24/7 support teams and incident protocols to consistently surpass SLAs.</p>
                             </div>
                         </div>
                     </article>

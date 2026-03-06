@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export const TiltEffect = () => {
     useEffect(() => {
         const MAX_TILT = 6;          // degrees
-        const SHINE_OPACITY = 0.035;  // max shine brightness (very subtle premium feel)
+        const SHINE_OPACITY = 0.050;  // max shine brightness (very subtle premium feel)
 
         let tracked = new Map(); // element → { shine, handler }
 

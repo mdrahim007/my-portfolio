@@ -247,7 +247,7 @@ export const About = () => {
                     order: isMobile ? 1 : 0,
                 }}>
                     <div style={{ marginBottom: '0.5rem' }}>
-                        <span className="eyebrow-pill animate-eyebrow">06 — About</span>
+                        <span className="eyebrow-pill animate-eyebrow">07 — About</span>
                     </div>
 
                     <h2

@@ -173,7 +173,7 @@ export const DocumentationAndFeedback = () => {
                     {/* Section heading */}
                     <div style={{ marginBottom: '4rem' }}>
                         <div style={{ marginBottom: '0.5rem' }}>
-                            <span className="eyebrow-pill animate-eyebrow" style={{ marginBottom: '0.75rem' }}>04 — Documentation</span>
+                            <span className="eyebrow-pill animate-eyebrow" style={{ marginBottom: '0.75rem' }}>05 — Documentation</span>
                         </div>
                         <h2 className="animate-heading" style={{
                             fontSize: 'clamp(2rem, 4.2vw, 4rem)',
@@ -312,7 +312,7 @@ export const DocumentationAndFeedback = () => {
             <section id="reputation" ref={feedbackSectionRef} className="section-padding" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="global-container">
                     <div style={{ marginBottom: '0.5rem' }}>
-                        <span className="eyebrow-pill animate-eyebrow">05 — Reputation</span>
+                        <span className="eyebrow-pill animate-eyebrow">06 — Reputation</span>
                     </div>
                     <h2 className="animate-heading" style={{
                         fontSize: 'clamp(2rem, 4.2vw, 4rem)',
