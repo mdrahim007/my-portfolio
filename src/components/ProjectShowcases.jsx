@@ -7,6 +7,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const LifecycleContent = ({ tab, data }) => {
     switch (tab) {
+        case 'Overview':
+            return <p className="star-text">{data.overview}</p>;
+        case 'The Challenge':
+            return <p className="star-text">{data.challenge}</p>;
+        case 'Our Solution':
+            return <p className="star-text">{data.solution}</p>;
+        case 'The Impact':
+            return <p className="star-text star-text--result">{data.impact}</p>;
+
+        // Fallbacks for Project 2 which still uses the old labels
         case 'Initiation':
             return <p className="star-text">{data.initiation}</p>;
         case 'Planning':
@@ -15,6 +25,7 @@ const LifecycleContent = ({ tab, data }) => {
             return <p className="star-text">{data.execution}</p>;
         case 'Closure':
             return <p className="star-text star-text--result">{data.closure}</p>;
+
         default:
             return null;
     }
@@ -67,7 +78,7 @@ const ProjectCard = ({ title, defaultTab, isReversed, imageSrc, data }) => {
 
                 {/* PM Lifecycle Tabs */}
                 <div className="star-tabs" style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem', marginBottom: '1.5rem', overflowX: 'auto', whiteSpace: 'nowrap' }}>
-                    {['Initiation', 'Planning', 'Execution', 'Closure'].map(tab => (
+                    {(data.overview ? ['Overview', 'The Challenge', 'Our Solution', 'The Impact'] : ['Initiation', 'Planning', 'Execution', 'Closure']).map(tab => (
                         <button
                             key={tab}
                             className="interactive-element star-tab-btn"
@@ -192,29 +203,29 @@ export const ProjectShowcases = () => {
 
                     {/* Project 1 */}
                     <ProjectCard
-                        title="myGov ITSM Ecosystem Lifecycle"
-                        defaultTab="Initiation"
+                        title="myGov System Implementation & Support"
+                        defaultTab="Overview"
                         isReversed={false}
-                        imageSrc="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                        imageSrc="/myGov-homepage.png"
                         data={{
-                            initiation: "The a2i myGov project necessitated a robust, scalable ITSM infrastructure. I gathered high-level requirements from key stakeholders to define project scope and critical success constraints.",
-                            planning: "As Project Manager, I architected the delivery roadmap, translating complex organizational needs into actionable Agile sprints and mitigating resource bottlenecks before deployment.",
-                            execution: "I orchestrated cross-functional development and support teams throughout the rollout, enforcing strict Service Level Agreements (SLAs) and generating executive progress dashboards.",
-                            closure: "Successfully launched the streamlined ecosystem on schedule, handing over a fully documented operational framework that permanently elevated national portal support standards."
+                            overview: "The myGov platform, developed by a2i, transforms manual government services into accessible digital formats. As the ITSM partner, my team manages the complete journey of bringing these offline services online so citizens can access them seamlessly from home.",
+                            challenge: "The main hurdle is taking complex, offline government procedures and accurately digitizing them. We must collect legacy data, map out a clear implementation plan, and ensure the new digital workflow operates perfectly for both the public and government offices.",
+                            solution: "I lead the end-to-end digitization process. My team gathers requirements from government offices, digitizes services, and conducts rigorous validation. Before the final launch, we also train government officials on exactly how to process the new applications.",
+                            impact: "We deliver digitized services that citizens can easily use from anywhere. Post-launch, we provide continuous support to users and trained officials. We also collect and analyze feedback, reporting insights to a2i to ensure the platform delivers 100% satisfaction."
                         }}
                     />
 
                     {/* Project 2 (Asymmetrical Reverse) */}
                     <ProjectCard
-                        title="National Portal Delivery Coordination"
-                        defaultTab="Closure"
+                        title="National Portal Onboarding & Support"
+                        defaultTab="Overview"
                         isReversed={true}
-                        imageSrc="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                        imageSrc="/national-portal2.png"
                         data={{
-                            initiation: "Critical government websites faced imminent launch deadlines complicated by sudden scope creep, disjointed team communication, and undefined QA benchmarks.",
-                            planning: "I immediately centralized project documentation, established stringent QA validation criteria against the Business Requirement Document (BRD), and aligned support metrics with development sprint goals.",
-                            execution: "Coordinating multi-disciplinary teams, I implemented a rigorous multi-stage QA process, tracking issue resolution velocity and continuously optimizing resource bandwidth during peak delivery phases.",
-                            closure: "Achieved seamless, on-time launch cycles with drastically reduced post-deployment friction through meticulous timeline management and strict requirement validation."
+                            overview: "The National Portal Framework by a2i provides a unified web platform for all government offices to share public information. I managed the QA and Support teams responsible for onboarding new government agencies and maintaining the entire portal ecosystem.",
+                            challenge: "The primary goal was bringing unconnected government offices onto a standardized framework. This required gathering accurate agency data, deploying cloned site structures, validating new development features, and ensuring officials could manage their content.",
+                            solution: "I mentored the teams executing this entire pipeline. We collected office data, set up domains, cloned the portal structure, and thoroughly tested functionality. We then conducted training sessions so officials could easily update portal information themselves.",
+                            impact: "We successfully expanded the national portal network, giving citizens reliable access to vital government information. Post-launch, my teams provided dedicated 24/7 technical support to resolve complex issues and ensure all portals remained fully operational."
                         }}
                     />
 

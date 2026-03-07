@@ -14,7 +14,7 @@ const EXPERIENCES = [
         company: 'UY Systems Ltd.',
         period: 'Dec 2023 — Present',
         tag: 'Current',
-        summary: 'Leading implementation and support teams for the national myGov ITSM initiative, ensuring smooth daily operations and 99% SLA compliance across government agencies.',
+        summary: 'Leading digitization and support teams for the myGov ITSM project (a2i). From requirement gathering to live operations and training, I ensure 100% SLA compliance and seamless citizen services.',
     },
     {
         id: 2,
@@ -24,7 +24,7 @@ const EXPERIENCES = [
         company: 'Business Automation Ltd.',
         period: 'Mar 2021 — Nov 2023',
         tag: null,
-        summary: 'Guided support operations, managed client inquiries, and delivered comprehensive user training for the National Portal Framework.',
+        summary: 'Mentored QA and support teams for the National Portal Framework (a2i). From onboarding government websites to comprehensive user training, I ensured reliable 24/7 technical support for officials.',
     },
     {
         id: 3,
@@ -34,7 +34,7 @@ const EXPERIENCES = [
         company: 'Chhinnamukul Bangladesh',
         period: 'Jul 2018 — Nov 2019',
         tag: null,
-        summary: 'Managed high-precision data entry and quality control processes for the national Basic Literacy Project.',
+        summary: 'Managed precision data entry and quality control for the Basic Literacy Project (MOPME). From inputting records to verifying accuracy, I ensured reliable databases.',
     },
 ];
 
