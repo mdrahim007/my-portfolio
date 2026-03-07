@@ -184,7 +184,7 @@ export const Experience = () => {
                     color: rgba(250,250,250,0.5);
                     font-size: clamp(0.95rem, 1.2vw, 1.05rem);
                     line-height: 1.8;
-                    margin: 0 0 5rem;
+                    margin: 0 0 3.5rem;
                     letter-spacing: 0.01em;
                 }
 
@@ -219,7 +219,7 @@ export const Experience = () => {
                     display: grid;
                     grid-template-columns: 1fr 64px 1fr;
                     align-items: center;
-                    margin-bottom: 3.5rem;
+                    margin-bottom: 2.5rem;
                     position: relative;
                     z-index: 1;
                 }
@@ -376,8 +376,10 @@ export const Experience = () => {
 
                 /* ── Mobile ────────────────────────────────── */
                 @media (max-width: 768px) {
-                    .exp-spine { left: 22px; }
+                    /* Spine hugs the left edge */
+                    .exp-spine { left: 20px; }
 
+                    /* All rows collapse to a simple left-node + card flex row */
                     .exp-row,
                     .exp-row--right,
                     .exp-row--left {
@@ -388,24 +390,46 @@ export const Experience = () => {
                         margin-bottom: 2rem;
                     }
 
+                    /* Hide the empty spacer column */
                     .exp-spacer-col { display: none; }
 
-                    .exp-node-col { flex-shrink: 0; margin-top: 0.25rem; }
+                    /* Node always on the left */
+                    .exp-node-col { order: 0; flex-shrink: 0; margin-top: 0.25rem; }
                     .exp-node-outer { width: 40px; height: 40px; }
+                    .exp-node-inner { width: 24px; height: 24px; }
 
+                    /* Card always on the right — zero ALL directional padding */
                     .exp-card-col,
+                    .exp-row--right .exp-card-col,
                     .exp-row--left .exp-card-col {
                         order: 1;
+                        flex: 1;
                         text-align: left;
-                        padding: 0;
+                        padding: 0 !important;
                     }
-                    .exp-node-col { order: 0; }
 
-                    .exp-card { padding: 1.5rem; }
-                    .exp-card-glow--left { right: unset; left: 0; border-radius: 16px 0 0 16px; }
+                    /* Card inner padding */
+                    .exp-card { padding: 1.25rem 1.25rem; }
 
+                    /* Always show glow on left edge on mobile */
+                    .exp-card-glow,
+                    .exp-card-glow--left,
+                    .exp-card-glow--right {
+                        left: 0;
+                        right: unset;
+                        border-radius: 16px 0 0 16px;
+                    }
+
+                    /* Left-side cards: reset right-aligned text/tag/meta */
                     .exp-row--left .exp-meta,
                     .exp-row--left .exp-tag { justify-content: flex-start; align-self: flex-start; }
+                    .exp-row--left .exp-card-col { text-align: left; }
+                }
+
+                /* ── Small mobile tweak ─────────────────────── */
+                @media (max-width: 400px) {
+                    .exp-career-summary { font-size: 0.9rem; }
+                    .exp-role { font-size: 1rem; }
                 }
             `}</style>
         </section>

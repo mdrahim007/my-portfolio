@@ -189,7 +189,8 @@ export const Hero = () => {
                                 zIndex: 1,
                             }} />
                             <span style={{ position: 'relative', zIndex: 1 }}>
-                                MD. ABDUR RAHIM • IT PROJECT MANAGEMENT
+                                <span className="hide-on-mobile">MD. ABDUR RAHIM • IT PROJECT MANAGEMENT</span>
+                                <span className="show-on-mobile">MD. ABDUR RAHIM</span>
                             </span>
                         </span>
 
@@ -285,7 +286,7 @@ export const Hero = () => {
                             <a
                                 href="#work"
                                 ref={buttonRef}
-                                className="interactive-element"
+                                className="interactive-element hero-btn"
                                 style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
@@ -294,8 +295,6 @@ export const Hero = () => {
                                     border: '1px solid #bea98e',
                                     color: '#0c0c0c',
                                     padding: '0',
-                                    height: '3.5rem',
-                                    width: '14rem',
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.2em',
@@ -326,7 +325,7 @@ export const Hero = () => {
                             {/* View CV — opens full-screen modal */}
                             <button
                                 onClick={() => setCvOpen(true)}
-                                className="interactive-element"
+                                className="interactive-element hero-btn"
                                 style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
@@ -337,8 +336,6 @@ export const Hero = () => {
                                     backdropFilter: 'blur(8px)',
                                     color: 'rgba(250,250,250,0.7)',
                                     padding: '0',
-                                    height: '3.5rem',
-                                    width: '14rem',
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.2em',

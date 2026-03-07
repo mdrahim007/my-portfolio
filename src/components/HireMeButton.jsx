@@ -5,16 +5,30 @@ export const HireMeButton = () => {
     const [scrolled, setScrolled] = useState(false);
     const timeoutRef = useRef(null);
 
+    const [isMobile, setIsMobile] = useState(false);
+
     // Track scroll to optionally apply different glass styles
+    // and check mobile status
     useEffect(() => {
         const onScroll = () => {
             setScrolled(window.scrollY > 60);
         };
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        checkMobile();
         window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+        window.addEventListener('resize', checkMobile);
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', checkMobile);
+        };
     }, []);
 
     const handleMouseEnter = () => {
+        if (isMobile) return; // Ignore hover on mobile
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
@@ -23,9 +37,24 @@ export const HireMeButton = () => {
     };
 
     const handleMouseLeave = () => {
+        if (isMobile) return; // Ignore hover on mobile
         timeoutRef.current = setTimeout(() => {
             setIsExpanded(false);
         }, 1500); // 1.5 seconds delay before hiding
+    };
+
+    const handleClick = (e) => {
+        if (isMobile && !isExpanded) {
+            e.preventDefault(); // Prevent jump to #contact
+            setIsExpanded(true);
+
+            // Auto-collapse after 3 seconds if they don't tap again
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+                setIsExpanded(false);
+            }, 3000);
+        }
+        // If already expanded (or on desktop), let the link function normally
     };
 
     const glassStyle = {
@@ -43,6 +72,7 @@ export const HireMeButton = () => {
             className="interactive-element hire-me-fixed-btn"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={handleClick}
             style={{
                 position: 'fixed',
                 right: 0,
