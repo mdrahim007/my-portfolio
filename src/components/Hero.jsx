@@ -145,6 +145,9 @@ export const Hero = () => {
                 ref={containerRef}
                 style={{
                     zIndex: 10,
+                    minHeight: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
                     paddingTop: 'var(--section-padding)',
                     paddingBottom: 'var(--section-padding)'
                 }}
@@ -152,7 +155,7 @@ export const Hero = () => {
 
 
                 {/* Split Screen Layout */}
-                <div className="hero-grid global-container">
+                <div className="hero-grid global-container" style={{ width: '100%' }}>
                     {/* Left Side: Text Content */}
                     <div className="hero-content-block" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {/* Section eyebrow */}
@@ -279,7 +282,7 @@ export const Hero = () => {
                                 opacity: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0
                             }}
                         >
-                            As a Project Coordinator and Support Manager, I lead the implementation and support teams for the national myGov ITSM project. We help government agencies adopt this solution while ensuring stable operations and reliable support for all our stakeholders.
+                            I am an IT professional currently coordinating the national myGov ITSM project. I lead cross-functional teams to deliver complex software and transform digital services. I am looking to apply my experience to new challenges as a Project Coordinator and future Project Manager.
                         </p>
 
                         <div className="hero-cta-row" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>

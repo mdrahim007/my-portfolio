@@ -271,7 +271,7 @@ export const Experience = () => {
                 }
 
                 .exp-node-num {
-                    font-size: 0.65rem;
+                    font-size: 0.80rem;
                     font-weight: 700;
                     letter-spacing: 0.05em;
                     color: var(--accent);

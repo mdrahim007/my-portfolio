@@ -106,8 +106,9 @@ export const About = () => {
             style={{
                 position: 'relative',
                 display: 'flex',
-                flexDirection: 'column',
+                alignItems: 'center',
                 justifyContent: 'center',
+                minHeight: '100vh',
                 overflow: 'hidden',
             }}
         >

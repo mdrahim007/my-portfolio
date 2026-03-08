@@ -118,7 +118,7 @@ export const BentoGrid = () => {
                             maxWidth: '99%',
                             // textAlign: 'justify',
                         }}>
-                            As a Project Coordinator and Support Manager for the national myGov ITSM initiative, my leadership philosophy is anchored in driving seamless system implementation and reliable service delivery. I believe that successfully onboarding government agencies requires careful requirement gathering, rigorous stakeholder alignment, and proactive IT support. By bridging the gap between the core technology platform and public sector agencies, I ensure smooth adoption and stable daily operations. For me, transparent communication, multi-layered support, and strict SLA adherence are the true drivers of project success.
+                            My approach to leadership is simple: I guide projects from start to finish with clear, honest communication. I believe success comes from aligning stakeholders, gathering accurate requirements, and managing risks before they become issues. By actively supporting my teams, I turn complex technical challenges into smooth, everyday solutions.
                         </p>
                     </article>
 
@@ -164,9 +164,10 @@ export const BentoGrid = () => {
                         <span className="eyebrow" style={{ marginBottom: '2.5rem' }}>Tools & Platforms</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', justifyContent: 'flex-start' }}>
                             {[
-                                'myGov ITSM Ecosystem',
+                                'National myGov Platform',
                                 'National Portal Framework',
-                                'Jira Service Management',
+                                'Jira & Confluence',
+                                'ClickUp',
                                 'MS Excel (Advanced)',
                                 'Wordpress',
                                 'OTRS Support System'
@@ -190,16 +191,16 @@ export const BentoGrid = () => {
                         <span className="eyebrow" style={{ marginBottom: '2.5rem' }}>Core Focus Areas</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', justifyContent: 'flex-start' }}>
                             <div className="glass-inner focus-card" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>System Implementation &amp; Onboarding</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Leading ITSM implementations from requirement gathering to system configuration and user training.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Project Lifecycle Coordination</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>I manage workflows, resources, and timelines to ensure every phase of a software implementation stays on track.</p>
                             </div>
                             <div className="glass-inner focus-card" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Stakeholder Communication &amp; Reporting</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Aligning technical teams and stakeholders using business analysis and data-driven reporting.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Business Analysis & Requirements</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>I translate complex stakeholder needs into clear technical plans so the final product meets its goals.</p>
                             </div>
                             <div className="glass-inner focus-card" style={{ padding: '1.5rem' }}>
-                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>IT Service Management (ITSM)</h4>
-                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>Managing 24/7 support teams and incident protocols to consistently surpass SLAs.</p>
+                                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#FAFAFA' }}>Team Leadership & Mentoring</h4>
+                                <p style={{ color: '#a1a1aa', fontSize: '0.95rem', lineHeight: 1.5, margin: 0 }}>I guide cross-functional teams to maintain high standards and meet project milestones.</p>
                             </div>
                         </div>
                     </article>
