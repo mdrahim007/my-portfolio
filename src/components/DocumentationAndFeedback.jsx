@@ -5,28 +5,55 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Gallery card data ─────────────────────────────────────────────── */
+/* ── Gallery card data (Confidential Frameworks) ──────────────────── */
 const galleryCards = [
     {
         id: 1,
-        title: 'a2i National Portal Project Charter',
-        category: 'Project Initiation',
-        image: 'https://images.unsplash.com/photo-1555529771-447544062c3e?q=80&w=1600&auto=format&fit=crop',
-        alt: 'Project Charter Document',
+        title: 'Stakeholder Alignment Framework',
+        category: 'Communication Strategy',
+        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop', // Group of people meeting around a table
+        alt: 'Blurred Project Framework',
+        modalContent: {
+            purpose: "In national-scale projects, miscommunication is the biggest risk. This framework maps out exactly who needs to know what, and when.",
+            components: [
+                "Audience Matrix: Identifying technical teams, domain experts, and stakeholders.",
+                "Communication Cadence: Structuring daily stand-ups, weekly reviews, and executive briefings.",
+                "Feedback Loops: A standardized process for capturing requirement changes without derailing timelines."
+            ],
+            impact: "Bridges the gap between developers and clients, ensuring everyone moves in the exact same direction."
+        }
     },
     {
         id: 2,
-        title: 'Agile Sprint Delivery Roadmap',
-        category: 'Agile Planning',
-        image: 'https://images.unsplash.com/photo-1618609378039-b572a138dbaa?q=80&w=1600&auto=format&fit=crop',
-        alt: 'Sprint Roadmap Flowchart',
+        title: 'SLA Escalation & Risk Matrix',
+        category: 'Risk Management',
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop', // Data dashboard with red/alert tones
+        alt: 'Blurred Risk Matrix',
+        modalContent: {
+            purpose: "When dealing with digital public services, downtime is not an option. This document is my blueprint for proactive risk mitigation and rapid issue resolution.",
+            components: [
+                "Tiered Support Workflows: Clear guidelines on ticket movement from L1 to core development.",
+                "Trigger Points: Automated alerts for tickets approaching SLA breaches.",
+                "Action Plans: Pre-defined technical responses for critical system outages."
+            ],
+            impact: "Empowers cross-functional teams to act swiftly, consistently maintaining 99% SLA compliance on enterprise portals."
+        }
     },
     {
         id: 3,
-        title: 'Executive Stakeholder Dashboard',
-        category: 'Data Visualization',
+        title: 'Executive Delivery Dashboard',
+        category: 'Data & Reporting',
         image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop',
-        alt: 'Executive Dashboard',
+        alt: 'Blurred Executive Dashboard',
+        modalContent: {
+            purpose: "Leadership needs to see the health of the project at a glance. This dashboard translates complex sprint data into clear business insights.",
+            components: [
+                "Milestone Tracking: Visualizing planned vs. actual delivery dates.",
+                "Resource Allocation: Monitoring team bandwidth and identifying bottlenecks early.",
+                "Quality Metrics: Tracking bug-fix rates and successful deployment percentages."
+            ],
+            impact: "Provides transparent, data-driven progress reports that build trust with executives and project sponsors."
+        }
     },
 ];
 
@@ -69,6 +96,9 @@ export const DocumentationAndFeedback = () => {
     const feedbackSectionRef = useRef(null);
     const cardRef = useRef(null);
     const sectionWrapperRef = useRef(null);
+
+    // Modal State
+    const [selectedDoc, setSelectedDoc] = useState(null);
 
     /* ── Mobile detection ──────────────────────────────────── */
     const [isMobileView, setIsMobileView] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 900);
@@ -185,8 +215,8 @@ export const DocumentationAndFeedback = () => {
                         }}>
                             Documentation <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>Showcase.</span>
                         </h2>
-                        <p className="animate-heading" style={{ color: '#a1a1aa', fontSize: '1.05rem', marginTop: '0', maxWidth: '55ch', lineHeight: 1.6 }}>
-                            A glimpse into the project reports, operational frameworks, and knowledge bases I use to coordinate cross-functional teams and align project delivery. (Sanitized for public viewing).
+                        <p className="animate-heading" style={{ color: '#a1a1aa', fontSize: '1.05rem', marginTop: '0', maxWidth: '65ch', lineHeight: 1.6 }}>
+                            A look at the strategic frameworks, risk matrices, and reporting structures I use to align cross-functional teams and ensure seamless project delivery. (Data sanitized for public viewing).
                         </p>
                     </div>
 
@@ -202,13 +232,16 @@ export const DocumentationAndFeedback = () => {
                         {galleryCards.map((card, i) => (
                             <article
                                 key={card.id}
-                                className="doc-grid-card glass-card"
+                                className="doc-grid-card glass-card interactive-element"
+                                onClick={() => setSelectedDoc(card)}
                                 style={{
                                     display: 'flex',
                                     flexDirection: 'column',
                                     padding: '1.25rem',
                                     paddingBottom: '2rem',
                                     borderRadius: '20px',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease'
                                 }}
                             >
                                 {/* Image Wrapper */}
@@ -227,7 +260,7 @@ export const DocumentationAndFeedback = () => {
                                             width: '100%',
                                             height: '100%',
                                             objectFit: 'cover',
-                                            filter: 'blur(8px) grayscale(40%)',
+                                            filter: 'blur(6px) grayscale(40%)',
                                             opacity: 0.65,
                                             transition: 'all 0.5s ease'
                                         }}
@@ -241,7 +274,7 @@ export const DocumentationAndFeedback = () => {
                                         pointerEvents: 'none'
                                     }} />
 
-                                    {/* Center lock icon */}
+                                    {/* Center lock icon (changes to unlock on hover) */}
                                     <div style={{
                                         position: 'absolute',
                                         inset: 0,
@@ -249,19 +282,25 @@ export const DocumentationAndFeedback = () => {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                                    }} className="doc-card-icon">
+                                    }} className="doc-card-icon-wrap">
                                         <div style={{
                                             width: '64px', height: '64px',
                                             borderRadius: '50%',
                                             background: 'rgba(12,12,12,0.4)',
                                             backdropFilter: 'blur(12px)',
                                             WebkitBackdropFilter: 'blur(12px)',
-                                            border: '1px solid rgba(190,169,142,0.2)',
+                                            border: '1px solid rgba(190,169,142,0.3)',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                            boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.05)'
-                                        }}>
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                            boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.05)',
+                                            transition: 'all 0.3s ease'
+                                        }} className="doc-card-icon">
+                                            {/* Lock Icon */}
+                                            <svg className="icon-lock" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(190,169,142,0.85)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'opacity 0.2s', position: 'absolute' }}>
                                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                            </svg>
+                                            {/* Unlock Icon (hidden by default) */}
+                                            <svg className="icon-unlock" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0, transition: 'opacity 0.2s', position: 'absolute' }}>
+                                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v1" />
                                             </svg>
                                         </div>
                                     </div>
@@ -429,15 +468,25 @@ export const DocumentationAndFeedback = () => {
                             }
                             
                             /* Hover effects for doc cards */
+                            .doc-grid-card:hover {
+                                transform: translateY(-6px);
+                            }
                             .doc-grid-card:hover .doc-card-bg-img {
-                                opacity: 0.85 !important;
-                                filter: blur(4px) grayscale(20%) !important;
+                                opacity: 0.8 !important;
+                                filter: blur(6px) grayscale(20%) !important;
                                 transform: scale(1.05);
                             }
                             
-                            .doc-grid-card:hover .doc-card-icon {
+                            .doc-grid-card:hover .doc-card-icon-wrap {
                                 transform: scale(1.1) translateY(-4px);
                             }
+                            .doc-grid-card:hover .doc-card-icon {
+                                background: rgba(190,169,142,0.15) !important;
+                                border-color: rgba(190,169,142,0.6) !important;
+                                box-shadow: 0 0 30px rgba(190,169,142,0.3), inset 0 2px 0 rgba(255,255,255,0.1) !important;
+                            }
+                            .doc-grid-card:hover .icon-lock { opacity: 0 !important; }
+                            .doc-grid-card:hover .icon-unlock { opacity: 1 !important; transform: scale(1.1); }
                         `}</style>
 
                         {/* ── Premium controls row ──────────────────────── */}
@@ -626,6 +675,112 @@ export const DocumentationAndFeedback = () => {
                     .glass-testimonial > div:last-child > div > p {
                         flex-wrap: wrap !important;
                     }
+                }
+            `}} />
+
+            {/* ------------------------------------------------------------------ */}
+            {/* DOCUMENT MODAL OVERLAY                                             */}
+            {/* ------------------------------------------------------------------ */}
+            {selectedDoc && (
+                <div
+                    className="doc-modal-overlay"
+                    onClick={() => setSelectedDoc(null)}
+                    style={{
+                        position: 'fixed', inset: 0, zIndex: 9999,
+                        background: 'rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: '2rem',
+                        animation: 'modalFadeIn 0.3s ease forwards'
+                    }}
+                >
+                    <div
+                        className="doc-modal-content glass-card"
+                        onClick={(e) => e.stopPropagation()} // prevent click-through
+                        style={{
+                            width: '100%', maxWidth: '680px',
+                            background: '#0c0c0c',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            borderRadius: '24px',
+                            padding: isMobileView ? '2.5rem 2rem' : '3.5rem',
+                            position: 'relative',
+                            boxShadow: '0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(190,169,142,0.05) inset',
+                            animation: 'modalSlideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards'
+                        }}
+                    >
+                        {/* Close button */}
+                        <button
+                            onClick={() => setSelectedDoc(null)}
+                            className="interactive-element"
+                            style={{
+                                position: 'absolute', top: '1.5rem', right: '1.5rem',
+                                width: '40px', height: '40px', borderRadius: '50%',
+                                background: 'rgba(255,255,255,0.05)', border: 'none',
+                                color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                cursor: 'pointer', transition: 'all 0.2s',
+                            }}
+                            onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff'; }}
+                            onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; }}
+                        >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+
+                        {/* Modal Header */}
+                        <div style={{ marginBottom: '2.5rem' }}>
+                            <span className="eyebrow" style={{ color: 'var(--accent)', marginBottom: '0.75rem', fontSize: '0.8rem' }}>
+                                {selectedDoc.category} &nbsp;—&nbsp; RESTRICTED
+                            </span>
+                            <h3 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#FAFAFA', lineHeight: 1.2, margin: 0 }}>
+                                {selectedDoc.title}
+                            </h3>
+                        </div>
+
+                        {/* Modal Body */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                            {/* Purpose */}
+                            <div>
+                                <h4 style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>The Purpose</h4>
+                                <p style={{ color: 'rgba(250,250,250,0.85)', fontSize: '1.05rem', lineHeight: 1.6, margin: 0 }}>
+                                    {selectedDoc.modalContent.purpose}
+                                </p>
+                            </div>
+
+                            {/* Key Components */}
+                            <div>
+                                <h4 style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>Key Components</h4>
+                                <ul style={{ margin: 0, paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                    {selectedDoc.modalContent.components.map((bullet, idx) => {
+                                        const [boldPart, rest] = bullet.split(': ');
+                                        return (
+                                            <li key={idx} style={{ color: 'rgba(250,250,250,0.7)', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                                                <strong style={{ color: '#bea98e', fontWeight: 600 }}>{boldPart}</strong>{rest ? `: ${rest}` : ''}
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+
+                            {/* Impact */}
+                            <div style={{ marginTop: '0.5rem', padding: '1.5rem', background: 'rgba(190,169,142,0.05)', borderRadius: '12px', borderLeft: '3px solid var(--accent)' }}>
+                                <h4 style={{ color: 'var(--accent)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>The Impact</h4>
+                                <p style={{ color: '#fff', fontSize: '1rem', lineHeight: 1.5, margin: 0, fontWeight: 500 }}>
+                                    {selectedDoc.modalContent.impact}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes modalFadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes modalSlideUp {
+                    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+                    to { opacity: 1; transform: translateY(0) scale(1); }
                 }
             `}} />
 
