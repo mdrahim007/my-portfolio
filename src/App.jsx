@@ -16,12 +16,15 @@ import { WhatsAppButton } from './components/BackToTop';
 import { TiltEffect } from './components/TiltEffect';
 import { IntroScreen } from './components/IntroScreen';
 import { HireMeButton } from './components/HireMeButton';
+import { ContactModal } from './components/ContactModal';
 
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   useEffect(() => {
     // ─── Lenis smooth scroll ────────────────────────────────────────────────
     const lenis = new Lenis({
@@ -51,7 +54,8 @@ function App() {
     <>
       {showIntro && <IntroScreen onComplete={() => setShowIntro(false)} />}
       <Navbar />
-      <HireMeButton />
+      <HireMeButton onClick={() => setIsContactModalOpen(true)} />
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
       <CustomCursor />
       <TiltEffect />
       <CanvasBackground />

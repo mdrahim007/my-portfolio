@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-export const HireMeButton = () => {
+export const HireMeButton = ({ onClick }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const timeoutRef = useRef(null);
@@ -44,8 +44,8 @@ export const HireMeButton = () => {
     };
 
     const handleClick = (e) => {
+        e.preventDefault(); // Prevent jump to #contact
         if (isMobile && !isExpanded) {
-            e.preventDefault(); // Prevent jump to #contact
             setIsExpanded(true);
 
             // Auto-collapse after 3 seconds if they don't tap again
@@ -53,8 +53,10 @@ export const HireMeButton = () => {
             timeoutRef.current = setTimeout(() => {
                 setIsExpanded(false);
             }, 3000);
+        } else {
+            // Trigger the modal if expanded (or on desktop)
+            if (onClick) onClick();
         }
-        // If already expanded (or on desktop), let the link function normally
     };
 
     const glassStyle = {
@@ -67,8 +69,7 @@ export const HireMeButton = () => {
     };
 
     return (
-        <a
-            href="#contact"
+        <button
             className="interactive-element hire-me-fixed-btn"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -176,6 +177,6 @@ export const HireMeButton = () => {
                     }
                 }
             `}</style>
-        </a>
+        </button>
     );
 };

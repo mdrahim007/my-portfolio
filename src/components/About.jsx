@@ -6,9 +6,9 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
-    { value: '5+', label: 'Years Experience' },
-    { value: '75+', label: 'Team Members' },
-    { value: '98%', label: 'SLA Compliance' },
+    { value: '5+', label: 'YEARS IT EXPERIENCE' },
+    { value: '25+', label: 'TEAM MEMBERS' },
+    { value: '99%', label: 'SLA COMPLIANCE' },
 ];
 
 export const About = () => {
@@ -286,7 +286,7 @@ export const About = () => {
                             color: 'var(--accent)',
                             opacity: 0.9,
                         }}>
-                            Professional Summary
+                            PROFESSIONAL SUMMARY
                         </span>
                     </div>
 
@@ -295,19 +295,9 @@ export const About = () => {
                         color: 'rgba(250,250,250,0.65)',
                         marginBottom: '1.25rem',
                         lineHeight: 1.8,
-                        maxWidth: '55ch',
+                        maxWidth: '100%',
                     }}>
-                        With a foundation built in high-stakes IT service delivery, I have successfully transitioned into elite Project Management, currently orchestrating technical deployments for the national myGov ITSM ecosystem.
-                    </p>
-
-                    <p className="about-text-block" style={{
-                        fontSize: isMobile ? '0.95rem' : '1.05rem',
-                        color: 'rgba(250,250,250,0.65)',
-                        marginBottom: '1.25rem',
-                        lineHeight: 1.8,
-                        maxWidth: '55ch',
-                    }}>
-                        My approach to project management is deeply rooted in Agile operational reality. Having managed front-line support teams, I anticipate deployment frictions before they occur, bridging the gap between strategic business objectives and technical execution through rigorous planning, transparent stakeholder reporting, and proactive risk mitigation.
+                        With 5 years of experience in high-stakes IT service delivery, I specialize in coordinating national-scale digital transformations. Having managed front-line support and implementation for platforms like the myGov ITSM ecosystem and the National Portal, I bring a unique, ground-level operational reality to enterprise Project Management.
                     </p>
 
                     <p className="about-text-block" style={{
@@ -315,9 +305,9 @@ export const About = () => {
                         color: 'rgba(250,250,250,0.65)',
                         marginBottom: '2rem',
                         lineHeight: 1.8,
-                        maxWidth: '55ch',
+                        maxWidth: '100%',
                     }}>
-                        Beyond simply hitting launch dates, my passion lies in optimizing the entire delivery lifecycle—from initial requirement gathering (BRDs) to establishing analytical frameworks that ensure long-term, sustainable product success across massive digital ecosystems.
+                        I don't just track timelines; I bridge the gap between complex business requirements and technical execution. By aligning cross-functional teams, establishing transparent reporting frameworks, and proactively mitigating risks, I ensure software is delivered seamlessly and sustainably.
                     </p>
 
                     {/* ── Stats Highlights Row ── */}

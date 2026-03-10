@@ -8,20 +8,31 @@ export const CVModal = ({ open, onClose }) => {
     // load each open without re-rendering on every render cycle (no flashing)
     const [iframeKey, setIframeKey] = useState(0);
 
-    // Lock body scroll while open, force iframe reload, and hide custom cursor
+    // Robut scroll-lock: fixes body in place so jumping/scrolling is absolutely impossible
     useEffect(() => {
         if (open) {
-            document.body.style.overflow = 'hidden';
+            // Save the current scroll position
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.width = '100%';
+
             document.body.classList.add('hide-custom-cursor');
-            setIframeKey(Date.now()); // Unique cache-buster on every open
+            setIframeKey(Date.now());
         } else {
-            document.body.style.overflow = '';
+            // Retrieve scroll position and restore
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.width = '';
+
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
             document.body.classList.remove('hide-custom-cursor');
         }
-        return () => {
-            document.body.style.overflow = '';
-            document.body.classList.remove('hide-custom-cursor');
-        };
     }, [open]);
 
     // Close on Escape

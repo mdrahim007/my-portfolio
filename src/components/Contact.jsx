@@ -17,20 +17,9 @@ const EMAILJS_TEMPLATE_ID = 'template_y5387u4';  // e.g. 'template_xyz456'
 const EMAILJS_PUBLIC_KEY = 'i4oHur5yLcVD28eyI';   // e.g. 'uABCDEFGHIJKLMNOP'
 // ────────────────────────────────────────────────────────────────────────────
 
-const VISITOR_TYPES = [
-    { value: '', label: 'Select Visitor Type' },
-    { value: 'Recruiter', label: 'Recruiter / HR Professional' },
-    { value: 'Business', label: 'Business Partner / Client' },
-    { value: 'Government', label: 'Government / Public Sector' },
-    { value: 'Developer', label: 'Fellow Developer / Technologist' },
-    { value: 'General', label: 'General Visitor' },
-    { value: 'Other', label: 'Other' },
-];
-
 const INITIAL_FORM = {
     from_name: '',
     from_email: '',
-    visitor_type: '',
     subject: '',
     message: '',
 };
@@ -180,22 +169,10 @@ export const Contact = () => {
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
     const [errorMsg, setErrorMsg] = useState('');
     const [focusedField, setFocusedField] = useState(null);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const sectionRef = useRef(null);
     const formRef = useRef(null);
     const infoRef = useRef(null);
-    const dropdownRef = useRef(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsDropdownOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
 
     useScrollReveal(sectionRef);
 
@@ -247,7 +224,6 @@ export const Contact = () => {
         if (!formData.from_name.trim()) e.from_name = 'Full name is required';
         if (!formData.from_email) e.from_email = 'Email address is required';
         else if (!/^\S+@\S+\.\S+$/.test(formData.from_email)) e.from_email = 'Please enter a valid email';
-        if (!formData.visitor_type) e.visitor_type = 'Please select your visitor type';
         if (!formData.subject.trim()) e.subject = 'Subject is required';
         if (!formData.message.trim()) e.message = 'Message is required';
         else if (formData.message.trim().length < 20) e.message = 'Please provide at least 20 characters';
@@ -270,7 +246,7 @@ export const Contact = () => {
                 {
                     from_name: formData.from_name,
                     from_email: formData.from_email,
-                    visitor_type: formData.visitor_type,
+                    visitor_type: 'N/A',
                     subject: formData.subject,
                     message: formData.message,
                     reply_to: formData.from_email,
@@ -341,16 +317,16 @@ export const Contact = () => {
                                 lineHeight: 1.05,
                             }}
                         >
-                            Let's Build <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>Together.</span>
+                            Let's <span style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 400 }}>Connect.</span>
                         </h2>
-                        <p className="animate-heading" style={{ color: 'rgba(250,250,250,0.6)', marginBottom: '0.8rem', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '45ch' }}>
-                            I partner with visionary organizations to architect robust digital ecosystems, optimize enterprise workflows, and elevate technical operations. If you are looking for leadership that bridges the gap between complex infrastructure and seamless user experiences, let's explore how my expertise aligns with your objectives.
+                        <p className="animate-heading" style={{ color: 'rgba(250,250,250,0.6)', marginBottom: '0.7rem', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '100%' }}>
+                            I am currently open to full-time Project Coordinating/Management and IT leadership opportunities. If your organization is looking for someone who can bridge the gap between complex technical infrastructure and seamless software delivery, I would love to connect and discuss how my experience can add long-term value to your team.
                         </p>
 
                         {/* Contact Channel Cards */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem', flex: 1 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1.5rem', flex: 1 }}>
                             {/* Email */}
-                            <a href="mailto:mdrahim.cse@gmail.com" className="contact-info-card glass-card interactive-element" style={{ textDecoration: 'none', padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.2rem', position: 'relative', flex: 1 }}>
+                            <a href="mailto:mdrahim.cse@gmail.com" className="contact-info-card glass-card interactive-element" style={{ textDecoration: 'none', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1.2rem', position: 'relative', flex: 1 }}>
                                 <div className="card-icon" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(12,12,12,0.4)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(250,250,250,0.7)', transition: 'all 0.4s ease', flexShrink: 0 }}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                                 </div>
@@ -361,24 +337,24 @@ export const Contact = () => {
                             </a>
 
                             {/* LinkedIn */}
-                            <a href="https://www.linkedin.com/in/abrahim007" target="_blank" rel="noopener noreferrer" className="contact-info-card glass-card interactive-element" style={{ textDecoration: 'none', padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.2rem', position: 'relative', flex: 1 }}>
+                            <a href="https://linkedin.com/in/abrahim007" target="_blank" rel="noopener noreferrer" className="contact-info-card glass-card interactive-element" style={{ textDecoration: 'none', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1.2rem', position: 'relative', flex: 1 }}>
                                 <div className="card-icon" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(12,12,12,0.4)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(250,250,250,0.7)', transition: 'all 0.4s ease', flexShrink: 0 }}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
                                 </div>
                                 <div>
-                                    <span className="eyebrow" style={{ marginBottom: '0.2rem', fontSize: '0.7rem' }}>Professional Network</span>
-                                    <h4 style={{ color: '#FAFAFA', fontSize: '1.05rem', fontWeight: 500, letterSpacing: '0.02em', margin: 0 }}>Connect on LinkedIn</h4>
+                                    <span className="eyebrow" style={{ marginBottom: '0.2rem', fontSize: '0.7rem' }}>PROFESSIONAL NETWORK</span>
+                                    <h4 style={{ color: '#FAFAFA', fontSize: '1.05rem', fontWeight: 500, letterSpacing: '0.02em', margin: 0 }}>linkedin.com/in/abrahim007</h4>
                                 </div>
                             </a>
 
                             {/* Phone */}
-                            <a href="tel:+8801722108281" className="contact-info-card glass-card interactive-element" style={{ textDecoration: 'none', padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1.2rem', position: 'relative', flex: 1 }}>
+                            <a href="tel:+8801722108281" className="contact-info-card glass-card interactive-element" style={{ textDecoration: 'none', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1.2rem', position: 'relative', flex: 1 }}>
                                 <div className="card-icon" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(12,12,12,0.4)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(250,250,250,0.7)', transition: 'all 0.4s ease', flexShrink: 0 }}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                                 </div>
                                 <div>
-                                    <span className="eyebrow" style={{ marginBottom: '0.2rem', fontSize: '0.7rem' }}>Direct Line</span>
-                                    <h4 style={{ color: '#FAFAFA', fontSize: '1.05rem', fontWeight: 500, letterSpacing: '0.02em', margin: 0 }}>+880 1722 108 281</h4>
+                                    <span className="eyebrow" style={{ marginBottom: '0.2rem', fontSize: '0.7rem' }}>DIRECT LINE</span>
+                                    <h4 style={{ color: '#FAFAFA', fontSize: '1.05rem', fontWeight: 500, letterSpacing: '0.02em', margin: 0 }}>+880 1722 108 281 (WhatsApp)</h4>
                                 </div>
                             </a>
                         </div>
@@ -394,7 +370,7 @@ export const Contact = () => {
                             <div style={{ position: 'absolute', top: 0, right: 0, width: '30%', height: '30%', borderTop: '1px solid rgba(190,169,142,0.3)', borderRight: '1px solid rgba(190,169,142,0.3)', borderTopRightRadius: '24px', pointerEvents: 'none' }} />
 
                             <h3 style={{ fontSize: '1.4rem', color: '#FAFAFA', marginBottom: '0.4rem', letterSpacing: '-0.01em' }}>Send a Message</h3>
-                            <p style={{ color: 'rgba(250,250,250,0.4)', fontSize: '0.82rem', marginBottom: '3rem', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>All inquiries welcome — recruiters, partners, and visitors alike.</p>
+                            <p style={{ color: 'rgba(190,169,142,0.85)', fontSize: '0.85rem', marginBottom: '3rem', fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}>All inquiries welcome — recruiters, partners, and visitors alike.</p>
 
                             {/* ─── SUCCESS STATE ─── */}
                             {submitStatus === 'success' ? (
@@ -402,152 +378,21 @@ export const Contact = () => {
                             ) : (
                                 <form ref={formRef} onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '2.2rem', flex: 1 }}>
 
-                                    {/* Row 1: Full Name + Visitor Type */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: isMobileView ? '1fr' : '1fr 1fr', gap: isMobileView ? '2.2rem' : '2rem' }}>
-                                        <FloatField id="from_name" label="Full Name" error={errors.from_name} focused={focusedField === 'from_name'} hasValue={!!formData.from_name}>
-                                            <input
-                                                id="from_name"
-                                                type="text"
-                                                name="from_name"
-                                                value={formData.from_name}
-                                                onChange={handleChange}
-                                                onFocus={() => setFocusedField('from_name')}
-                                                onBlur={() => setFocusedField(null)}
-                                                autoComplete="name"
-                                                className="interactive-element"
-                                                style={inputBaseStyle(focusedField === 'from_name', errors.from_name)}
-                                            />
-                                        </FloatField>
-
-                                        {/* Visitor Type Custom Dropdown */}
-                                        <div className="form-field-wrapper" style={{ position: 'relative', zIndex: isDropdownOpen ? 100 : 1 }} ref={dropdownRef}>
-                                            <label style={{
-                                                position: 'absolute',
-                                                top: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? '-1.2rem' : '0.5rem',
-                                                left: 0,
-                                                fontSize: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? '0.72rem' : '1rem',
-                                                color: errors.visitor_type ? '#ef4444' : (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? 'var(--accent)' : 'rgba(250,250,250,0.4)',
-                                                textTransform: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? 'uppercase' : 'none',
-                                                letterSpacing: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? '0.1em' : 'normal',
-                                                pointerEvents: 'none',
-                                                transition: 'all 0.3s ease',
-                                                fontFamily: (focusedField === 'visitor_type' || isDropdownOpen || formData.visitor_type) ? 'var(--font-body)' : 'var(--font-heading)',
-                                                zIndex: 1,
-                                            }}>
-                                                Visitor Type
-                                            </label>
-
-                                            <div
-                                                className="interactive-element"
-                                                onClick={() => {
-                                                    setIsDropdownOpen(!isDropdownOpen);
-                                                    setFocusedField(isDropdownOpen ? null : 'visitor_type');
-                                                }}
-                                                style={{
-                                                    ...inputBaseStyle(focusedField === 'visitor_type' || isDropdownOpen, errors.visitor_type),
-                                                    color: 'var(--text-primary)',
-                                                    cursor: 'pointer',
-                                                    position: 'relative',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-between',
-                                                    paddingRight: '0',
-                                                    userSelect: 'none'
-                                                }}
-                                            >
-                                                <span style={{
-                                                    color: formData.visitor_type === '' ? 'transparent' : 'var(--text-primary)',
-                                                    transition: 'color 0.3s ease'
-                                                }}>
-                                                    {formData.visitor_type ? VISITOR_TYPES.find(v => v.value === formData.visitor_type)?.label : 'Select Visitor Type'}
-                                                </span>
-                                                <svg
-                                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                                                    style={{
-                                                        transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                                                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                                        color: 'rgba(250,250,250,0.4)'
-                                                    }}
-                                                >
-                                                    <polyline points="6 9 12 15 18 9" />
-                                                </svg>
-
-                                                {/* Dropdown Menu Options */}
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    top: 'calc(100% + 8px)',
-                                                    left: 0,
-                                                    right: 0,
-                                                    background: 'rgba(15, 15, 20, 0.95)',
-                                                    backdropFilter: 'blur(16px)',
-                                                    WebkitBackdropFilter: 'blur(16px)',
-                                                    border: '1px solid rgba(190,169,142,0.15)',
-                                                    borderRadius: '12px',
-                                                    boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-                                                    opacity: isDropdownOpen ? 1 : 0,
-                                                    visibility: isDropdownOpen ? 'visible' : 'hidden',
-                                                    pointerEvents: isDropdownOpen ? 'auto' : 'none',
-                                                    transform: isDropdownOpen ? 'translateY(0)' : 'translateY(-10px)',
-                                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                                    zIndex: 50,
-                                                    overflow: 'hidden',
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                }}>
-                                                    {VISITOR_TYPES.filter(v => v.value !== '').map(({ value, label }) => (
-                                                        <div
-                                                            key={value}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleChange({ target: { name: 'visitor_type', value } });
-                                                                setIsDropdownOpen(false);
-                                                                setFocusedField(null);
-                                                            }}
-                                                            style={{
-                                                                padding: '0.8rem 1.2rem',
-                                                                fontSize: '0.9rem',
-                                                                color: formData.visitor_type === value ? '#bea98e' : 'rgba(250,250,250,0.8)',
-                                                                background: formData.visitor_type === value ? 'rgba(190,169,142,0.1)' : 'transparent',
-                                                                cursor: 'pointer',
-                                                                transition: 'all 0.2s ease',
-                                                                borderBottom: '1px solid rgba(255,255,255,0.03)',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                gap: '0.8rem'
-                                                            }}
-                                                            onMouseOver={(e) => {
-                                                                if (formData.visitor_type !== value) {
-                                                                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                                                                    e.currentTarget.style.color = '#FAFAFA';
-                                                                }
-                                                            }}
-                                                            onMouseOut={(e) => {
-                                                                if (formData.visitor_type !== value) {
-                                                                    e.currentTarget.style.background = 'transparent';
-                                                                    e.currentTarget.style.color = 'rgba(250,250,250,0.8)';
-                                                                }
-                                                            }}
-                                                        >
-                                                            {/* Checkmark placeholder for selection */}
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                                                                style={{
-                                                                    opacity: formData.visitor_type === value ? 1 : 0,
-                                                                    color: '#bea98e',
-                                                                    transform: formData.visitor_type === value ? 'scale(1)' : 'scale(0.5)',
-                                                                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
-                                                                }}
-                                                            >
-                                                                <polyline points="20 6 9 17 4 12" />
-                                                            </svg>
-                                                            {label}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {errors.visitor_type && <span style={{ color: '#ef4444', fontSize: '0.75rem', position: 'absolute', bottom: '-1.4rem', left: 0 }}>{errors.visitor_type}</span>}
-                                        </div>
-                                    </div>
+                                    {/* Row 1: Full Name */}
+                                    <FloatField id="from_name" label="Full Name" error={errors.from_name} focused={focusedField === 'from_name'} hasValue={!!formData.from_name}>
+                                        <input
+                                            id="from_name"
+                                            type="text"
+                                            name="from_name"
+                                            value={formData.from_name}
+                                            onChange={handleChange}
+                                            onFocus={() => setFocusedField('from_name')}
+                                            onBlur={() => setFocusedField(null)}
+                                            autoComplete="name"
+                                            className="interactive-element"
+                                            style={inputBaseStyle(focusedField === 'from_name', errors.from_name)}
+                                        />
+                                    </FloatField>
 
                                     {/* Row 2: Email */}
                                     <FloatField id="from_email" label="Your Email Address" error={errors.from_email} focused={focusedField === 'from_email'} hasValue={!!formData.from_email}>
@@ -566,7 +411,7 @@ export const Contact = () => {
                                     </FloatField>
 
                                     {/* Row 3: Subject */}
-                                    <FloatField id="subject" label="Subject / Role / Purpose" error={errors.subject} focused={focusedField === 'subject'} hasValue={!!formData.subject}>
+                                    <FloatField id="subject" label="Subject / Purpose" error={errors.subject} focused={focusedField === 'subject'} hasValue={!!formData.subject}>
                                         <input
                                             id="subject"
                                             type="text"
@@ -617,7 +462,7 @@ export const Contact = () => {
                                     </div>
 
                                     {/* Submit Row */}
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '0.5rem', gap: '1rem', flexWrap: 'wrap' }}>
                                         {/* Error banner */}
                                         {submitStatus === 'error' && (
                                             <p style={{ color: '#f87171', fontSize: '0.82rem', margin: 0, flex: 1, lineHeight: 1.5 }}>
@@ -696,8 +541,8 @@ export const Contact = () => {
                         <a href="https://www.linkedin.com/in/abrahim007" target="_blank" rel="noreferrer" className="interactive-element" style={{ color: 'rgba(250,250,250,0.5)', transition: 'color 0.3s ease, transform 0.3s ease' }} onMouseOver={e => { e.currentTarget.style.color = '#bea98e'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseOut={e => { e.currentTarget.style.color = 'rgba(250,250,250,0.5)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
                         </a>
-                        <a href="https://github.com" target="_blank" rel="noreferrer" className="interactive-element" style={{ color: 'rgba(250,250,250,0.5)', transition: 'color 0.3s ease, transform 0.3s ease' }} onMouseOver={e => { e.currentTarget.style.color = '#bea98e'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseOut={e => { e.currentTarget.style.color = 'rgba(250,250,250,0.5)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
+                        <a href="https://www.facebook.com/abrahim007" target="_blank" rel="noreferrer" className="interactive-element" style={{ color: 'rgba(250,250,250,0.5)', transition: 'color 0.3s ease, transform 0.3s ease' }} onMouseOver={e => { e.currentTarget.style.color = '#bea98e'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseOut={e => { e.currentTarget.style.color = 'rgba(250,250,250,0.5)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                         </a>
                         <a href="https://twitter.com" target="_blank" rel="noreferrer" className="interactive-element" style={{ color: 'rgba(250,250,250,0.5)', transition: 'color 0.3s ease, transform 0.3s ease' }} onMouseOver={e => { e.currentTarget.style.color = '#bea98e'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseOut={e => { e.currentTarget.style.color = 'rgba(250,250,250,0.5)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" /></svg>

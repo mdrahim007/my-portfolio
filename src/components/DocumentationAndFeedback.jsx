@@ -60,36 +60,32 @@ const galleryCards = [
 const testimonials = [
     {
         id: 1,
-        quote: "Abdur Rahim's project management completely transformed our delivery lifecycle. His ability to align cross-functional teams, enforce agile ceremonies, and communicate progress to stakeholders saved us months of friction.",
-        author: "Sarah Jenkins",
-        role: "VP of Product",
-        company: "myGov Digital Services",
-        type: "Stakeholder Feedback"
+        quote: "Data-driven and deeply strategic. Abdur Rahim knows exactly how to balance strict project timelines with the flexibility required to navigate complex, large-scale government technology deployments.",
+        author: "Md. Moniruzzaman",
+        role: "Project Director & CTO",
+        type: "EXECUTIVE FEEDBACK"
     },
     {
         id: 2,
-        quote: "Before Abdur took over coordination, our development sprints were siloed and chaotic. He introduced a structured roadmap and risk mitigation framework that ensured we hit every critical milestone on time.",
-        author: "Michael Chang",
-        role: "Lead Technical Architect",
-        company: "myGov ITSM Project",
-        type: "Peer Feedback"
+        quote: "Abdur Rahim has a rare ability to translate complex government requirements into clear, actionable technical sprints. His coordination on the myGov ITSM project ensured that both our technical teams and government stakeholders were always aligned.",
+        author: "Project Sponsor",
+        role: "E-Governance Initiatives",
+        type: "STAKEHOLDER ALIGNMENT"
     },
     {
         id: 3,
-        quote: "It's rare to find a PM who handles both the technical scope and stakeholder expectations so effortlessly. His flawless reporting and Business Requirement Documents (BRDs) kept the entire joint venture aligned.",
-        author: "Alex Rivera",
-        role: "Enterprise Client",
-        company: "National Portal Framework",
-        type: "Customer Feedback"
+        quote: "Leading a cross-functional team of over 25 members is no easy task, but Abdur Rahim managed our support and implementation units seamlessly. His focus on process optimization is the reason we consistently maintained our 99% SLA target.",
+        author: "Operations Head",
+        role: "IT Service Management (ITSM)",
+        type: "TEAM LEADERSHIP"
     },
     {
         id: 4,
-        quote: "Data-driven and deeply strategic. Abdur knows exactly how to balance strict project timelines with the flexibility required to navigate complex government technology deployments.",
-        author: "Elena Rostova",
-        role: "Program Director",
-        company: "Government Technology Division",
-        type: "Executive Feedback"
-    }
+        quote: "Whether it was handling the National Portal onboarding or managing critical system upgrades, Abdur Rahim's proactive risk management caught problems long before they impacted the live environment. He brings genuine stability to chaotic deployments.",
+        author: "Senior Solutions Architect",
+        role: "Digital Transformation Division",
+        type: "RISK MANAGEMENT"
+    },
 ];
 
 export const DocumentationAndFeedback = () => {
@@ -99,6 +95,29 @@ export const DocumentationAndFeedback = () => {
 
     // Modal State
     const [selectedDoc, setSelectedDoc] = useState(null);
+
+    // Prevent body scroll when modal is open without jumping to top
+    useEffect(() => {
+        if (selectedDoc) {
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.width = '100%';
+        } else {
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.width = '';
+
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+        }
+    }, [selectedDoc]);
 
     /* ── Mobile detection ──────────────────────────────────── */
     const [isMobileView, setIsMobileView] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 900);
@@ -781,6 +800,48 @@ export const DocumentationAndFeedback = () => {
                 @keyframes modalSlideUp {
                     from { opacity: 0; transform: translateY(20px) scale(0.98); }
                     to { opacity: 1; transform: translateY(0) scale(1); }
+                }
+
+                @media (max-width: 600px) {
+                    .doc-modal-overlay {
+                        padding: 1rem !important;
+                    }
+                    .doc-modal-content {
+                        padding: 1.5rem !important;
+                        max-height: 90vh;
+                        overflow-y: auto;
+                    }
+                    /* Custom scrollbar for the modal */
+                    .doc-modal-content::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    .doc-modal-content::-webkit-scrollbar-track {
+                        background: rgba(0,0,0,0.2);
+                        border-radius: 4px;
+                    }
+                    .doc-modal-content::-webkit-scrollbar-thumb {
+                        background: rgba(190,169,142,0.3);
+                        border-radius: 4px;
+                    }
+                    .doc-modal-content::-webkit-scrollbar-thumb:hover {
+                        background: rgba(190,169,142,0.5);
+                    }
+                    .doc-modal-content > button {
+                        top: 1rem !important;
+                        right: 1rem !important;
+                        width: 32px !important;
+                        height: 32px !important;
+                    }
+                    .doc-modal-content h3 {
+                        font-size: 1.25rem !important;
+                        padding-right: 2rem; /* make room for close btn */
+                    }
+                    .doc-modal-content p {
+                        font-size: 0.95rem !important;
+                    }
+                    .doc-modal-content ul li {
+                        font-size: 0.9rem !important;
+                    }
                 }
             `}} />
 
