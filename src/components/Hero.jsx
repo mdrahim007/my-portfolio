@@ -290,6 +290,14 @@ export const Hero = () => {
                                 href="#work"
                                 ref={buttonRef}
                                 className="interactive-element hero-btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const targetElement = document.getElementById('work');
+                                    if (targetElement) {
+                                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                                        window.history.replaceState(null, null, window.location.pathname);
+                                    }
+                                }}
                                 style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',

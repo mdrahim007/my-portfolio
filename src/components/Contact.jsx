@@ -550,6 +550,14 @@ export const Contact = () => {
                     </div>
                     <div style={{ alignSelf: 'center' }}>
                         <a href="#home" className="interactive-element" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', color: '#bea98e', textDecoration: 'none', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.6rem 1.2rem', border: '1px solid rgba(190,169,142,0.25)', borderRadius: '100px', transition: 'all 0.3s ease' }}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const targetElement = document.getElementById('home');
+                                if (targetElement) {
+                                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                                    window.history.replaceState(null, null, window.location.pathname);
+                                }
+                            }}
                             onMouseOver={e => { e.currentTarget.style.background = 'rgba(190,169,142,0.1)'; e.currentTarget.style.borderColor = 'rgba(190,169,142,0.5)'; }}
                             onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(190,169,142,0.25)'; }}
                         >

@@ -77,7 +77,17 @@ const NavItem = ({ label, href, Icon, isActive, scrolled, onClick, isMobile }) =
             aria-current={isActive ? 'page' : undefined}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            onClick={onClick}
+            onClick={(e) => {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    // Provide fallback history state replacement to ensure completely clean URL
+                    window.history.replaceState(null, null, window.location.pathname);
+                }
+                if (onClick) onClick(e);
+            }}
             style={{
                 textDecoration: 'none',
                 display: 'inline-flex',
