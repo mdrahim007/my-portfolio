@@ -37,6 +37,34 @@ body {
   touch-action: none !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   CUSTOM PREMIUM SCROLLBAR
+   ═══════════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px; /* For horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d5c09e;
+  border-radius: 10px;
+  border: 2px solid #0a0a0a; /* Creates padding around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c3af8e; /* Slightly darker on hover */
+}
+
+/* Firefox fallback */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d5c09e #0a0a0a;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
@@ -45,6 +73,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   line-height: 1.6;
+}
+
+/* Hardcode modal overlay background to prevent Chrome cursor hover glitch */
+.modal-overlay-fixed {
+  background: rgba(5, 5, 8, 0.85) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  transition: none !important;
 }
 
 h1 {
@@ -174,6 +210,11 @@ h6 {
     transform 0.3s ease;
   position: relative;
   overflow: hidden;
+  /* Fix for backdrop-filter rendering bug in Chrome when children have transitions */
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @supports (backdrop-filter: blur(1px)) {
@@ -288,6 +329,10 @@ h6 {
   padding: 3rem;
   position: relative;
   overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @supports (backdrop-filter: blur(1px)) {

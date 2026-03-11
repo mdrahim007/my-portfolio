@@ -46,8 +46,7 @@ export const CustomCursor = () => {
             if (isInteractive) {
                 gsap.to(cursor, {
                     scale: 3,
-                    backgroundColor: 'var(--text-primary)', // White
-                    mixBlendMode: 'difference', // Creates the "reverse color" effect against light backgrounds
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjusted for visibility without mix-blend-mode
                     duration: 0.3,
                     ease: 'power2.out'
                 });
@@ -69,7 +68,6 @@ export const CustomCursor = () => {
                 gsap.to(cursor, {
                     scale: 1,
                     backgroundColor: 'rgba(255, 255, 255, 1)',
-                    mixBlendMode: 'normal',
                     duration: 0.3,
                     ease: 'power2.out'
                 });
@@ -115,7 +113,6 @@ export const CustomCursor = () => {
                 marginTop: '-6px',
                 backgroundColor: 'rgba(255, 255, 255, 1)',
                 borderRadius: '50%',
-                mixBlendMode: 'difference',
                 pointerEvents: 'none',
                 zIndex: 999999,
                 transform: 'translate(-100px, -100px)', // Start offscreen

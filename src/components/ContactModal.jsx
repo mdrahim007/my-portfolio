@@ -262,13 +262,14 @@ export const ContactModal = ({ isOpen, onClose }) => {
             {/* Dark Frosted Glass Overlay Background */}
             <div
                 onClick={onClose}
+                className="modal-overlay-fixed"
                 style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'rgba(5, 5, 8, 0.85)',
-                    backdropFilter: 'blur(12px)',
-                    WebkitBackdropFilter: 'blur(12px)',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    willChange: 'transform',
+                    transform: 'translateZ(0)',
+                    WebkitTransform: 'translateZ(0)',
                 }}
             />
 

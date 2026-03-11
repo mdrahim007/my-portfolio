@@ -702,15 +702,16 @@ export const DocumentationAndFeedback = () => {
             {/* ------------------------------------------------------------------ */}
             {selectedDoc && (
                 <div
-                    className="doc-modal-overlay"
+                    className="doc-modal-overlay modal-overlay-fixed"
                     onClick={() => setSelectedDoc(null)}
                     style={{
                         position: 'fixed', inset: 0, zIndex: 9999,
-                        background: 'rgba(0,0,0,0.6)',
-                        backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         padding: '2rem',
-                        animation: 'modalFadeIn 0.3s ease forwards'
+                        animation: 'modalFadeIn 0.3s ease forwards',
+                        willChange: 'transform',
+                        transform: 'translateZ(0)',
+                        WebkitTransform: 'translateZ(0)',
                     }}
                 >
                     <div
@@ -798,8 +799,8 @@ export const DocumentationAndFeedback = () => {
                     to { opacity: 1; }
                 }
                 @keyframes modalSlideUp {
-                    from { opacity: 0; transform: translateY(20px) scale(0.98); }
-                    to { opacity: 1; transform: translateY(0) scale(1); }
+                    from { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.98); }
+                    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
                 }
 
                 @media (max-width: 600px) {

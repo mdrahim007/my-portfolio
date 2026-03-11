@@ -50,14 +50,6 @@ const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUr
             ref={cardRef}
             className="interactive-element glass-card proj-card"
             style={{ cursor: 'none' }}
-            onMouseOver={() => {
-                const img = cardRef.current?.querySelector('.proj-img-el');
-                if (img) img.style.transform = 'scale(1.06)';
-            }}
-            onMouseOut={() => {
-                const img = cardRef.current?.querySelector('.proj-img-el');
-                if (img) img.style.transform = 'scale(1)';
-            }}
         >
             <div className="proj-inner">
 
@@ -68,6 +60,8 @@ const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUr
                         src={imageSrc}
                         alt={title}
                     />
+                    {/* Dark hover-reveal overlay */}
+                    <div className="proj-img-overlay" />
                     {/* Subtle bottom vignette only */}
                     <div className="proj-img-vignette" />
                 </div>
@@ -221,7 +215,7 @@ export const ProjectShowcases = () => {
                         title="myGov System Implementation & Support"
                         defaultTab="OVERVIEW"
                         isReversed={false}
-                        imageSrc="/myGov-homepage.png"
+                        imageSrc="/myGov-homepage.webp"
                         liveUrl="https://www.mygov.bd"
                         data={{
                             overview: "The myGov platform, developed by a2i, transforms manual government services into accessible digital formats. As the ITSM partner, my team manages the complete journey of bringing these offline services online so citizens can access them seamlessly from home.",
@@ -236,7 +230,7 @@ export const ProjectShowcases = () => {
                         title="National Portal Onboarding & Support"
                         defaultTab="OVERVIEW"
                         isReversed={true}
-                        imageSrc="/national-portal2.png"
+                        imageSrc="/national-portal2.webp"
                         liveUrl="https://bangladesh.gov.bd"
                         data={{
                             overview: "The National Portal Framework by a2i provides a unified web platform for all government offices to share public information. I managed the QA and Support teams responsible for onboarding new government agencies and maintaining the entire portal ecosystem.",
@@ -317,7 +311,22 @@ export const ProjectShowcases = () => {
                     position: absolute; inset: 0;
                     background: linear-gradient(to bottom, transparent 65%, rgba(11,11,17,0.45) 100%);
                     pointer-events: none;
+                    z-index: 2;
                 }
+                
+                /* Dark overlay that fades away on hover */
+                .proj-img-overlay {
+                    position: absolute; 
+                    inset: 0;
+                    background-color: rgba(6, 6, 9, 0.35); /* 35% dark tint */
+                    pointer-events: none;
+                    transition: opacity 500ms ease-out;
+                    z-index: 1;
+                }
+                .proj-card:hover .proj-img-overlay {
+                    opacity: 0;
+                }
+                
                 /* subtle noise/grain texture */
                 .proj-img-grain {
                     position: absolute; inset: 0;

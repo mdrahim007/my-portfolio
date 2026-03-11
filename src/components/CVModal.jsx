@@ -48,19 +48,20 @@ export const CVModal = ({ open, onClose }) => {
     return createPortal(
         <div
             ref={overlayRef}
+            className="modal-overlay-fixed"
             onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
             style={{
                 position: 'fixed',
                 inset: 0,
                 zIndex: 99998,
-                background: 'rgba(4,4,12,0.85)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
                 animation: 'cvFadeIn 0.35s cubic-bezier(0.4,0,0.2,1) forwards',
+                willChange: 'transform',
+                transform: 'translateZ(0)',
+                WebkitTransform: 'translateZ(0)',
             }}
         >
             <style>{`
@@ -69,8 +70,8 @@ export const CVModal = ({ open, onClose }) => {
                     to   { opacity: 1; }
                 }
                 @keyframes cvSlideUp {
-                    from { opacity: 0; transform: translateY(40px) scale(0.98); }
-                    to   { opacity: 1; transform: translateY(0)     scale(1); }
+                    from { opacity: 0; transform: translate3d(0, 40px, 0) scale(0.98); }
+                    to   { opacity: 1; transform: translate3d(0, 0, 0)     scale(1); }
                 }
             `}</style>
 

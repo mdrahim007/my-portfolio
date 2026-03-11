@@ -398,8 +398,8 @@ export const Hero = () => {
                             }}
                         >
                             <img
-                                src="/my_photo.jpg"
-                                alt="Md Abdur Rahim - Support Manager"
+                                src="/my_photo.webp"
+                                alt="Md. Abdur Rahim - Project Coordinator and Support Manager"
                                 style={{
                                     width: '100%',
                                     height: '100%',

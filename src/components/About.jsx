@@ -171,8 +171,8 @@ export const About = () => {
                     }}>
                         <img
                             ref={photoRef}
-                            src="/my_photo2.jpg"
-                            alt="Md Abdur Rahim — Professional Photo"
+                            src="/my_photo2.webp"
+                            alt="Md. Abdur Rahim - Project Coordinator and Support Manager"
                             style={{
                                 display: 'block',
                                 width: '100%',
