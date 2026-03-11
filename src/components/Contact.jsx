@@ -534,7 +534,7 @@ export const Contact = () => {
             <footer style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', borderTop: '1px solid rgba(255,255,255,0.04)', backgroundColor: 'rgba(5,5,8,0.95)', zIndex: 20 }}>
                 <div className="global-container" style={{ display: 'flex', flexDirection: isMobileView ? 'column' : 'row', justifyContent: 'space-between', alignItems: 'center', gap: isMobileView ? '1.5rem' : '0', paddingTop: '2rem', paddingBottom: '2rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', alignItems: isMobileView ? 'center' : 'flex-start', textAlign: isMobileView ? 'center' : 'left' }}>
-                        <span style={{ fontSize: '1rem', fontFamily: 'var(--font-heading)', fontWeight: 400, letterSpacing: '0.04em', color: '#FAFAFA' }}>ABDUR RAHIM</span>
+                        <span style={{ fontSize: '1rem', fontFamily: 'var(--font-heading)', fontWeight: 400, letterSpacing: '0.04em', color: '#FAFAFA' }}>MD. ABDUR RAHIM</span>
                         <span style={{ fontSize: '0.65rem', color: 'rgba(250,250,250,0.3)', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 500 }}>&copy; {new Date().getFullYear()} All rights reserved.</span>
                     </div>
                     <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>

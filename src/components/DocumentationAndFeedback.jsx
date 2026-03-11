@@ -60,28 +60,28 @@ const galleryCards = [
 const testimonials = [
     {
         id: 1,
-        quote: "Data-driven and deeply strategic. Abdur Rahim knows exactly how to balance strict project timelines with the flexibility required to navigate complex, large-scale government technology deployments.",
+        quote: "Data-driven and deeply strategic. Md. Abdur Rahim knows exactly how to balance strict project timelines with the flexibility required to navigate complex, large-scale government technology deployments.",
         author: "Md. Moniruzzaman",
         role: "Project Director & CTO",
         type: "EXECUTIVE FEEDBACK"
     },
     {
         id: 2,
-        quote: "Abdur Rahim has a rare ability to translate complex government requirements into clear, actionable technical sprints. His coordination on the myGov ITSM project ensured that both our technical teams and government stakeholders were always aligned.",
+        quote: "Md. Abdur Rahim has a rare ability to translate complex government requirements into clear, actionable technical sprints. His coordination on the myGov ITSM project ensured that both our technical teams and government stakeholders were always aligned.",
         author: "Project Sponsor",
         role: "E-Governance Initiatives",
         type: "STAKEHOLDER ALIGNMENT"
     },
     {
         id: 3,
-        quote: "Leading a cross-functional team of over 25 members is no easy task, but Abdur Rahim managed our support and implementation units seamlessly. His focus on process optimization is the reason we consistently maintained our 99% SLA target.",
+        quote: "Leading a cross-functional team of over 25 members is no easy task, but Md. Abdur Rahim managed our support and implementation units seamlessly. His focus on process optimization is the reason we consistently maintained our 99% SLA target.",
         author: "Operations Head",
         role: "IT Service Management (ITSM)",
         type: "TEAM LEADERSHIP"
     },
     {
         id: 4,
-        quote: "Whether it was handling the National Portal onboarding or managing critical system upgrades, Abdur Rahim's proactive risk management caught problems long before they impacted the live environment. He brings genuine stability to chaotic deployments.",
+        quote: "Whether it was handling the National Portal onboarding or managing critical system upgrades, Md. Abdur Rahim's proactive risk management caught problems long before they impacted the live environment. He brings genuine stability to chaotic deployments.",
         author: "Senior Solutions Architect",
         role: "Digital Transformation Division",
         type: "RISK MANAGEMENT"
