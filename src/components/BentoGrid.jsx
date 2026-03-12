@@ -49,10 +49,10 @@ export const BentoGrid = () => {
                 trigger: csatRef.current,
                 start: 'top 85%',
                 onEnter: () => {
-                    gsap.to(csatRef.current, { innerHTML: 99, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
-                    gsap.to(teamRef.current, { innerHTML: 25, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
-                    gsap.to(npsRef.current, { innerHTML: 4, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
-                    gsap.to(ahtRef.current, { innerHTML: 2, duration: 2, ease: 'power2.out', snap: { innerHTML: 1 } });
+                    gsap.to(csatRef.current, { innerHTML: 99, duration: 5, ease: 'power2.out', snap: { innerHTML: 1 } });
+                    gsap.to(teamRef.current, { innerHTML: 25, duration: 5, ease: 'power2.out', snap: { innerHTML: 1 } });
+                    gsap.to(npsRef.current, { innerHTML: 5, duration: 5, ease: 'power2.out', snap: { innerHTML: 1 } });
+                    gsap.to(ahtRef.current, { innerHTML: 2, duration: 5, ease: 'power2.out', snap: { innerHTML: 1 } });
                 },
                 once: true
             });
