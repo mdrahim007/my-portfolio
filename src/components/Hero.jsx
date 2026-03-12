@@ -406,7 +406,7 @@ export const Hero = () => {
                             }}
                         >
                             <img
-                                src="/my_photo.webp"
+                                src="/md_abdur_rahim.webp"
                                 alt="Md. Abdur Rahim - Project Coordinator and Support Manager"
                                 style={{
                                     width: '100%',
