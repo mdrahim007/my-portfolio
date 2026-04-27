@@ -9,7 +9,7 @@
     <meta name="description"
         content="Professional CV of Md. Abdur Rahim - Project Coordinator & Support Manager. Experienced in Project Management, Stakeholder Management, and Business Analysis.">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
         /* ═══════════════════════════════════════════════════
            LIGHT MODE — default, print-friendly
@@ -300,7 +300,7 @@
         }
 
         .name {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 27px;
             font-weight: 700;
             color: var(--name-color);
@@ -379,7 +379,7 @@
         }
 
         .job-role {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 14px;
             font-weight: 700;
             color: var(--primary);
@@ -870,19 +870,23 @@
     </div>
 
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.btn-toggle-theme i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+        function toggleTheme(forceDark) {
+            if (forceDark === true) {
+                document.body.classList.add('dark-mode');
+            } else if (forceDark === false) {
+                document.body.classList.remove('dark-mode');
             } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+                document.body.classList.toggle('dark-mode');
             }
         }
 
-    </script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const theme = urlParams.get('theme');
+        if (theme === 'light') {
+            document.body.classList.remove('dark-mode');
+        } else if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }    </script>
 </body>
 
 </html>

@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { LinkedInCard } from './LinkedInCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -288,7 +289,7 @@ export const Contact = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                paddingBottom: '15rem',
+                paddingBottom: '10rem',
             }}
         >
             <div className="global-container" style={{ position: 'relative' }}>
@@ -528,6 +529,10 @@ export const Contact = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* ── LinkedIn Connect Card ── */}
+                <LinkedInCard />
+
             </div>
 
             {/* ── Footer ── */}
