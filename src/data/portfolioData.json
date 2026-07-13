@@ -48,5 +48,15 @@
     "technologies": ["React", "Python", "TensorFlow", "WebSocket"],
     "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop",
     "size": "medium"
+  },
+  {
+    "id": 6,
+    "title": "MyWallet: Intelligent & Sovereign Financial Assistant",
+    "role": "Android Developer",
+    "description": "An advanced, local-first Android platform that manages your entire financial life using on-device AI, serverless cloud synchronization, and offline-first NoSQL architecture.",
+    "metrics": ["On-Device AI & NLM", "Serverless Cloud Sync", "Smart Receipt Scanning"],
+    "technologies": ["Kotlin", "Jetpack Compose", "ObjectBox", "Google ML Kit", "Hilt"],
+    "image": "/MyWallet-Finance-App.webp",
+    "size": "large"
   }
 ]

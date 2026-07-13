@@ -30,7 +30,7 @@ const LifecycleContent = ({ tab, data }) => {
 /* ─────────────────────────────────────────────────────────────────
    Project Card
 ───────────────────────────────────────────────────────────────── */
-const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUrl, data }) => {
+const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUrl, playStoreUrl, useIframe, useScrollableImage, data }) => {
     const [activeTab, setActiveTab] = useState(defaultTab);
     const [animKey, setAnimKey] = useState(0);
     const cardRef = useRef(null);
@@ -55,11 +55,53 @@ const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUr
 
                 {/* ── Image Panel ── */}
                 <div className="proj-img-wrap" style={{ order: isReversed ? 2 : 1 }}>
-                    <img
-                        className="proj-img-el"
-                        src={imageSrc}
-                        alt={title}
-                    />
+                    {useScrollableImage ? (
+                        <div 
+                            className="hide-scroll"
+                            data-lenis-prevent="true"
+                            onWheel={(e) => e.stopPropagation()}
+                            onTouchMove={(e) => e.stopPropagation()}
+                            style={{ 
+                                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', 
+                                overflowY: 'auto', overflowX: 'hidden',
+                                scrollbarWidth: 'none',
+                                msOverflowStyle: 'none',
+                                pointerEvents: 'auto'
+                            }} 
+                        >
+                            <img
+                                src={imageSrc}
+                                alt={title}
+                                style={{ width: '100%', height: 'auto', display: 'block' }}
+                                loading="lazy"
+                            />
+                        </div>
+                    ) : useIframe && liveUrl ? (
+                        <div className="proj-img-el" style={{ overflow: 'hidden', position: 'relative' }}>
+                            <iframe
+                                src={liveUrl}
+                                title={title}
+                                style={{ 
+                                    width: 'calc(220% + 44px)', 
+                                    height: '220%', 
+                                    transform: 'scale(0.454545)', 
+                                    transformOrigin: '0 0', 
+                                    border: 'none', 
+                                    pointerEvents: 'auto', 
+                                    backgroundColor: '#fff',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <img
+                            className="proj-img-el"
+                            src={imageSrc}
+                            alt={title}
+                        />
+                    )}
                     {/* Dark hover-reveal overlay */}
                     <div className="proj-img-overlay" />
                     {/* Subtle bottom vignette only */}
@@ -73,7 +115,7 @@ const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUr
                     <span className="proj-badge">Featured Project</span>
 
                     {/* Title */}
-                    <h3 className="proj-title">{title}</h3>
+                    <h3 className="proj-title" style={{ whiteSpace: 'pre-line' }}>{title}</h3>
 
                     {/* ════════════════════════════════════════
                         Folder-Tab System
@@ -117,17 +159,59 @@ const ProjectCard = ({ title, subtitle, defaultTab, isReversed, imageSrc, liveUr
 
                     </div>
 
-                    {/* Visit Live Portal link */}
-                    {liveUrl && (
+                    {/* Links row */}
+                    <div className="proj-links-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginTop: 'auto' }}>
+                        {/* Visit Live Portal link */}
+                        {liveUrl && (
+                            <a
+                                href={liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="interactive-element proj-live-link"
+                                style={{ cursor: 'none', marginTop: 0 }}
+                            >
+                                <span className="proj-live-link__text">Visit Live Portal</span>
+                                <span className="proj-live-link__arrow">→</span>
+                            </a>
+                        )}
+
+                        {/* Mobile Play Store Icon */}
+                        {playStoreUrl && (
+                            <a
+                                href={playStoreUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="interactive-element proj-play-icon-mobile"
+                                style={{ cursor: 'none', display: 'none', color: '#bea98e', opacity: 0.9, marginTop: 0 }}
+                                title="Get it on Google Play"
+                            >
+                                <svg viewBox="0 0 512 512" fill="currentColor" width="16" height="16" style={{ display: 'block' }}>
+                                    <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                                </svg>
+                            </a>
+                        )}
+                    </div>
+
+                    {/* Play Store Badge */}
+                    {playStoreUrl && (
                         <a
-                            href={liveUrl}
+                            href={playStoreUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="interactive-element proj-live-link"
-                            style={{ cursor: 'none' }}
+                            className="interactive-element proj-play-badge-desktop"
+                            style={{ 
+                                cursor: 'none',
+                                position: 'absolute',
+                                bottom: '0.3rem',
+                                right: '3rem',
+                                zIndex: 10
+                            }}
                         >
-                            <span className="proj-live-link__text">Visit Live Portal</span>
-                            <span className="proj-live-link__arrow">→</span>
+                            <img 
+                                alt="Get it on Google Play" 
+                                src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                                style={{ height: '48px', width: 'auto' }}
+                            />
                         </a>
                     )}
                 </div>
@@ -216,6 +300,7 @@ export const ProjectShowcases = () => {
                         defaultTab="OVERVIEW"
                         isReversed={false}
                         imageSrc="/myGov-homepage.webp"
+                        useIframe={true}
                         liveUrl="https://www.mygov.bd"
                         data={{
                             overview: "The myGov platform, developed by a2i, transforms manual government services into accessible digital formats. As the ITSM partner, my team manages the complete journey of bringing these offline services online so citizens can access them seamlessly from home.",
@@ -227,16 +312,34 @@ export const ProjectShowcases = () => {
 
                     {/* ── Project 2 ── */}
                     <ProjectCard
-                        title="National Portal Onboarding & Support"
+                        title={"National Portal Onboarding &\nSupport"}
                         defaultTab="OVERVIEW"
                         isReversed={true}
-                        imageSrc="/national-portal2.webp"
-                        liveUrl="https://bangladesh.gov.bd"
+                        imageSrc="/national-portal-long.webp"
+                        useScrollableImage={true}
+                        liveUrl="https://dhaka.gov.bd"
                         data={{
                             overview: "The National Portal Framework by a2i provides a unified web platform for all government offices to share public information. I managed the QA and Support teams responsible for onboarding new government agencies and maintaining the entire portal ecosystem.",
                             challenge: "The primary goal was bringing unconnected government offices onto a standardized framework. This required gathering accurate agency data, deploying cloned site structures, validating new development features, and ensuring officials could manage their content.",
                             solution: "I mentored the teams executing this entire pipeline. We collected office data, set up domains, cloned the portal structure, and thoroughly tested functionality. We then conducted training sessions so officials could easily update portal information themselves.",
                             impact: "We successfully expanded the national portal network, giving citizens reliable access to vital government information. Post-launch, my teams provided dedicated 24/7 technical support to resolve complex issues and ensure all portals remained fully operational.",
+                        }}
+                    />
+
+                    {/* ── Project 3 ── */}
+                    <ProjectCard
+                        title="MyWallet: Intelligent & Sovereign Financial Assistant"
+                        defaultTab="OVERVIEW"
+                        isReversed={false}
+                        imageSrc="/MyWallet-Finance-App.webp"
+                        liveUrl="https://mywallet.mdrahim.com"
+                        playStoreUrl="https://play.google.com/store/apps/details?id=com.mdrahim.mywallet"
+                        useIframe={true}
+                        data={{
+                            overview: "MyWallet is an advanced, local-first Android platform that manages your entire financial life using on-device AI, serverless cloud synchronization, and offline-first NoSQL architecture.",
+                            challenge: "Traditional financial apps rely heavily on backend servers, which compromises user privacy, increases latency, and requires constant internet access to function properly.",
+                            solution: "I engineered a fully offline-first solution utilizing ObjectBox for high-speed local data storage and a custom on-device Natural Language Model (NLM) for executing intents. It also leverages Google ML Kit for smart receipt scanning.",
+                            impact: "Users experience a secure, completely private financial suite with advanced biometric protection, automatic serverless Google Drive sync, and conversational AI—all operating seamlessly without third-party servers.",
                         }}
                     />
 
@@ -282,6 +385,7 @@ export const ProjectShowcases = () => {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     min-height: 440px;
+                    height: 480px;
                 }
 
                 /* ─────────────────────────────
@@ -343,10 +447,10 @@ export const ProjectShowcases = () => {
                     background: rgba(255,255,255,0.018);
                     backdrop-filter: blur(24px) saturate(180%);
                     -webkit-backdrop-filter: blur(24px) saturate(180%);
-                    padding: 3rem;
+                    padding: 2.5rem 3rem 1.5rem 3rem;
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
+                    justify-content: flex-start;
                     position: relative;
                 }
 
@@ -422,6 +526,9 @@ export const ProjectShowcases = () => {
                     color: rgba(225,215,200,0.9);
                     background: rgba(190,169,142,0.06);
                 }
+                .hide-scroll::-webkit-scrollbar {
+                    display: none;
+                }
 
                 /* ACTIVE TAB — the key magic */
                 .ftab-btn--active {
@@ -464,7 +571,7 @@ export const ProjectShowcases = () => {
                     border-top: none;                     /* no top border — seamless with strip */
                     border-radius: 0 0 10px 10px;
                     padding: 1.5rem 1.6rem 1.6rem;
-                    min-height: 110px;
+                    height: 200px;
                     position: relative;
                     z-index: 1;
                     animation: ftabReveal 0.3s ease forwards;
@@ -528,6 +635,7 @@ export const ProjectShowcases = () => {
                     .proj-inner {
                         grid-template-columns: 1fr !important;
                         min-height: unset;
+                        height: auto;
                     }
                     /* Always show image first on mobile */
                     .proj-img-wrap { order: 1 !important; min-height: 220px !important; max-height: 280px; }
@@ -546,12 +654,15 @@ export const ProjectShowcases = () => {
                     }
                     .ftab-panel {
                         padding: 1.1rem 1.2rem !important;
-                        min-height: 85px;
+                        height: auto;
+                        min-height: 140px;
                     }
                     .ftab-text {
                         font-size: clamp(0.82rem, 2.8vw, 0.94rem) !important;
                         line-height: 1.72 !important;
                     }
+                    .proj-play-badge-desktop { display: none !important; }
+                    .proj-play-icon-mobile { display: inline-flex !important; align-items: center; justify-content: center; }
                 }
 
                 /* ═══════════════════════════
@@ -569,7 +680,7 @@ export const ProjectShowcases = () => {
                         padding: 0.58rem 0.1rem !important;
                         letter-spacing: 0.07em !important;
                     }
-                    .ftab-panel { border-radius: 0 0 8px 8px; padding: 0.9rem 1rem !important; }
+                    .ftab-panel { border-radius: 0 0 8px 8px; padding: 0.9rem 1rem !important; height: auto; min-height: 140px; }
                     .ftab-text { font-size: clamp(0.8rem, 3.5vw, 0.9rem) !important; line-height: 1.65 !important; }
                 }
             `}} />

@@ -198,6 +198,9 @@ export const CVReaderView = ({ isDark = true }) => {
                 scrollbarWidth: 'thin',
                 scrollbarColor: `${t.scrollThumb} transparent`,
                 transition: 'background 0.4s ease',
+                margin: 0,
+                padding: '10px 0',
+                border: 'none',
             }}
         >
             <div style={{
